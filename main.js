@@ -16,7 +16,7 @@ let d = new Date();
 let previousTime = 0;
 let currentTime = 0;
 let passedTime = 0;
-let msPerFrame = 1000.0 / 144.0;
+let msPerFrame = 1000.0 /72.0;
 
 const numResource = 22;
 let resourceLoaded = 0;
@@ -27,11 +27,11 @@ let keys = {};
 let blocks = [];
 let walls = [];
 
-const speed = 2.7;
-const gravity = 0.19;
-const globalFriction = 0.996;
-const groundFriction = 0.88;
-const sideJump = 5.1;
+const speed = 2.7*2;
+const gravity = 0.19*2*2;
+const globalFriction = 0.992;
+const groundFriction = 0.76;
+const sideJump = 5.1*2;
 const boundFriction = 0.66;
 const JumpConst = 15.0;
 const chargingConst = 600.0;
@@ -311,7 +311,12 @@ class Player
         if (Math.abs(this.vx) < 0.0001) this.vx = 0;
         if (Math.abs(this.vy) < 0.0001) this.vy = 0;
         this.x += this.vx;
-        this.y += this.vy;
+        if(this.vy!=0){
+            this.y += this.vy-gravity/2;
+        }
+        else{
+            this.y += this.vy;
+        }
         
         let c;
 
@@ -367,7 +372,7 @@ class Player
                 else if (keys.ArrowRight) this.vx = sideJump;
                 audios.jump.start();
 
-                this.vy = this.jumpGauge * JumpConst;
+                this.vy = this.jumpGauge * JumpConst * 2;
                 this.jumpGauge = 0;
                 this.onGround = false;
                 this.crouching = false;
@@ -843,7 +848,8 @@ function initLevels()
     blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
     walls.push(new Wall(7, 715, 430, 0, 300));
 }
-
+//플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
+//키입력 True False로 가능, while()
 function keyDown(e)
 {
     keys[e.key] = true;
