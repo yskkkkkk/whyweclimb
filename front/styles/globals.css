@@ -14,3 +14,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* -------------------------------------------------------------------------------------- */
+
+.intro {
+  display: flex;
+  justify-content: center;
+  gap: 10vw;
+  align-items: center;
+  margin-top: 40vh;
+}
