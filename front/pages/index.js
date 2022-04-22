@@ -1,8 +1,17 @@
 import Head from 'next/head';
 import Login from "../components/login"
+import Signup from '../components/signup';
+import { useState } from 'react';
 
 export default function Home() {
   
+  const [showLogin, setShowLogin] = useState(true);
+  const [showSignup, setShowSignup] = useState(false);  
+
+  const showSignupToggle = () => {
+    setShowSignup(!showSignup);
+    setShowLogin(!showLogin);
+  }
 
   return (
     <>
@@ -17,8 +26,15 @@ export default function Home() {
         <section>
           <h2>why we climb</h2>
         </section>
-        <Login />
+        <section>
+          {showLogin && <Login toSignup={showSignupToggle} />}
+          {showSignup && <Signup toLogin={showSignupToggle} />}
+        </section>
       </main>
+
+      
+      
+      
       
     </>
   )

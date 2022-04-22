@@ -1,7 +1,7 @@
-import style from './home.module.css';
+import style from './login.module.css';
 
 
-export default function Login() {
+export default function Login({toSignup}) {
   
   return (
     <section className={style.login}>
@@ -14,7 +14,7 @@ export default function Login() {
       <section className={style.btns}>
         <button >login</button>
         <span>no account? click 
-          <a href='#' className={style.toSignup}> here!</a>
+          <a href='#' onClick={toSignup} className={style.toSignup}> here!</a>
         </span>
       </section>
     </section>
