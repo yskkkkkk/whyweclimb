@@ -3,6 +3,7 @@ import Login from "../components/login"
 import Signup from '../components/signup';
 import ModeSelect from '../components/modeSelect';
 import { useState } from 'react';
+import Configure from '../components/configure';
 
 
 
@@ -41,6 +42,7 @@ export default function Home() {
           {room == 0 && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
           {room == 1 && <Signup toMain={toMain} />}
           {room == 2 && <ModeSelect toMain={toMain} toConfigure={toConfigure} />}
+          {room == 3 && <Configure toModeSelect={toModeSelect} />}
         </section>
       </main>
 
