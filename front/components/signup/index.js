@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 const ID_REGEX = /^[a-zA-Z0-9]{3,20}$/;
 const PW_REGEX = /^[a-zA-Z0-9]{8,24}$/;
 
-export default function Signup ({toLogin}) {
+export default function Signup ({toMain}) {
   
   const inputID = useRef();
 
@@ -190,7 +190,7 @@ export default function Signup ({toLogin}) {
           <label>PW confirm <input type="password" required /></label>
         </div>
       </section>
-      <a href="#" className={style.btns} onClick={toLogin}>back</a>
+      <a href="#" className={style.btns} onClick={toMain}>back</a>
     </main>
   )
 
