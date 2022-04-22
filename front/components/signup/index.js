@@ -18,7 +18,7 @@ export default function Signup ({toLogin}) {
   const [matchPassword, setMatchPassword] = useState("");
   const [validMatchPassword, setValidMatchPassword] = useState(false);
 
-  const [errorMsg, setErrorMsg] = useState(["confirm your ID", "confirm your password", "inconsistent password"]);
+  const [errorMsg, setErrorMsg] = useState([]);
   
   const initializeData = () => {      // 모든 상태정보 초기화
     setUserId("");
@@ -28,7 +28,7 @@ export default function Signup ({toLogin}) {
     setAvailableUserId(false);
     setValidUserPassword(false);
     setValidMatchPassword(false);
-    setErrorMsg(["confirm your ID", "confirm your password", "inconsistent password"]);
+    setErrorMsg([]);
   };
 
   const userIdCheck = (e) => {         // 아이디 중복 확인
@@ -40,9 +40,9 @@ export default function Signup ({toLogin}) {
           if (data) {
             alert('유효한 아이디입니다');
             setAvailableUserId(data);
-            if (errorMsg && errorMsg.includes("confirm your ID")) {
-              errorMsg.filter(msg => msg != "confirm your ID");
-            }
+            // if (errorMsg && errorMsg.includes("confirm your ID")) {
+            //   errorMsg.filter(msg => msg != "confirm your ID");
+            // }
           }
           else {
             alert('이미 사용중인 아이디입니다');
@@ -83,7 +83,21 @@ export default function Signup ({toLogin}) {
       submitRegistration();
     }
     else {
-      alert("잘못된 접근입니다");
+      if (!availableUserId) {
+        addErrorID();
+      }
+      if (!validUserPassword) {
+        addErrorPW();
+      }
+      if (!validMatchPassword) {
+        addErrorConfirmPW();
+      }
+      else {
+        setErrorMsg(errorMsg + ['잘못된 접근입니다']);
+      }
+
+      alert(errorMsg);
+      
     }
   }
 
@@ -132,8 +146,8 @@ export default function Signup ({toLogin}) {
     const result = ID_REGEX.test(userId);
     setValidUserId(result);
     setAvailableUserId(false);
-    if (!result) {
-      addErrorID();
+    if (result) {
+      removeErrorID();
     }
   }, [userId]);
 
@@ -143,9 +157,6 @@ export default function Signup ({toLogin}) {
     if (result) {
       removeErrorPW();
     }
-    else {
-      addErrorPW();
-    }
   }, [userPassword]);
 
   useEffect(() => {                   // 비밀번호학인 조건 충족 여부 확인
@@ -153,9 +164,6 @@ export default function Signup ({toLogin}) {
     setValidMatchPassword(match);
     if (match) {
       removeErrorConfirmPW();
-    }
-    else {
-      addErrorConfirmPW();
     }
   }, [matchPassword]);
 
