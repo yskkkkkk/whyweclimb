@@ -45,11 +45,6 @@ export default function Home() {
           {room == 3 && <Configure toModeSelect={toModeSelect} />}
         </section>
       </main>
-
-      
-      
-      
-      
     </>
   )
 }
