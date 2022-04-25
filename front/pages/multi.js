@@ -1,4 +1,6 @@
 import Lobby from '../components/multi/lobby';
+import style from '../styles/multi.module.css';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Multi() {
@@ -10,10 +12,12 @@ export default function Multi() {
   }
 
   return (
-    <main>
+    <main className={style.multi}>
       {multiRoom == 0 && <Lobby />}
-      
-      
+
+      <Link href={'/'} passHref>
+        <button>back</button>
+      </Link>        
     </main>
   )
 }
