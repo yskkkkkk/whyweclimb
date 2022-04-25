@@ -1,0 +1,13 @@
+.multi {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15vh;
+}
+
+.multi button {
+  width: 10vw;
+  align-self: center;
+}

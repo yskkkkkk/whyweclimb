@@ -9,7 +9,7 @@ import Configure from '../components/configure';
 
 export default function Home() {
 
-  const [room, setRoom] = useState(0);    // 0=메인(로그인), 1=회원가입, 2=모드 선택화면, 3=설정화면,
+  const [room, setRoom] = useState(localStorage.getItem("token") ? 2 : 0);    // 0=메인(로그인), 1=회원가입, 2=모드 선택화면, 3=설정화면,
 
   const toMain = () => {
     setRoom(0);
@@ -45,11 +45,6 @@ export default function Home() {
           {room == 3 && <Configure toModeSelect={toModeSelect} />}
         </section>
       </main>
-
-      
-      
-      
-      
     </>
   )
 }
