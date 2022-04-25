@@ -32,6 +32,10 @@
     margin-left: 2em;
 }
 
+.btns {
+  display: flex;
+  justify-content: space-evenly;
+}
 /* ------------------------------------ responsive design ↓ --------------------------------------- */
 
 /* Extra small devices (phones, 600px and down) */
