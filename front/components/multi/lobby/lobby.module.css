@@ -7,6 +7,6 @@
   gap: 15vw;
 }
 
-.lobby h2:hover {
+.lobby h2 a:hover {
   color: rgb(82, 82, 204);
 }

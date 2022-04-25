@@ -5,7 +5,6 @@ import style from './findModal.module.css';
 export default function FindModal({toggleFindModal}) {
 
   const router = useRouter();
-
   const [roomID, setRoomID] = useState('');
 
   const writeRoomID = (e) => {
@@ -26,7 +25,7 @@ export default function FindModal({toggleFindModal}) {
   // };
 
   return (
-    <section className={style.modal}>
+    <section onClick={e => e.stopPropagation()} className={style.modal}>
       <div className={style.card}>
         <label>search room 
           <input type="text" required onChange={writeRoomID} /></label>
