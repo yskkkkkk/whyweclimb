@@ -1,12 +1,12 @@
 import style from './lobby.module.css';
 
-export default function Lobby() {
+export default function Lobby({toWaiting, toCreate}) {
 
   return (
-    <main className={style.lobby}>
-      <h2><a href="#" >join</a></h2>
+    <nav className={style.lobby}>
+      <h2><a href="#" onClick={toWaiting} >join</a></h2>
       <h2><a href="#" >find</a></h2>
-      <h2><a href="#" >create</a></h2>
-    </main>
+      <h2><a href="#" onClick={toCreate} >create</a></h2>
+    </nav>
   )
 }
