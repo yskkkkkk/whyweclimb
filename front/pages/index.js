@@ -2,14 +2,14 @@ import Head from 'next/head';
 import Login from "../components/login"
 import Signup from '../components/signup';
 import ModeSelect from '../components/modeSelect';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Configure from '../components/configure';
 
 
 
 export default function Home() {
 
-  const [room, setRoom] = useState(localStorage.getItem("token") ? 2 : 0);    // 0=메인(로그인), 1=회원가입, 2=모드 선택화면, 3=설정화면,
+  const [room, setRoom] = useState(false);    // 0=메인(로그인), 1=회원가입, 2=모드 선택화면, 3=설정화면,
 
   const toMain = () => {
     setRoom(0);
@@ -23,6 +23,10 @@ export default function Home() {
   const toConfigure = () => {
     setRoom(3);
   }
+
+  useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
+    setRoom(localStorage.getItem("token") ? 2 : 0);
+  }, []);
 
 
   return (
