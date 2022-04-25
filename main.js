@@ -16,7 +16,7 @@ let d = new Date();
 let previousTime = 0;
 let currentTime = 0;
 let passedTime = 0;
-let msPerFrame = 1000.0 /72.0;
+let msPerFrame = 1000.0 /70.0;
 
 const numResource = 22;
 let resourceLoaded = 0;
@@ -36,9 +36,10 @@ const boundFriction = 0.66;
 const JumpConst = 15.0;
 const chargingConst = 600.0;
 let player;
+let player2;
 let level = 0;
 let levelMax = 0;
-let runningTime = 0;
+
 class Vector
 {
     constructor(x, y)
@@ -220,6 +221,7 @@ class Player
 {
     constructor(x, y)
     {
+        let runningTime = 0;
         this.crouching = false;
         this.running_R = false;
         this.running_L = false;
@@ -346,8 +348,8 @@ class Player
                 c = this.testCollide(-speed, 0);
                 this.running_R = false
                 this.running_L = true
-                runningTime += 1
-                runningTime = runningTime%32
+                this.runningTime += 1
+                this.runningTime = this.runningTime%16
                 if (c.side == undefined)
                     this.vx = -speed;
                 else
@@ -357,8 +359,8 @@ class Player
             {
                 this.running_R = true
                 this.running_L = false
-                runningTime += 1
-                runningTime = runningTime%32
+                this.runningTime += 1
+                this.runningTime = this.runningTime%16
                 c = this.testCollide(speed, 0);
 
                 if (c.side == undefined)
@@ -380,7 +382,7 @@ class Player
             else if(!keys.ArrowRight && !keys.ArrowLeft){
                 this.running_R=false
                 this.running_L=false
-                runningTime=0
+                this.runningTime=0
             }
         }
 
@@ -388,7 +390,10 @@ class Player
         c = this.testCollide(0, -gravity);
         if (c.side == undefined)
         {
-            this.vy -= gravity;
+            if(this.vy > -100){
+                this.vy -= gravity;
+            }
+            
             this.onGround = false;
         }
 
@@ -586,10 +591,10 @@ class Player
             gfx.drawImage(images[this.getDrawImage()], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
         }else if(this.running_L){
             
-            gfx.drawImage(images[`running_L${parseInt(runningTime/16)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
+            gfx.drawImage(images[`running_L${parseInt(this.runningTime/8)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
         }else{
             
-            gfx.drawImage(images[`running_R${parseInt(runningTime/16)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
+            gfx.drawImage(images[`running_R${parseInt(this.runningTime/8)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
         }
         gfx.beginPath();
         gfx.rect(941, HEIGHT - 779, 52, -14);
@@ -779,8 +784,8 @@ function init()
         audios.jump.play();
     };
 
-    player = new Player((WIDTH - 32) / 2.0, 0);
-    // player = new Player(833, HEIGHT * 2 + 690);
+    player = new Player((WIDTH - 32) / 2.0,156);
+    player2 = new Player(833,156);
 
 
     initLevels();
@@ -789,7 +794,7 @@ function init()
 //Make game levels
 function initLevels()
 {
-    blocks.push(new Block(0, new AABB(100, 100, 150, 34)));
+    blocks.push(new Block(0, new AABB(0, 0, 1000, 156)));
     blocks.push(new Block(0, new AABB(330, 230, 150, 34)));
     blocks.push(new Block(0, new AABB(710, 410, 116, 34)));
     blocks.push(new Block(0, new AABB(330, 660, 150, 34)));
@@ -803,8 +808,8 @@ function initLevels()
 
     blocks.push(new Block(2, new AABB(130, 10, 100, 45)));
     blocks.push(new Block(2, new AABB(130, 300, 100, 45)));
-    blocks.push(new Block(2, new AABB(540, 400, 120, 180)));
-    blocks.push(new Block(2, new AABB(800, 480, 120, 180)));
+    blocks.push(new Block(2, new AABB(540, 535, 120, 45)));
+    blocks.push(new Block(2, new AABB(800, 615, 120, 45)));
 
     blocks.push(new Block(3, new AABB(460, 10, 110, 34)));
     blocks.push(new Block(3, new AABB(46, 236, 100, 34)));
@@ -850,6 +855,7 @@ function initLevels()
 }
 //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
 //키입력 True False로 가능, while()
+
 function keyDown(e)
 {
     keys[e.key] = true;
@@ -892,6 +898,7 @@ function render()
 
     if(level<levelMax){
         let stage_bg = `stage${level+1}_bg`
+        
         gfx.drawImage(images[stage_bg], 0, 0, 1000, 800);
     }
 
@@ -911,6 +918,7 @@ function render()
         drawWall(w);
     });
     player.render();
+    player2.render();
     if (levelMax == 0)
     {
         gfx.fillText("Let's go up!", 550, HEIGHT - 80);
@@ -928,10 +936,17 @@ function render()
 
 function drawWall(wall)
 {
+    
     gfx.beginPath();
     gfx.moveTo(wall.x0, HEIGHT - wall.y0);
     gfx.lineTo(wall.x1, HEIGHT - wall.y1);
+    if(level <levelMax && level >= 3){
+        gfx.strokeStyle='white'
+    }
     gfx.stroke();
+    if(level <levelMax){
+        gfx.strokeStyle='black'
+    }
 }
 
 function drawAABB(aabb)
@@ -944,13 +959,20 @@ function drawBlock(x, y, w, h)
     
     gfx.beginPath();
     gfx.rect(x, HEIGHT - y, w, -h);
-    gfx.fill();
-    gfx.fillStyle='rgb(0,0,0)'
+    
     if(level < levelMax){
         let stage = `stage${level+1}`
         //console.log(stage)
+        if(level==0 && x==0 && y==0){
+            
+        }
+        else{
         gfx.drawImage(images[stage], x, HEIGHT - y, w, -h);
-        //gfx.fillStyle = 'rgb(255,221,0)'
+        }//gfx.fillStyle = 'rgb(255,221,0)'
+    }
+    else{
+        gfx.fill();
+        gfx.fillStyle='rgb(0,0,0)'
     }
     if (x==942 && y== 780 && w== Math.trunc(player.jumpGauge * 50)&& h== 12){
         gfx.fillStyle='rgb(255,0,0)'
