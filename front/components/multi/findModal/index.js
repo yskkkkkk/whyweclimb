@@ -16,7 +16,7 @@ export default function FindModal({toggleFindModal}) {
   //     .then((response) => response.json())
   //     .then((data) => {
   //       if (data) {
-  //         router.push(`/${roomID}`);
+  //         router.push(`/multi/${roomID}`);
   //       }
   //       else {
   //         alert('invalid RoomID');

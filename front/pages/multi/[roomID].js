@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
-import style from '../styles/waitRoom.module.css';
+import style from '../../styles/waitRoom.module.css';
+import Link from 'next/link';
 
 export default function WaitRoom() {
 
@@ -12,6 +13,9 @@ export default function WaitRoom() {
       <section>
         3 / 4
       </section>
+      <Link href={'/multi'}>
+        <button>back to Lobby</button>
+      </Link>
     </main>
   )
 }
