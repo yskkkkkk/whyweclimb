@@ -13,4 +13,5 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class WebSockChatHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
     private final ChatService chatService;
+
 }
