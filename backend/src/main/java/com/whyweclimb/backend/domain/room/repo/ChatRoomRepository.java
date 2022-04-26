@@ -1,7 +1,8 @@
-package com.whyweclimb.backend.repo;
+package com.whyweclimb.backend.domain.room.repo;
 
-import com.whyweclimb.backend.model.ChatRoom;
 import org.springframework.stereotype.Repository;
+
+import com.whyweclimb.backend.domain.room.model.ChatRoom;
 
 import javax.annotation.PostConstruct;
 import java.util.*;

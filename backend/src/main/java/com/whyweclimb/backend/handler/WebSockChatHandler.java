@@ -1,7 +1,8 @@
-package com.whyweclimb.backend.config.handler;
+package com.whyweclimb.backend.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.whyweclimb.backend.service.ChatService;
+import com.whyweclimb.backend.domain.room.service.ChatService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
