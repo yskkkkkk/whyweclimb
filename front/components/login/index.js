@@ -47,11 +47,13 @@ export default function Login({toSignup, toModeSelect}) {
     <main className={style.login}>
       <div className={style.card}>
         <label>Id 
-          <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required /></label>
+          <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
+        </label>
       </div>
       <div className={style.card}>
         <label>Password 
-          <input type="password" onChange={e => setUserPassword(e.target.value)} required /></label>
+          <input type="password" onChange={e => setUserPassword(e.target.value)} required />
+        </label>
       </div>
       <section className={style.btns}>
         <button /*onClick={handleLoginSubmit}*/ onClick={toModeSelect} >login</button>
