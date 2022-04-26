@@ -1,5 +1,6 @@
 import Lobby from '../components/multi/lobby';
 import FindModal from '../components/findModal';
+import Create from '../components/create';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -40,6 +41,8 @@ export default function Multi() {
     <main className={findModal ? style.modalOn : style.multi}>
 
       {multiRoom == 0 && <Lobby toWaiting={toWaiting} toCreate={toCreate} toggleFindModal={toggleFindModal} />}
+
+      {multiRoom == 2 && <Create toLobby={toLobby} />}
 
       {findModal && <FindModal toggleFindModal={toggleFindModal} />}
 
