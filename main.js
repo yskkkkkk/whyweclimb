@@ -221,7 +221,8 @@ class Player
 {
     constructor(x, y)
     {
-        let runningTime = 0;
+        this.direction_L = false;
+        this.runningTime = 0;
         this.crouching = false;
         this.running_R = false;
         this.running_L = false;
@@ -328,7 +329,11 @@ class Player
         
         // let moving = this.vx * this.vx + this.vy + this.vy;
         // let falling = this.vy < 0 ? true : false;
-
+        if (keys.ArrowLeft){
+            this.direction_L = true
+        }else if (keys.ArrowRight){
+            this.direction_L = false
+        }
         if (this.onGround)
         {
             this.vx *= groundFriction;
@@ -587,8 +592,14 @@ class Player
 
     render()
     {
-        if(this.running_L==false && this.running_R==false){
-            gfx.drawImage(images[this.getDrawImage()], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
+        if(this.running_L==false && this.running_R==false && this.direction_L && !this.crouching){
+            gfx.drawImage(images['running_L1'], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
+        }else if(this.running_L==false && this.running_R==false && this.direction_L && this.crouching){
+            gfx.drawImage(images['running_L1'], this.x, HEIGHT - this.size*(1-this.jumpGauge*0.2) - this.y + level * HEIGHT, this.size, this.size*(1-this.jumpGauge*0.2));
+        }else if(this.running_L==false && this.running_R==false && !this.direction_L && !this.crouching){
+            gfx.drawImage(images['running_R1'], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
+        }else if(this.running_L==false && this.running_R==false && !this.direction_L && this.crouching){
+            gfx.drawImage(images['running_R1'], this.x, HEIGHT - this.size*(1-this.jumpGauge*0.2) - this.y + level * HEIGHT, this.size, this.size*(1-this.jumpGauge*0.2));
         }else if(this.running_L){
             
             gfx.drawImage(images[`running_L${parseInt(this.runningTime/8)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
