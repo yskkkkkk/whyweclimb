@@ -11,8 +11,8 @@ export default function FindModal({toggleFindModal}) {
     setRoomID(e.target.value);
   };
 
-  // const findRoom = () => {
-  //   fetch(`https://${userId}/exists`)
+  // const findRoom = () => {                       // 찾는 방이 있으면 해당 페이지로 route. 다만 여기서 ws으로 바로 연결할지는 미정.
+  //   fetch(`https://${roomID}/exists`)
   //     .then((response) => response.json())
   //     .then((data) => {
   //       if (data) {
