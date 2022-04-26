@@ -39,9 +39,9 @@ export default function Home() {
       </Head>
 
       <main className="intro">
-        <section>
+        <header>
           <h2>why we climb</h2>
-        </section>
+        </header>
         <section>
           {room == 0 && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
           {room == 1 && <Signup toMain={toMain} />}
