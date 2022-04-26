@@ -1,0 +1,29 @@
+.multi {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15vh;
+  position: relative;
+}
+
+.multi button {
+  width: 10vw;
+  align-self: center;
+}
+
+.modalOn {
+  background-color: rgb(152, 149, 149);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15vh;
+  position: relative;
+}
+.modalOn button {
+  width: 10vw;
+  align-self: center;
+}

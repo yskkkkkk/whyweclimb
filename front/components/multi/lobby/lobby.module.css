@@ -1,0 +1,12 @@
+.lobby {
+  /* width: 100vw;
+  height: 100vh; */
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  gap: 15vw;
+}
+
+.lobby h2 a:hover {
+  color: rgb(82, 82, 204);
+}
