@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.model;
+package com.whyweclimb.backend.domain.room.model;
 
 import lombok.Getter;
 import lombok.Setter;

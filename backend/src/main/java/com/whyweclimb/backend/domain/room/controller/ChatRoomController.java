@@ -1,7 +1,8 @@
-package com.whyweclimb.backend.controller;
+package com.whyweclimb.backend.domain.room.controller;
 
-import com.whyweclimb.backend.model.ChatRoom;
-import com.whyweclimb.backend.repo.ChatRoomRepository;
+import com.whyweclimb.backend.domain.room.model.ChatRoom;
+import com.whyweclimb.backend.domain.room.repo.ChatRoomRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,10 +1,11 @@
-package com.whyweclimb.backend.controller;
+package com.whyweclimb.backend.domain.room.controller;
 
-import com.whyweclimb.backend.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
+
+import com.whyweclimb.backend.domain.room.model.ChatMessage;
 
 @RequiredArgsConstructor
 @Controller
