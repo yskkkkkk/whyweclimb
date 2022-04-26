@@ -25,7 +25,7 @@ export default function FindModal({toggleFindModal}) {
   // };
 
   return (
-    <section onClick={e => e.stopPropagation()} className={style.modal}>
+    <section className={style.modal}>
       <div className={style.card}>
         <label>search room 
           <input type="text" required onChange={writeRoomID} /></label>

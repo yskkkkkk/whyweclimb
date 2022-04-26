@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  
+}
+
+.choice {
+  display: flex;
+  justify-content: center;
+  gap: 10vw;
+}
