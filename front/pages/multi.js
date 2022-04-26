@@ -1,24 +1,20 @@
 import Lobby from '../components/multi/lobby';
-import FindModal from '../components/findModal';
-import Create from '../components/create';
+import FindModal from '../components/multi/findModal';
+import Create from '../components/multi/create';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Multi() {
   
-  const [multiRoom, setMultiRoom] = useState(0);  // 0:lobby  1:waiting  2:create
+  const [multiRoom, setMultiRoom] = useState(0);  // 0:lobby  1:create
   const [findModal, setFindModal] = useState(false);
 
   const toLobby = () => {
     setMultiRoom(0);
   };
-  const toWaiting = () => {
-    setMultiRoom(1);
-    // joinRoom();
-  };
   const toCreate = () => {
-    setMultiRoom(2);
+    setMultiRoom(1);
   };
   const toggleFindModal = () => {
     setFindModal(!findModal);
@@ -40,15 +36,11 @@ export default function Multi() {
   return (
     <main className={findModal ? style.modalOn : style.multi}>
 
-      {multiRoom == 0 && <Lobby toWaiting={toWaiting} toCreate={toCreate} toggleFindModal={toggleFindModal} />}
+      {multiRoom == 0 && <Lobby /*joinRoom={joinRoom} */ toCreate={toCreate} toggleFindModal={toggleFindModal} />}
 
-      {multiRoom == 2 && <Create toLobby={toLobby} />}
+      {multiRoom == 1 && <Create toLobby={toLobby} />}
 
-      {findModal && <FindModal toggleFindModal={toggleFindModal} />}
-
-      <Link href={'/'} passHref>
-        <button>back</button>
-      </Link>      
+      {findModal && <FindModal toggleFindModal={toggleFindModal} />}  
         
     </main>
   )
