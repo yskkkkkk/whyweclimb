@@ -34,6 +34,7 @@ public class ChatService {
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {
+
         try {
             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
         } catch (IOException e) {
