@@ -6,7 +6,7 @@ export default function ModeSelect({toMain, toConfigure}) {
   
   return (
     <main className={style.container}>
-      <Link href={'/singleGame'} passHref>
+      <Link href={'/single/singleGame'} passHref>
         <h2>single mode</h2>
       </Link>
       <Link href={'/multi'} passHref>
