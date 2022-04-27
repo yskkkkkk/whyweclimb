@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
+import {Component} from 'react'; 
 
-export default function Engine() {
+class Engine extends Component {
 
-  useEffect(() => {
-    init();
-    run();
-  }, [])
+  render() {
 
   'use strict'
 
@@ -624,11 +622,11 @@ export default function Engine() {
       }
   }
 
-//   window.onload = function ()
-//   {
-//       init();
-//       run();
-//   };
+  window.onload = function ()
+  {
+      init();
+      run();
+  };
 
   function init()
   {
@@ -704,82 +702,82 @@ export default function Engine() {
 
       //Images 
       images.normal = new Image();
-      images.normal.src = "./images/normal.png";
+      images.normal.src = "/images/normal.png";
       images.normal.onload = function () { resourceLoaded++; };
       images.crouch = new Image();
-      images.crouch.src = "./images/crouch.png";
+      images.crouch.src = "/images/crouch.png";
       images.crouch.onload = function () { resourceLoaded++; };
       images.stage1 = new Image();
-      images.stage1.src = "./images/STAGE1.png"
+      images.stage1.src = "/images/STAGE1.png"
       images.stage1.onload = function() { resourceLoaded++; };
       images.stage2 = new Image();
-      images.stage2.src = "./images/STAGE2.png"
+      images.stage2.src = "/images/STAGE2.png"
       images.stage2.onload = function() { resourceLoaded++; };
       images.stage3 = new Image();
-      images.stage3.src = "./images/STAGE3.png"
+      images.stage3.src = "/images/STAGE3.png"
       images.stage3.onload = function() { resourceLoaded++; };
       images.stage4 = new Image();
-      images.stage4.src = "./images/STAGE4.png"
+      images.stage4.src = "/images/STAGE4.png"
       images.stage4.onload = function() { resourceLoaded++; };
       images.stage5 = new Image();
-      images.stage5.src = "./images/STAGE5.png"
+      images.stage5.src = "/images/STAGE5.png"
       images.stage5.onload = function() { resourceLoaded++; };
       images.stage6 = new Image();
-      images.stage6.src = "./images/STAGE6.png"
+      images.stage6.src = "/images/STAGE6.png"
       images.stage6.onload = function() { resourceLoaded++; };
       images.stage7 = new Image();
-      images.stage7.src = "./images/STAGE7.png"
+      images.stage7.src = "/images/STAGE7.png"
       images.stage7.onload = function() { resourceLoaded++; };
       images.stage8 = new Image();
-      images.stage8.src = "./images/STAGE8.png"
+      images.stage8.src = "/images/STAGE8.png"
       images.stage8.onload = function() { resourceLoaded++; };
       images.stage1_bg = new Image();
-      images.stage1_bg.src = "./images/STAGE1_bg.png"
+      images.stage1_bg.src = "/images/STAGE1_bg.png"
       images.stage1_bg.onload = function() { resourceLoaded++; };
       images.stage2_bg = new Image();
-      images.stage2_bg.src = "./images/STAGE2_bg.png"
+      images.stage2_bg.src = "/images/STAGE2_bg.png"
       images.stage2_bg.onload = function() { resourceLoaded++; };
       images.stage3_bg = new Image();
-      images.stage3_bg.src = "./images/STAGE3_bg.png"
+      images.stage3_bg.src = "/images/STAGE3_bg.png"
       images.stage3_bg.onload = function() { resourceLoaded++; };
       images.stage4_bg = new Image();
-      images.stage4_bg.src = "./images/STAGE4_bg.png"
+      images.stage4_bg.src = "/images/STAGE4_bg.png"
       images.stage4_bg.onload = function() { resourceLoaded++; };
       images.stage5_bg = new Image();
-      images.stage5_bg.src = "./images/STAGE5_bg.png"
+      images.stage5_bg.src = "/images/STAGE5_bg.png"
       images.stage5_bg.onload = function() { resourceLoaded++; };
       images.stage6_bg = new Image();
-      images.stage6_bg.src = "./images/STAGE6_bg.png"
+      images.stage6_bg.src = "/images/STAGE6_bg.png"
       images.stage6_bg.onload = function() { resourceLoaded++; };
       images.stage7_bg = new Image();
-      images.stage7_bg.src = "./images/STAGE7_bg.png"
+      images.stage7_bg.src = "/images/STAGE7_bg.png"
       images.stage7_bg.onload = function() { resourceLoaded++; };
       images.stage8_bg = new Image();
-      images.stage8_bg.src = "./images/STAGE8_bg.png"
+      images.stage8_bg.src = "/images/STAGE8_bg.png"
       images.stage8_bg.onload = function() { resourceLoaded++; };
 
       images.running_R1 = new Image();
-      images.running_R1.src = "./images/running_R1.png"
+      images.running_R1.src = "/images/running_R1.png"
       images.running_R1.onload = function() { resourceLoaded++; };
       images.running_R2 = new Image();
-      images.running_R2.src = "./images/running_R2.png"
+      images.running_R2.src = "/images/running_R2.png"
       images.running_R2.onload = function() { resourceLoaded++; };
       images.running_L1 = new Image();
-      images.running_L1.src = "./images/running_L1.png"
+      images.running_L1.src = "/images/running_L1.png"
       images.running_L1.onload = function() { resourceLoaded++; };
       images.running_L2 = new Image();
-      images.running_L2.src = "./images/running_L2.png"
+      images.running_L2.src = "/images/running_L2.png"
       images.running_L2.onload = function() { resourceLoaded++; };
 
       //Audios
       audios.landing = new Audio();
-      audios.landing.src = "./audios/landing.wav";
+      audios.landing.src = "/audios/landing.wav";
       audios.landing.volume = volume;
       audios.bounce = new Audio();
-      audios.bounce.src = "./audios/bounce.wav";
+      audios.bounce.src = "/audios/bounce.wav";
       audios.bounce.volume = volume;
       audios.jump = new Audio();
-      audios.jump.src = "./audios/jump2.wav";
+      audios.jump.src = "/audios/jump2.wav";
       audios.jump.volume = volume;
 
       audios.landing.start = function ()
@@ -1029,7 +1027,11 @@ export default function Engine() {
       return new Vector(x, y);
   }
 
+
   return (
     <canvas id="cvs" width="1000" height="800" />
   )
-}
+
+  }
+
+} export default Engine
