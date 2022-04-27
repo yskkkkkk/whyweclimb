@@ -18,27 +18,25 @@ import java.util.*;
 public class ChatService {
 
     private final ObjectMapper objectMapper; //
-    private Map<String, ChatRoom> chatRooms; // 모든 채팅방 정보
+    private Map<String, ChatRoom> chatRooms; //
 
-    
     @PostConstruct
-    private void init(){
+    private void init() {
         chatRooms = new LinkedHashMap<>();
     }
 
-    public List<ChatRoom> findAllRoom(){
+    public List<ChatRoom> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
 
-    public ChatRoom findRoomById(String roomId){
+    public ChatRoom findRoomById(String roomId) {
         return chatRooms.get(roomId);
     }
 
-
-    public <T> void sendMessage(WebSocketSession session, T message){
-        try{
+    public <T> void sendMessage(WebSocketSession session, T message) {
+        try {
             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
     }
