@@ -20,6 +20,7 @@ public class ChatService {
     private final ObjectMapper objectMapper; //
     private Map<String, ChatRoom> chatRooms; // 모든 채팅방 정보
 
+    
     @PostConstruct
     private void init(){
         chatRooms = new LinkedHashMap<>();
