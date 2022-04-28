@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public boolean checkIdDuplicate(String userId) {
+		return userRepository.existsByUserId(userId);
+	}
+	
+	@Override
 	public UserInfoResponse login(UserRequest request) {
 		return userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword());
 	}
@@ -53,6 +58,7 @@ public class UserServiceImpl implements UserService{
 		});
 		return new UserInfoResponse(user.orElse(null));
 	}
+
     
     
 }
