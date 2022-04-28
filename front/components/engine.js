@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
+import {Component} from 'react'; 
 
-export default function Engine() {
+class Engine extends Component {
 
-  useEffect(() => {
-    init();
-    
-    
-    run();
-  }, [])
+  render() {
 
   'use strict'
 
@@ -265,7 +261,6 @@ export default function Engine() {
 
       getDrawImage()
       {
-          
           if (this.crouching)
               return 'crouch';
           else
@@ -604,7 +599,6 @@ export default function Engine() {
 
       render()
       {
-        
           if(this.running_L==false && this.running_R==false && this.direction_L && !this.crouching){
               gfx.drawImage(images['running_L1'], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
           }else if(this.running_L==false && this.running_R==false && this.direction_L && this.crouching){
@@ -628,11 +622,11 @@ export default function Engine() {
       }
   }
 
-//   window.onload = function ()
-//   {
-//       init();
-//       run();
-//   };
+  window.onload = function ()
+  {
+      init();
+      run();
+  };
 
   function init()
   {
@@ -648,9 +642,12 @@ export default function Engine() {
           guideMsg2 = 'Touch top left, right, middle side to jump';
       }
 
-      document.onkeydown = keyDown;
-      document.onkeyup = keyUp;
-
+      window.onkeydown = keyDown;
+      window.onkeyup = keyUp;
+      window.onbeforeunload = function (event) {
+          console.log("unload")
+          keys = {};
+      }
       cvs.addEventListener('click', function (e)
       {
           let mousePos = getMousePos(cvs, e);
@@ -773,7 +770,9 @@ export default function Engine() {
       images.running_L1.onload = function() { resourceLoaded++; };
       images.running_L2 = new Image();
       images.running_L2.src = "/images/running_L2.png"
-      images.running_L2.onload = function() { resourceLoaded++; };
+      images.running_L2.onload = function() { resourceLoaded++; 
+        console.log(resourceLoaded)
+        };
 
       //Audios
       audios.landing = new Audio();
@@ -813,11 +812,6 @@ export default function Engine() {
 
 
       initLevels();
-      
-      console.log(images)
-      console.log(blocks)
-      console.log(walls)
-      console.log(audios)
   }
 
   //Make game levels
@@ -881,8 +875,6 @@ export default function Engine() {
       blocks.push(new Block(7, new AABB(520, 430, 100, 34)));
       blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
       walls.push(new Wall(7, 715, 430, 0, 300));
-      
-      
   }
   //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
   //키입력 True False로 가능, while()
@@ -897,18 +889,17 @@ export default function Engine() {
   {
       keys[e.key] = false;
   }
-
+  
   function run(time)
   {
       let currentTime = new Date().getTime();
       passedTime += currentTime - previousTime;
       previousTime = currentTime;
-      
+
       while (passedTime >= msPerFrame)
       {
           update(msPerFrame);
           render();
-          
           passedTime -= msPerFrame;
       }
 
@@ -922,8 +913,10 @@ export default function Engine() {
 
   function render()
   {
+      
       if (resourceLoaded != numResource)
           return;
+
       gfx.clearRect(0, 0, WIDTH, HEIGHT);
 
       if(level<levelMax){
@@ -1039,7 +1032,12 @@ export default function Engine() {
       return new Vector(x, y);
   }
 
+
   return (
-    <canvas id="cvs" width="1000" height="800" />
+    <canvas id="cvs" width="1000" height="800" />,
+    //<div> {resourceLoaded} </div>
   )
-}
+
+  }
+
+} export default Engine
