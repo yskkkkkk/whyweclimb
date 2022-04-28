@@ -26,19 +26,56 @@ public class UserController {
 	@PostMapping("")
 	public ResponseEntity<UserInfoResponse> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
 		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
-		return new ResponseEntity<UserInfoResponse>(userService.createUser(request), HttpStatus.OK);
+		UserInfoResponse response = userService.createUser(request);
+		HttpStatus status;
+		if(response == null) { 
+			status = HttpStatus.NOT_ACCEPTABLE;
+		}else { 
+			status = HttpStatus.CREATED;
+		}
+		return new ResponseEntity<UserInfoResponse>(response, status);
+	}
+	
+	//아이디 중복체크 
+	@GetMapping("/id")
+	public ResponseEntity<Boolean> checkId(@RequestParam String userId){
+		boolean result;
+		HttpStatus status;
+		if (userService.checkIdDuplicate(userId)) {
+			result = false;
+			status = HttpStatus.CONFLICT;
+		}else {
+			result = true;
+			status = HttpStatus.OK;
+		}
+		
+		return new ResponseEntity<Boolean>(result, status);
 	}
 
 	// 로그인 후 정보 반환
     @PostMapping("/login")
     public ResponseEntity<UserInfoResponse> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
     	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
-    	return new ResponseEntity<UserInfoResponse>(userService.login(request), HttpStatus.OK);
+    	UserInfoResponse response = userService.login(request);
+		HttpStatus status;
+		if(response == null) { 
+			status = HttpStatus.NOT_FOUND;
+		}else { 
+			status = HttpStatus.OK;
+		}
+		return new ResponseEntity<UserInfoResponse>(response, status);
     }
 
     // 배경음, 효과음 변경 
     @PutMapping("")
     public ResponseEntity<UserInfoResponse> settingUserOption(@RequestBody UserUpdateRequest request){
-    	return new ResponseEntity<UserInfoResponse>(userService.updateUser(request), HttpStatus.OK);
+    	UserInfoResponse response = userService.updateUser(request);
+		HttpStatus status;
+		if(response == null) { 
+			status = HttpStatus.NOT_ACCEPTABLE;
+		}else { 
+			status = HttpStatus.OK;
+		}
+		return new ResponseEntity<UserInfoResponse>(response, status);
     }
 }
