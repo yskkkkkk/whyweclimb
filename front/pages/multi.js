@@ -41,7 +41,7 @@ export default function Multi() {
         if(data.length === 0) {
           alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
         } else {
-          location.href=`multi/${data[0].roomId}`;
+          location.href=`multi/${data[data.length-1].roomId}`;
         }
       })
       .catch(e=>console.error(e))
