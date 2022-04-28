@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios'
 
 export default function Create({toLobby}) {
-  const basicURL = 'http://localhost:8081'
+  const basicURL = 'http://localhost:8081/api'
   const [roomName, setRoomName] = useState("");
   const [interference, setInterference] = useState("");
   const [privateRoom, setPrivateRoom] = useState("");
