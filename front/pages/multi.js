@@ -4,9 +4,10 @@ import Create from '../components/multi/create';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Multi() {
-  
+  const basicURL = 'http://localhost:8081'
   const [multiRoom, setMultiRoom] = useState(0);  // 0:lobby  1:create
   const [findModal, setFindModal] = useState(false);
 
@@ -33,10 +34,23 @@ export default function Multi() {
   //   });
   // }
 
+  const joinRoom = () => {
+    axios.get(`${basicURL}/chat/rooms`)
+      .then(res=>res.data)
+      .then(data=>{
+        if(data.length === 0) {
+          alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
+        } else {
+          location.href=`multi/${data[data.length-1].roomId}`;
+        }
+      })
+      .catch(e=>console.error(e))
+  }
+
   return (
     <main className={findModal ? style.modalOn : style.multi}>
 
-      {multiRoom == 0 && <Lobby /*joinRoom={joinRoom} */ toCreate={toCreate} toggleFindModal={toggleFindModal} />}
+      {multiRoom == 0 && <Lobby joinRoom={joinRoom} toCreate={toCreate} toggleFindModal={toggleFindModal} />}
 
       {multiRoom == 1 && <Create toLobby={toLobby} />}
 
