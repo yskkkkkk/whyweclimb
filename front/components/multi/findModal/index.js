@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export default function FindModal({toggleFindModal}) {
-  const basicURL = 'http://localhost:8081'
+  const basicURL = 'http://localhost:8081/api'
   const router = useRouter();
   const [roomID, setRoomID] = useState('');
 
