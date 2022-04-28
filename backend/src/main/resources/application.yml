@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://k6a401.p.ssafy.io:3306/whyweclimb?serverTimezone=UTC&characterEncoding=UTF-8
+    username: climb_dev
+    password: climb401
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+  security:
+    jwt:
+      secret-key: jwt.secret=asdlkfnekjlsainffklnmflk;andklsfnklsd;lkjfiawefsdailsakdj
+    sha-256:
+      salt: thisWhyIsWecodeClimb
+      
+    
