@@ -32,7 +32,7 @@ class Engine extends Component {
     let keys = {};
     let blocks = [];
     let walls = [];
-
+    let goals = [];
     const speed = 2.7*2;
     const gravity = 0.19*2*2;
     const globalFriction = 0.992;
@@ -44,7 +44,9 @@ class Engine extends Component {
     let player;
     let player2;
     let level = 0;
+    let goalLevel = 7
     let levelMax = 0;
+
 
     class Vector
     {
@@ -102,7 +104,19 @@ class Engine extends Component {
             return this.x == v.x && this.y == v.y;
         }
     }
+    class Goal
+    {
+        constructor(level, aabb)
+        {
+            this.level = level;
+            this.aabb = aabb;
+        }
 
+        convert()
+        {
+            return new AABB(this.aabb.x, this.aabb.y + this.level * HEIGHT, this.aabb.width, this.aabb.height);
+        }
+    }
     class Wall
     {
         constructor(level, x0, y0, wx, wy)
@@ -326,7 +340,7 @@ class Engine extends Component {
             else{
                 this.y += this.vy;
             }
-            
+            //if (this.x > )
             let c;
 
             //Calculate current level
@@ -443,6 +457,16 @@ class Engine extends Component {
             }
             else
             {
+                for (let g of goals){
+                    if(g.level != level) continue;
+                    if(g.level != levelMax) continue;
+                    let aabb = g.convert();
+                    let r = aabb.checkCollideBox(box);
+                    if(r.collide)
+                    {
+                        console.log("Goal!!!!")
+                    }
+                }
                 for (let b of blocks)
                 {
                     if (b.level != level) continue;
@@ -568,6 +592,7 @@ class Engine extends Component {
                         return { side, set, ref };
                     }
                 }
+                
             }
 
             return { side, set };
@@ -869,6 +894,7 @@ class Engine extends Component {
         blocks.push(new Block(7, new AABB(520, 430, 100, 34)));
         blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
         walls.push(new Wall(7, 715, 430, 0, 300));
+        goals.push(new Block(7, new AABB(877,634,100,34)))
     }
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
@@ -919,7 +945,11 @@ class Engine extends Component {
             gfx.drawImage(images[stage_bg], 0, 0, 1000, 800);
         }
 
-        
+        goals.forEach(g =>{
+            if(g.level != level) return;
+            if(g.level != goalLevel) return;
+            drawAABB(g.aabb);
+        })
 
         blocks.forEach(b =>
         {
