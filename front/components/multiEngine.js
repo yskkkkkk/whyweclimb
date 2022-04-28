@@ -912,6 +912,7 @@ class Engine extends Component {
     function keyUp(e)
     {
         keys[e.key] = false;
+        stomp.send('/pub/chat/message',{},JSON.stringify({type:'TALK', roomId:roomId,sender:'noman1', message:'keys'}));
     }
 
     function run(time)
