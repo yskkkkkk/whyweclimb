@@ -3,3 +3,7 @@ ARG JAR_FILE=build/libs/backend-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 8081
 ENTRYPOINT ["java","-jar","/app.jar"]
+RUN apk --no-cache add tzdata && \
+	cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
+	echo "Asia/Seoul" > /etc/timezone \
+	apk del tzdata
