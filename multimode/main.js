@@ -18,7 +18,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 12;
+const numResource = 13;
 let resourceLoaded = 0;
 
 let images = {};
@@ -26,7 +26,7 @@ let audios = {};
 let keys = {};
 let blocks = [];
 let walls = [];
-
+let goals = [];
 const speed = 2.7*2;
 const gravity = 0.19*2*2;
 const globalFriction = 0.992;
@@ -39,6 +39,7 @@ let player;
 let player2;
 let level = 0;
 let levelMax = 0;
+let goalLevel = 2
 
 class Vector
 {
@@ -96,7 +97,19 @@ class Vector
         return this.x == v.x && this.y == v.y;
     }
 }
+class Goal
+{
+    constructor(level, aabb)
+    {
+        this.level = level;
+        this.aabb = aabb;
+    }
 
+    convert()
+    {
+        return new AABB(this.aabb.x, this.aabb.y + this.level * HEIGHT, this.aabb.width, this.aabb.height);
+    }
+}
 class Wall
 {
     constructor(level, x0, y0, wx, wy)
@@ -437,6 +450,16 @@ class Player
         }
         else
         {
+            for (let g of goals){
+                if(g.level != level) continue;
+                if(g.level != goalLevel) continue;
+                let aabb = g.convert();
+                let r = aabb.checkCollideBox(box);
+                if(r.collide)
+                {
+                    console.log("Goal!!!!")
+                }
+            }
             for (let b of blocks)
             {
                 if (b.level != level) continue;
@@ -694,6 +717,9 @@ function init()
     previousTime = new Date().getTime();
 
     //Images 
+    images.goal = new Image();
+    images.goal.src = "./images/goal.png";
+    images.goal.onload = function () { resourceLoaded++; };
     images.normal = new Image();
     images.normal.src = "./images/normal.png";
     images.normal.onload = function () { resourceLoaded++; };
@@ -785,6 +811,7 @@ function initLevels()
     //blocks.push(new Block(stages[0], new AABB(530,530,150,34)))
     blocks.push(new Block(stages[0], new AABB(330, 660, 150, 34)));
     blocks.push(new Block(stages[0], new AABB(70, 620, 150, 34)));
+    goals.push(new Block(stages[0], new AABB(388,694,34,34)))
 
     //walls.push(new Wall(1, 200, 100, 0, 200));
     blocks.push(new Block(stages[1], new AABB(270, 200, 300, 34)));
@@ -792,12 +819,14 @@ function initLevels()
     blocks.push(new Block(stages[1], new AABB(700,400, 300,34)))
     blocks.push(new Block(stages[1], new AABB(670, 600, 180, 90)));
     blocks.push(new Block(stages[1], new AABB(200,500,300,34)))
+    goals.push(new Block(stages[1], new AABB(746,634,34,34)))
     //blocks.push(new Block(stages[1], new AABB(0, 200, 48, 34)));
 
     //blocks.push(new Block(stages[2], new AABB(130, 10, 100, 45)));
     blocks.push(new Block(stages[2], new AABB(130, 200, 400, 45)));
     blocks.push(new Block(stages[2], new AABB(540, 535, 120, 45)));
     blocks.push(new Block(stages[2], new AABB(800, 615, 120, 45)));
+    goals.push(new Block(stages[2], new AABB(838,660,34,34)))
 
 
 }
@@ -850,7 +879,11 @@ function render()
         gfx.drawImage(images[stage_bg], 0, 0, 1000, 800);
     }
 
-    
+    goals.forEach(g =>{
+        if(g.level != level) return;
+        if(g.level != goalLevel) return;
+        drawGoal(g.aabb);
+    })
 
     blocks.forEach(b =>
     {
@@ -880,6 +913,7 @@ function render()
         gfx.fillText("Thanks for playing~", 810, HEIGHT - 550);
     }
     
+    
 }
 
 function drawWall(wall)
@@ -896,7 +930,18 @@ function drawWall(wall)
         gfx.strokeStyle='black'
     }
 }
-
+function drawGoal(aabb)
+{
+    let x = aabb.x;
+    let y = aabb.y;
+    let w = aabb.width;
+    let h = aabb.height;
+    gfx.beginPath();
+    gfx.rect(x, HEIGHT - y, w, -h);
+    
+    gfx.drawImage(images['goal'], x, HEIGHT - y, w, -h);
+    
+}
 function drawAABB(aabb)
 {
     drawBlock(aabb.x, aabb.y, aabb.width, aabb.height);
