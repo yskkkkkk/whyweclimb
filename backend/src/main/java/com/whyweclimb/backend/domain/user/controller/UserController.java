@@ -37,16 +37,18 @@ public class UserController {
 	
 	// 계정 생성
 	@PostMapping("")
-	public ResponseEntity<UserInfoResponse> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
+	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
 		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
 		UserInfoResponse response = userService.createUser(request);
+		Boolean result = true;
 		HttpStatus status;
-		if(response == null) { 
+		if(response == null) {
+			result = false;
 			status = HttpStatus.NOT_ACCEPTABLE;
 		}else { 
 			status = HttpStatus.CREATED;
 		}
-		return new ResponseEntity<UserInfoResponse>(response, status);
+		return new ResponseEntity<Boolean>(result, status);
 	}
 	
 	//아이디 중복체크 
