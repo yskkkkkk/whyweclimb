@@ -26,15 +26,19 @@ export default function Login({toSignup, toModeSelect}) {
       },
     })
     .then((response) => {
-      // 참고: https://stackoverflow.com/questions/49725012/handling-response-status-using-fetch-in-react-js/49725163
       return response.json();
     })
     .then((data) => {
       console.log(data);
-      localStorage.setItem("token", data.token);
-      initializeData();
-      alert(`로그인 성공 : ${data}`)
-      toModeSelect();
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        initializeData();
+        alert(`로그인 성공 : ${data}`)
+        toModeSelect();
+      }
+      else {
+        alert('유요하지 않은 아이디 혹은 비밀번호 입니다.');
+      }
     })
     .catch((error) => {
       alert(`로그인 실패 : ${error}`);
