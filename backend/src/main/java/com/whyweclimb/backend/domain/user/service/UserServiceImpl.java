@@ -2,7 +2,6 @@ package com.whyweclimb.backend.domain.user.service;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
@@ -41,9 +40,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserInfoResponse login(UserRequest request) {
-		return userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword());
+		return userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
 	}
-
+	
+	@Override
+	public UserInfoResponse userInfo(String userId) {
+		return userRepository.findByUserId(userId).orElse(null);
+	}
+	
 	@Override
 	public UserInfoResponse updateUser(UserUpdateRequest request) {
 		Optional<User> user = userRepository.findById(request.getUserSeq());
@@ -58,7 +62,5 @@ public class UserServiceImpl implements UserService{
 		});
 		return new UserInfoResponse(user.orElse(null));
 	}
-
-    
     
 }

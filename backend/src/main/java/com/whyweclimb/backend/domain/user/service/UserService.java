@@ -8,5 +8,6 @@ public interface UserService {
 	UserInfoResponse createUser(UserRequest request);
 	boolean checkIdDuplicate(String userId);
 	UserInfoResponse login(UserRequest request);
+	UserInfoResponse userInfo(String userId);
 	UserInfoResponse updateUser(UserUpdateRequest request);
 }

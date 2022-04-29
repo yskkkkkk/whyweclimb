@@ -24,8 +24,8 @@ spring:
     suffix: .ftl
   security:
     jwt:
-      secret-key: jwt.secret=asdlkfnekjlsainffklnmflk;andklsfnklsd;lkjfiawefsdailsakdj
+      secret: vlasdlkfnekjlsainffklnmflkandklsfnklsd;lkjfiawefsdailsakdj
     sha-256:
       salt: thisWhyIsWecodeClimb
-      
+    
     
