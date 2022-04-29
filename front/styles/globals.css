@@ -24,3 +24,13 @@ a {
   align-items: center;
   margin-top: 40vh;
 }
+
+#mute {
+  float: right;
+  margin-top: 40px;
+}
+
+#cvs {
+  border: 2px solid black;
+  margin: 0px 28px
+}

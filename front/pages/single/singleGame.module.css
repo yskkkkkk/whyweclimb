@@ -1,0 +1,17 @@
+.container {
+  width: 1028px;
+  margin: 8px 0px
+}
+
+.head {
+  margin-left: 28px
+}
+
+.title {
+  display: inline;
+  font: 3em "Georgia"
+}
+
+.indent {
+  margin: 0px 28px
+}
