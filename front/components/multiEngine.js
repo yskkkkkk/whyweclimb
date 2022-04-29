@@ -2,10 +2,12 @@ import {Component} from 'react';
 
 class Engine extends Component {
 
+  
   render() {
-
+    
     'use strict'
-
+    
+    
     let cvs;
     let gfx;
     let mute;
@@ -46,7 +48,8 @@ class Engine extends Component {
     let level = 0;
     let goalLevel = 7
     let levelMax = 0;
-
+    const stomp = this.props.stomp;
+    const roomId = this.props.roomId;
 
     class Vector
     {
@@ -903,11 +906,13 @@ class Engine extends Component {
     {
         keys[e.key] = true;
         // console.log(e);
+        stomp.send('/pub/chat/message',{},JSON.stringify({type:'TALK', roomId:roomId,sender:'noman1', message:'keys'}));        
     }
 
     function keyUp(e)
     {
         keys[e.key] = false;
+        stomp.send('/pub/chat/message',{},JSON.stringify({type:'TALK', roomId:roomId,sender:'noman1', message:'keys'}));
     }
 
     function run(time)
@@ -1058,7 +1063,10 @@ class Engine extends Component {
 
 
     return (
+        <>
         <canvas id="cvs" width="1000" height="800" />
+        <h2>{this.props.type}</h2>
+        </>
     )
 
   }
