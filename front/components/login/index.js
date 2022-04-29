@@ -13,31 +13,37 @@ export default function Login({toSignup, toModeSelect}) {
     setUserPassword("");
   };
 
-  // const handleLoginSubmit = () => {     // 로그인 버튼 누를시 post요청 (백에서 실패사유 알려주면 땡큐)
-  //   fetch(/**/, {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       userID: userID,
-  //       password: userPassword,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //   .then((response) => {
-  //     // 참고: https://stackoverflow.com/questions/49725012/handling-response-status-using-fetch-in-react-js/49725163
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     localStorage.setItem("token", data.accessToken);
-  //     initializeData();
-  //     alert(`로그인 성공 : ${data}`)
-  //   })
-  //   .catch((error) => {
-  //     alert(`로그인 실패 : ${error}`);
-  //   });
-  // };
+  const handleLoginSubmit = () => {     // 로그인 버튼 누를시 post요청 (백에서 실패사유 알려주면 땡큐)
+    fetch('http://k6a401.p.ssafy.io:8081/api/user/login', {
+      method: "POST",
+      body: JSON.stringify({
+        userId: userID,
+        userPassword: userPassword,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        initializeData();
+        alert(`로그인 성공 : ${data}`)
+        toModeSelect();
+      }
+      else {
+        alert('유요하지 않은 아이디 혹은 비밀번호 입니다.');
+      }
+    })
+    .catch((error) => {
+      alert(`로그인 실패 : ${error}`);
+    });
+  };
 
   useEffect(() => {
     inputID.current.focus();
@@ -56,7 +62,7 @@ export default function Login({toSignup, toModeSelect}) {
         </label>
       </div>
       <section className={style.btns}>
-        <button /*onClick={handleLoginSubmit}*/ onClick={toModeSelect} >login</button>
+        <button onClick={handleLoginSubmit} >login</button>
         <span>no account? click 
           <a href='#' onClick={toSignup} className={style.toSignup}> here!</a>
         </span>
