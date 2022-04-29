@@ -40,7 +40,7 @@ export default function Home() {
 
       <main className="intro">
         <header>
-          <h2>why we climb</h2>
+          <h2>why we glimb</h2>
         </header>
         <section>
           {room == 0 && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
