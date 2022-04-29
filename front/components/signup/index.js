@@ -34,7 +34,7 @@ export default function Signup ({toMain}) {
   const userIdCheck = (e) => {         // 아이디 중복 확인
     e.preventDefault();
     if (validUserId && userId) {
-      fetch(/**/)
+      fetch(`http://k6a401.p.ssafy.io:8081/api/user/id?userId=${userId}`)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -145,6 +145,7 @@ export default function Signup ({toMain}) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
     const result = ID_REGEX.test(userId);
     setValidUserId(result);
+    console.log(validUserId);
     setAvailableUserId(false);
     if (result) {
       removeErrorID();
@@ -179,15 +180,15 @@ export default function Signup ({toMain}) {
       <section className={style.login}>
         <div className={style.card}>
           <label>Id 
-            <input type="text" ref={inputID} placeholder="a-z, A-Z, 0-9" required />
+            <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z, A-Z, 0-9" required />
             <button onClick={userIdCheck}>중복확인</button>
           </label>
         </div>
         <div className={style.card}>
-          <label>Password <input type="password" placeholder="a-z, A-Z, 0-9" required /></label>
+          <label>Password <input type="password" onChange={e => setUserPassword(e.target.value)} placeholder="a-z, A-Z, 0-9" required /></label>
         </div>
         <div className={style.card}>
-          <label>PW confirm <input type="password" required /></label>
+          <label>PW confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} required /></label>
         </div>
       </section>
       <a href="#" className={style.btns} onClick={toMain}>back</a>
