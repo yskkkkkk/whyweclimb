@@ -30,7 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                            ,"/user/login"
 	                            ,"/user"
 	                            ,"/chat/message"
-	                            ,"/chat/**")
+	                            ,"/chat/**"
+	                            ,"/ws-stomp"
+	                            ,"/ws-stomp/**"
+	                            ,"/sub"
+	                            ,"/sub/**"
+	                            ,"/pub"
+	                            ,"/pub/**")
 	                    .permitAll()
 	                    .anyRequest().authenticated()
                     .and() 
