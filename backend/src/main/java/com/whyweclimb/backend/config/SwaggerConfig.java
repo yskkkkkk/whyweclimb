@@ -17,7 +17,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
-// http://localhost:8081/swagger-ui/index.html#/
+// http://localhost:8081/api/swagger-ui/index.html#/
+// http://k6a401.p.ssafy.io:8081/api/swagger-ui/index.html#/
 
 @Configuration
 public class SwaggerConfig {
@@ -53,10 +54,10 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("X-AUTH-TOKEN", authorizationScopes));
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("X-AUTH-TOKEN", "Authorization", "header");
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 }

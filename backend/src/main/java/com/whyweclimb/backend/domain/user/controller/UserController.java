@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +67,7 @@ public class UserController {
 
 	// 로그인 후 토큰 반환
     @PostMapping("/login")
-    public ResponseEntity<String> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
+    public ResponseEntity<Map<String, String>> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
     	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
     	UserInfoResponse response = userService.login(request);
 		String token = "";
@@ -77,7 +79,10 @@ public class UserController {
 			status = HttpStatus.OK;
 		}
 		log.info("생성된 jwt 토큰: "+token);
-		return new ResponseEntity<String>(token, status);
+		Map<String, String> result = new HashMap<String, String>();
+		result.put("token", token);
+		
+		return new ResponseEntity<Map<String, String>>(result, status);
     }
 
     //회원정보 반환

@@ -28,7 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                            ,"/funding/**"
 	                            ,"/user/id"
 	                            ,"/user/login"
-	                            ,"/user")
+	                            ,"/user"
+	                            ,"/chat/message"
+	                            ,"/chat/**"
+	                            ,"/ws-stomp"
+	                            ,"/ws-stomp/**"
+	                            ,"/sub"
+	                            ,"/sub/**"
+	                            ,"/pub"
+	                            ,"/pub/**")
 	                    .permitAll()
 	                    .anyRequest().authenticated()
                     .and() 
