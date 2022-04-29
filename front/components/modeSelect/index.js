@@ -13,19 +13,10 @@ export default function ModeSelect({toMain, toConfigure}) {
       'Authorization': token,
       mode: 'no-cors'
     }
-    fetch('http://k6a401.p.ssafy.io:8081/api/user/information', {headers: headers})
+    fetch('https://k6a401.p.ssafy.io/api/user/information', {headers: headers})
     .then((response) => {
       console.log(response.json());
     });
-    // fetch('https://api.themoviedb.org/3/movie/popular?api_key=cbd74fe726ff642366194acd512090b7&language=en-US&page=1')
-    // .then((response) => {
-    //   // console.log(response.json());
-    //   return response.json();
-    // })
-    // .then((data) => {
-    //   console.log(data);
-    // })
-    // preflight
   };
 
 
