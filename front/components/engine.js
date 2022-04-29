@@ -24,7 +24,7 @@ class Engine extends Component {
     let passedTime = 0;
     let msPerFrame = 1000.0 /70.0;
 
-    const numResource = 22;
+    const numResource = 23;
     let resourceLoaded = 0;
 
     let images = {};
@@ -459,7 +459,7 @@ class Engine extends Component {
             {
                 for (let g of goals){
                     if(g.level != level) continue;
-                    if(g.level != levelMax) continue;
+                    if(g.level != goalLevel) continue;
                     let aabb = g.convert();
                     let r = aabb.checkCollideBox(box);
                     if(r.collide)
@@ -725,6 +725,9 @@ class Engine extends Component {
         previousTime = new Date().getTime();
 
         //Images 
+        images.goal = new Image();
+        images.goal.src = "/images/goal.png";
+        images.goal.onload = function () { resourceLoaded++; };
         images.normal = new Image();
         images.normal.src = "/images/normal.png";
         images.normal.onload = function () { resourceLoaded++; };
@@ -948,7 +951,7 @@ class Engine extends Component {
         goals.forEach(g =>{
             if(g.level != level) return;
             if(g.level != goalLevel) return;
-            drawAABB(g.aabb);
+            drawGoal(g.aabb);
         })
 
         blocks.forEach(b =>
@@ -995,7 +998,18 @@ class Engine extends Component {
             gfx.strokeStyle='black'
         }
     }
-
+    function drawGoal(aabb)
+    {
+        let x = aabb.x;
+        let y = aabb.y;
+        let w = aabb.width;
+        let h = aabb.height;
+        gfx.beginPath();
+        gfx.rect(x, HEIGHT - y, w, -h);
+        
+        gfx.drawImage(images['goal'], x, HEIGHT - y, w, -h);
+        
+    }
     function drawAABB(aabb)
     {
         drawBlock(aabb.x, aabb.y, aabb.width, aabb.height);
@@ -1018,6 +1032,7 @@ class Engine extends Component {
             }//gfx.fillStyle = 'rgb(255,221,0)'
         }
         else{
+            gfx.fillStyle='rgb(0,0,0)'
             gfx.fill();
             gfx.fillStyle='rgb(0,0,0)'
         }
