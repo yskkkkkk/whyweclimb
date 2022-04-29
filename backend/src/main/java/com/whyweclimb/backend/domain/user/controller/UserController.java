@@ -3,17 +3,27 @@ package com.whyweclimb.backend.domain.user.controller;
 import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.model.UserRequest;
 import com.whyweclimb.backend.domain.user.model.UserUpdateRequest;
+import com.whyweclimb.backend.domain.user.service.JwtTokenProvider;
 import com.whyweclimb.backend.domain.user.service.SecurityService;
 import com.whyweclimb.backend.domain.user.service.UserServiceImpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -21,6 +31,7 @@ public class UserController {
 
 	private final UserServiceImpl userService;
 	private final SecurityService securityService;
+	private final JwtTokenProvider jwtTokenProvider;
 	
 	// 계정 생성
 	@PostMapping("")
@@ -52,20 +63,33 @@ public class UserController {
 		return new ResponseEntity<Boolean>(result, status);
 	}
 
-	// 로그인 후 정보 반환
+	// 로그인 후 토큰 반환
     @PostMapping("/login")
-    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
+    public ResponseEntity<String> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
     	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
     	UserInfoResponse response = userService.login(request);
-		HttpStatus status;
+		String token = "";
+    	HttpStatus status;
 		if(response == null) { 
 			status = HttpStatus.NOT_FOUND;
 		}else { 
+			token = jwtTokenProvider.createToken(response.getUserId(), Collections.singletonList("ROLE_USER"));
 			status = HttpStatus.OK;
 		}
-		return new ResponseEntity<UserInfoResponse>(response, status);
+		log.info("생성된 jwt 토큰: "+token);
+		return new ResponseEntity<String>(token, status);
     }
 
+    //회원정보 반환
+	@GetMapping("/information")
+	public ResponseEntity<UserInfoResponse> postLoginProcessing(HttpServletRequest request) {
+		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		return new ResponseEntity<UserInfoResponse>(userService.userInfo(authentication.getName()), HttpStatus.OK);
+		
+	}
+    
     // 배경음, 효과음 변경 
     @PutMapping("")
     public ResponseEntity<UserInfoResponse> settingUserOption(@RequestBody UserUpdateRequest request){
