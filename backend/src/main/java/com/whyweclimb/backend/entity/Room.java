@@ -11,9 +11,12 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "tb_room")
-public class room {
+public class Room {
     @Id
-    private Integer roomCode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer roomSeq;
+    @Column
+    private String roomCode;
     @Column
     private Boolean roomPrivate;
     @Column
