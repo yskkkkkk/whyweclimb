@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
     	httpSecurity.csrf().disable();
+    	httpSecurity.cors();
     	httpSecurity.authorizeRequests()
     					.antMatchers("/user/information").access("hasRole('ROLE_USER')")
 	                    .antMatchers("/", "/oauth2/**", "/login/**", "/css/**",
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                            ,"/pub"
 	                            ,"/pub/**")
 	                    .permitAll()
+	                    .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 	                    .anyRequest().authenticated()
                     .and() 
 	                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) 
