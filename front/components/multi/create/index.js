@@ -1,6 +1,6 @@
 import style from './create.module.css';
 import { useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 
 export default function Create({toLobby}) {
   const basicURL = 'http://localhost:8081/api'
