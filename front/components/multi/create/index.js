@@ -55,9 +55,8 @@ export default function Create({toLobby}) {
     } else {
       const data = JSON.stringify(roomInfo);
       axios.post(`${basicURL}/chat/room`, roomInfo)
-        .then(response => {
-          console.log(response);
-        })
+        .then(response => response.data)
+        .then(data=>location.href=`multi/${data.roomCode}`)
         .catch(err=>console.error(err));
     }
   }
