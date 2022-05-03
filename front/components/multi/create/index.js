@@ -4,39 +4,59 @@ import axios from 'axios'
 
 export default function Create({toLobby}) {
   const basicURL = 'http://localhost:8081/api'
-  const [roomName, setRoomName] = useState("");
-  const [interference, setInterference] = useState("");
-  const [privateRoom, setPrivateRoom] = useState("");
-  const [playerNumber, setPlayerNumber] = useState("");
-  const [roomInfo, setRoomInfo] = useState({roomName:"", interference:"", privateRoom:"", playerNumber:"", roomInfo:""});
+  const [roomCode, setroomCode] = useState("");
+  const [roomInterference, setroomInterference] = useState("");
+  const [roomPrivate, setroomPrivate] = useState("");
+  const [roomMaxNum, setroomMaxNum] = useState("");
+  const [roomInfo, setRoomInfo] = useState({roomCode:"", roomroomInterference:"", roomPrivate:"", roomMaxNum:""});
   const nameChange = (e) => {
-    setRoomName(e.target.value);
+    setroomCode(e.target.value);
   }
 
-  const interferenceSelect = (e) => {
-    setInterference(e.target.value);
+  const roomInterferenceSelect = (e) => {
+    setroomInterference(e.target.value);
   };
   const privacySelect = (e) => {
-    setPrivateRoom(e.target.value);
+    setroomPrivate(e.target.value);
   };
-  const playerNumberSelect = (e) => {
-    setPlayerNumber(e.target.value);
+  const roomMaxNumSelect = (e) => {
+    setroomMaxNum(e.target.value);
   };
-  // const createRoom = (e) => {
-  //   e.preventDefault();
-  //   // 웹소켓 연결 요청 or http 요청으로 방만들어주면 해당 방으로 router push
-  // }
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    // if (name !== "roomMaxNum") {
+    //   setRoomInfo(prev => ({
+    //     ...prev,
+    //     [name]: value === "true" ? true : false
+    //   })        
+    //   )    
+    if (name === "roomMaxNum") {
+      setRoomInfo(prev => ({
+        ...prev,
+        [name]: parseInt(value)
+      }))
+    } else if (name === "roomCode") {
+      setRoomInfo(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    } else {
+      setRoomInfo(prev => ({
+        ...prev,
+        [name]: value === "true" ? true: false
+      }))
+    }
+  }
+
 
   function createRoom(){
-    if(roomName==="") {
+    if(roomInfo.roomCode==="") {
       alert("방 제목을 입력해 주세요!!");
     } else {
-      var params = new URLSearchParams();
-      params.append("name", roomName);
-      axios.post(`${basicURL}/chat/room`, params)
-        .then(response => {
-          console.log(response);
-        })
+      const data = JSON.stringify(roomInfo);
+      axios.post(`${basicURL}/chat/room`, roomInfo)
+        .then(response => response.data)
+        .then(data=>location.href=`multi/${data.roomCode}`)
         .catch(err=>console.error(err));
     }
   }
@@ -44,20 +64,20 @@ export default function Create({toLobby}) {
   return (
     <main className={style.container}>
       <section className={style.choice}>
-        <span>RoomName</span>
+        <span>roomCode</span>
         <div>
-          <input type="text" value={roomName} onChange={nameChange} />
+          <input type="text" name="roomCode" value={roomInfo.roomCode} onChange={handleChange} />
         </div>
       </section>
       <section className={style.choice}>
-        <span>Interference</span>
+        <span>roomInterference</span>
         <div>
           <label>
-            <input onClick={interferenceSelect} type="radio" name="interference" value="on" required />
+            <input onClick={handleChange} type="radio" name="roomInterference" value="true" required />
             on
           </label>
           <label>
-            <input onClick={interferenceSelect} type="radio" name="interference" value="off" required />
+            <input onClick={handleChange} type="radio" name="roomInterference" value="false" required />
             off
           </label>
         </div>
@@ -66,11 +86,11 @@ export default function Create({toLobby}) {
         <span>Private Room</span>
         <div>
           <label>
-            <input onClick={privacySelect} type="radio" name="privateRoom" value="yes" required />
+            <input onClick={handleChange} type="radio" name="roomPrivate" value="true" required />
             yes
           </label>
           <label>
-            <input onClick={privacySelect} type="radio" name="privateRoom" value="no" required />
+            <input onClick={handleChange} type="radio" name="roomPrivate" value="false" required />
             no
           </label>
         </div>
@@ -79,15 +99,15 @@ export default function Create({toLobby}) {
         <span>Max player number</span>
         <div>
           <label>
-            <input onClick={playerNumberSelect} type="radio" name="playerNumber" value="2" required />
+            <input onClick={handleChange} type="radio" name="roomMaxNum" value="2" required />
             2
           </label>
           <label>
-            <input onClick={playerNumberSelect} type="radio" name="playerNumber" value="3" required />
+            <input onClick={handleChange} type="radio" name="roomMaxNum" value="3" required />
             3
           </label>
           <label>
-            <input onClick={playerNumberSelect} type="radio" name="playerNumber" value="4" required />
+            <input onClick={handleChange} type="radio" name="roomMaxNum" value="4" required />
             4
           </label>
         </div>

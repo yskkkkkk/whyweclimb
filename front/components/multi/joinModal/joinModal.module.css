@@ -1,0 +1,64 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
+.card {
+  padding: 2.5rem;
+  margin: 2.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  font-size: large;
+  border: 2px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.card label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2vw;
+  align-items: center;
+}
+.card input {
+    width: 15em;
+    height: 2em;
+    margin-left: 2em;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-evenly;
+}
+/* ------------------------------------ responsive design ↓ --------------------------------------- */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
