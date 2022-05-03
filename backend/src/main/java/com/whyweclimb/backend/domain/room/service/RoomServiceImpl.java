@@ -17,7 +17,7 @@ public class RoomServiceImpl implements RoomService {
 	public RoomInfoResponse createRoom(RoomCreateRequest request) {
 		RoomInfoResponse room = new RoomInfoResponse(
 				roomRepository.save(
-					RoomCreateRequest.createAndToEntity(request)
+					RoomCreateRequest.toEntity(request)
 				)
 			);
 		return room;

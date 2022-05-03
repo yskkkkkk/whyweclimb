@@ -18,12 +18,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class RoomCreateRequest {
-	private String roomCode;
     private Boolean roomPrivate;
     private Boolean roomInterference;
     private Integer roomMaxNum;
     
-    public static Room createAndToEntity(RoomCreateRequest request){
+    public static Room toEntity(RoomCreateRequest request){
         return Room.builder()
     			.roomCode(UUID.randomUUID().toString().substring(24))
     			.roomPrivate(request.roomPrivate)
