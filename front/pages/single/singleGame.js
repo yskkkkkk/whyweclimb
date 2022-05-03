@@ -1,4 +1,3 @@
-// import Engine from '../../components/engine';
 import dynamic from 'next/dynamic';
 import style from './singleGame.module.css';
 // 오직 cliend-side 에서만 렌더 되게끔 lazy loading 처리
