@@ -5,19 +5,17 @@ import com.whyweclimb.backend.domain.user.model.UserRequest;
 import com.whyweclimb.backend.domain.user.model.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.service.JwtTokenProvider;
 import com.whyweclimb.backend.domain.user.service.SecurityService;
-import com.whyweclimb.backend.domain.user.service.UserServiceImpl;
+import com.whyweclimb.backend.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-	private final UserServiceImpl userService;
+	private final UserService userService;
 	private final SecurityService securityService;
 	private final JwtTokenProvider jwtTokenProvider;
 	
@@ -90,7 +88,7 @@ public class UserController {
     //회원정보 반환
 	@GetMapping("/information")
 	public ResponseEntity<UserInfoResponse> postLoginProcessing(HttpServletRequest request) {
-		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
+//		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		return new ResponseEntity<UserInfoResponse>(userService.userInfo(authentication.getName()), HttpStatus.OK);
