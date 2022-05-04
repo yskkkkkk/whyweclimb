@@ -1,5 +1,7 @@
 package com.whyweclimb.backend.domain.room.model;
 
+import javax.persistence.Id;
+
 import org.springframework.data.redis.core.RedisHash;
 
 import lombok.Getter;
@@ -15,6 +17,8 @@ public class Message {
         ENTER, MOVE
     }
 
+    @Id
+    private Integer id;
     private MessageType type;
     private String roomCode;
     private String sender;
