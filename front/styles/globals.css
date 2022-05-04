@@ -58,7 +58,9 @@ a {
 
 #mute {
   float: right;
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  margin-left: 20px;
+  display: inline;
 }
 
 #cvs {

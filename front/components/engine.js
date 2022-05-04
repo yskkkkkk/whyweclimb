@@ -1,5 +1,5 @@
 import {Component} from 'react'; 
-
+import style from './engine.module.css';
 class Engine extends Component {
 
   render() {
@@ -9,6 +9,8 @@ class Engine extends Component {
     let cvs;
     let gfx;
     let mute;
+    let startTime;
+    let playingTime;
 
     const WIDTH = 1000;
     const HEIGHT = 800;
@@ -17,6 +19,8 @@ class Engine extends Component {
     let guideMsg2 = '';
     let isMuted = false;
     let isTouch = false;
+
+    
 
     let d = new Date();
     let previousTime = 0;
@@ -648,7 +652,10 @@ class Engine extends Component {
 
     window.onload = function ()
     {
+        console.log("onload")
         init();
+        startTime = new Date()
+        playingTime = document.getElementById("time")
         run();
     };
 
@@ -918,7 +925,7 @@ class Engine extends Component {
         let currentTime = new Date().getTime();
         passedTime += currentTime - previousTime;
         previousTime = currentTime;
-
+        playingTime.innerText = `${parseInt((currentTime-startTime)/1000)}초`
         while (passedTime >= msPerFrame)
         {
             update(msPerFrame);
