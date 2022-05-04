@@ -31,7 +31,8 @@ class Engine extends Component {
 
     let images = {};
     let audios = {};
-    let keys = {" ":false, ArrowLeft:false, ArrowRight:false};
+    let inputkeys = {" ":false, ArrowLeft:false, ArrowRight:false, up:true};
+    let keys= {};
     let blocks = [];
     let walls = [];
     let goals = [];
@@ -315,6 +316,7 @@ class Engine extends Component {
             {
                 keys.ArrowLeft = false;
                 keys.ArrowRight = false;
+                keys.up= false;
             }
             audios.landing.start();
         }
@@ -905,21 +907,27 @@ class Engine extends Component {
     //키입력 True False로 가능, while()
 
     function keyDown(e)
-    {
-        keys[e.key] = true;
-        console.log(keys);
-        if(player.onGround)
-        {
-            stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:keys[" "], left:keys['ArrowLeft'], right:keys['ArrowRight']}));        
+    {   if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+            inputkeys[e.key] = true;
+            console.log('keys',keys);
+            // if(player.onGround)
+            {
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+            }
+
         }
     }
 
     function keyUp(e)
     {
-        keys[e.key] = false;
-        if(player.onGround)
-        {
-            stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:keys[" "], left:keys['ArrowLeft'], right:keys['ArrowRight']}));        
+        if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+            inputkeys[e.key] = false;
+            // console.log(keys);
+            // if(player.onGround)
+            {
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+            }
+
         }
     }
 
@@ -1085,7 +1093,10 @@ class Engine extends Component {
     }
 
     function receiveMessage(msg){
-        console.log('msg',msg);        
+        console.log('msg',msg);
+        keys[" "] = msg.space;
+        keys['ArrowLeft'] = msg.left;
+        keys['ArrowRight'] = msg.right;
     }
 
     return (
