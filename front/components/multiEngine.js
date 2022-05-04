@@ -31,7 +31,8 @@ class Engine extends Component {
 
     let images = {};
     let audios = {};
-    let keys = {};
+    let inputkeys = {" ":false, ArrowLeft:false, ArrowRight:false, up:true};
+    let keys= {};
     let blocks = [];
     let walls = [];
     let goals = [];
@@ -50,6 +51,7 @@ class Engine extends Component {
     let levelMax = 0;
     const stomp = this.props.stomp;
     const roomId = this.props.roomId;
+    const msg = this.props.msg;
 
     class Vector
     {
@@ -314,6 +316,7 @@ class Engine extends Component {
             {
                 keys.ArrowLeft = false;
                 keys.ArrowRight = false;
+                keys.up= false;
             }
             audios.landing.start();
         }
@@ -651,6 +654,7 @@ class Engine extends Component {
 
     window.onload = function ()
     {
+        socketConnect();
         init();
         run();
     };
@@ -903,16 +907,28 @@ class Engine extends Component {
     //키입력 True False로 가능, while()
 
     function keyDown(e)
-    {
-        keys[e.key] = true;
-        // console.log(e);
-        stomp.send('/pub/chat/message',{},JSON.stringify({type:'TALK', roomId:roomId,sender:'noman1', message:'keys'}));        
+    {   if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+            inputkeys[e.key] = true;
+            console.log('keys',keys);
+            // if(player.onGround)
+            {
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+            }
+
+        }
     }
 
     function keyUp(e)
     {
-        keys[e.key] = false;
-        stomp.send('/pub/chat/message',{},JSON.stringify({type:'TALK', roomId:roomId,sender:'noman1', message:'keys'}));
+        if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+            inputkeys[e.key] = false;
+            // console.log(keys);
+            // if(player.onGround)
+            {
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+            }
+
+        }
     }
 
     function run(time)
@@ -1061,11 +1077,31 @@ class Engine extends Component {
         return new Vector(x, y);
     }
 
+    function socketConnect(){
+        stomp.connect({},
+            function(){
+                stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+                    var recv = JSON.parse(message.body);
+                    receiveMessage(recv);
+                });
+                // stomp.send(`/pub/chat/message`,{},JSON.stringify({type:'ENTER',roomCode:roomId, sender:"noman"}));
+            },
+            function(error){
+                console.log('error', error.headers.message);
+            }
+        )
+    }
+
+    function receiveMessage(msg){
+        console.log('msg',msg);
+        keys[" "] = msg.space;
+        keys['ArrowLeft'] = msg.left;
+        keys['ArrowRight'] = msg.right;
+    }
 
     return (
         <>
         <canvas id="cvs" width="1000" height="800" />
-        <h2>{this.props.type}</h2>
         </>
     )
 
