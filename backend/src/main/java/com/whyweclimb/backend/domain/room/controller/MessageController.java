@@ -8,6 +8,8 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 import com.whyweclimb.backend.domain.room.model.Message;
+import com.whyweclimb.backend.domain.room.model.MessageFindRequest;
+import com.whyweclimb.backend.domain.room.service.MessageService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,13 +17,23 @@ import com.whyweclimb.backend.domain.room.model.Message;
 public class MessageController {
 
     private final SimpMessageSendingOperations messagingTemplate;
-
+    private final MessageService messageService;
+    
     @MessageMapping("/chat/message")
     public void message(Message message){
 //        if(ChatMessage.MessageType.ENTER.equals(message.getType())){
 //            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
-//        }
-    	log.info("[key input space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight());
+//        }	
+    	log.info("[name: "+message.getSender()+", key input: space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight()+"]");
+    	
+    	message.setId(1);
+    	messageService.readMessage(MessageFindRequest.builder()
+    			.id(message.getId())
+    			.sender(message.getSender())
+    			.build());
+
+    	messageService.saveMessage(message);
+    	
         messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
     }
 }
