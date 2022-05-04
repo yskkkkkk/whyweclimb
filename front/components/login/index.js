@@ -50,9 +50,13 @@ export default function Login({toSignup, toModeSelect}) {
   }, [])
 
   return (
+    
     <main className={style.login}>
+      
       <div className={style.card}>
+      
         <label>Id 
+          
           <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
         </label>
       </div>

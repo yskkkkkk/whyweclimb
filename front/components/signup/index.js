@@ -181,6 +181,7 @@ export default function Signup ({toMain}) {
       </h2>
       <section className={style.login}>
         <div className={style.card}>
+          
           <label>Id 
             <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z, A-Z, 0-9" required />
             <button onClick={userIdCheck}>중복확인</button>
