@@ -5,6 +5,7 @@ import axios from 'axios'
 import Link from 'next/link';
 import SockJS from 'sockjs-client';
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/multiEngine')}, {ssr:false});
@@ -22,35 +23,38 @@ export default function WaitRoom() {
   const [isStart, setIsStart] = useState(true);
   const router = useRouter();
   const {roomID} = router.query;
+  const [msg, setMsg] = useState('');
 
-  function sendMessage(msg){
-    // console.log('hii');
-    stomp.send(`/pub/chat/message`, {}, JSON.stringify({type:'TALK', roomId:roomID, sender:'noman1', message:msg}));
-  }
+  // function sendMessage(msg){
+  //   console.log('hii');
+  //   stomp.send(`/pub/chat/message`, {}, JSON.stringify({type:'MOVE', roomId:roomID, sender:'noman1', message:msg}));
+  // }
 
   function startGame(){
     setIsStart(prev=>!prev);
   }
 
-  function receiveMessage(msg){
-    console.log(msg)
-  }
+  // function receiveMessage(msg){
+  //   console.log('msg',msg)
+  //   setMsg(msg);
+  // }
 
-  function socketConnect(){
-    stomp.connect({},
-      function(){
-        stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
-          var recv = JSON.parse(message.body);
-          receiveMessage(recv);
-        });
-        stomp.send(`/pub/chat/message`,{},JSON.stringify({type:'ENTER', roomId:roomID, sender:"noman"}));
-        console.log('stomp',stomp);
-      },
-      function(error){
-        console.log(error.headers.message);
-      }
-    )
-  }
+  // function socketConnect(){
+  //   stomp.connect({},
+  //     function(){
+  //       stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
+  //         var recv = JSON.parse(message.body);
+  //         receiveMessage(recv);
+  //         console.log(message);
+  //       });
+  //       stomp.send(`/pub/chat/message`,{},JSON.stringify({type:'ENTER', roomCode:roomID, sender:"noman"}));
+  //       // console.log('stomp',stomp);
+  //     },
+  //     function(error){
+  //       console.log('error',error.headers.message);
+  //     }
+  //   )
+  // }
   
   useEffect(()=>{
     if(roomID){
@@ -58,7 +62,8 @@ export default function WaitRoom() {
         .then(res=>res.data)
         .then(data=>{
           if(data!==''){
-            socketConnect();
+            console.log(data);
+            // socketConnect();
           } else {
             location.href="/multi";
           }
@@ -83,7 +88,7 @@ export default function WaitRoom() {
           <p>점프컹스</p>
           <p id="mute">Mute<input type="checkbox"/></p>
         </div>
-        <Engine stomp={stomp} roomId={roomID}/>
+          <Engine stomp={stomp} msg={msg} roomId={roomID}/>
       </main>}
     </>
     
