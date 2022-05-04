@@ -1,11 +1,16 @@
 package com.whyweclimb.backend.domain.room.model;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class ChatMessage {
+@ToString
+@RedisHash(value = "message")
+public class Message {
     public enum MessageType {
         ENTER, MOVE
     }

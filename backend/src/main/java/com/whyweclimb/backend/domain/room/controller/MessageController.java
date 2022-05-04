@@ -7,17 +7,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
-import com.whyweclimb.backend.domain.room.model.ChatMessage;
+import com.whyweclimb.backend.domain.room.model.Message;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-public class ChatController {
+public class MessageController {
 
     private final SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/chat/message")
-    public void message(ChatMessage message){
+    public void message(Message message){
 //        if(ChatMessage.MessageType.ENTER.equals(message.getType())){
 //            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
 //        }
