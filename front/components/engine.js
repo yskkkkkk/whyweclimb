@@ -576,13 +576,22 @@ class Engine extends Component {
       }
     }
 
-    window.onload = function () {
+    window.addEventListener("load", function () {
       console.log("onload");
       init();
       startTime = new Date();
       playingTime = document.getElementById("time");
       run();
-    };
+    });
+
+    // window.onload = function ()
+    // {
+    //     console.log("onload")
+    //     init();
+    //     startTime = new Date()
+    //     playingTime = document.getElementById("time")
+    //     run();
+    // };
 
     function init() {
       console.log("initin");
