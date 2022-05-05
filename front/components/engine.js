@@ -1045,7 +1045,7 @@ class Engine extends Component {
         <canvas id="cvs" width="1000" height="800" />
         <button
           onClick={() => {
-            this.init();
+            this.test();
           }}
         >
           test
