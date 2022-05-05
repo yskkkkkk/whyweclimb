@@ -1043,7 +1043,13 @@ class Engine extends Component {
     return (
       <div>
         <canvas id="cvs" width="1000" height="800" />
-        <button onClick={this.test.bind(this)}>test</button>
+        <button
+          onClick={() => {
+            this.test();
+          }}
+        >
+          test
+        </button>
       </div>
     );
   }
