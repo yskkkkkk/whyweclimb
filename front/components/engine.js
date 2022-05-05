@@ -585,6 +585,7 @@ class Engine extends Component {
     };
 
     function init() {
+      console.log("initin");
       cvs = document.getElementById("cvs");
       gfx = cvs.getContext("2d");
       gfx.font = "20px Georgia";
@@ -806,6 +807,7 @@ class Engine extends Component {
       player2 = new Player(833, 156);
 
       initLevels();
+      console.log("initout");
     }
 
     //Make game levels
