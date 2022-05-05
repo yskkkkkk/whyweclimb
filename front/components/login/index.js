@@ -33,7 +33,7 @@ export default function Login({toSignup, toModeSelect}) {
       if (data.token) {
         localStorage.setItem("token", data.token);
         initializeData();
-        alert(`로그인 성공 : ${data}`)
+        // alert(`로그인 성공 : ${data}`)
         toModeSelect();
       }
       else {
