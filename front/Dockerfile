@@ -1,5 +1,4 @@
 FROM node:alpine
-ENV PORT 3000
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN apk --no-cache add tzdata && \
@@ -7,7 +6,7 @@ RUN apk --no-cache add tzdata && \
         echo "Asia/Seoul" > /etc/timezone
 RUN npm i --force -y
 COPY ./ ./
-ENV NODE_ENV production
+EXPOSE 3000
 RUN npm run build
 CMD [ "npm", "run", "start"]
 
