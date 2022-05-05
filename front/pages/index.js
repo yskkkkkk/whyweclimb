@@ -2,32 +2,36 @@ import Head from 'next/head';
 import Login from "../components/login"
 import Signup from '../components/signup';
 import ModeSelect from '../components/modeSelect';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Configure from '../components/configure';
+import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 
 
 
 export default function Home() {
 
-  const [room, setRoom] = useState(false);    // 0=메인(로그인), 1=회원가입, 2=모드 선택화면, 3=설정화면,
+  const ref = useRef();
+  const [loggedIn, setLoggedIn] = useState(false);    // false: 로그인 & 회원가입 컴포넌트, true: 모드선택 & 설정 컴포넌트
 
   const toMain = () => {
-    setRoom(0);
+    setLoggedIn(false);
+    window.localStorage.clear();
+    ref.current.scrollTo(0);
   }
   const toSignup = () => {
-    setRoom(1);
+    setLoggedIn(false);
+    ref.current.scrollTo(1);
   }
   const toModeSelect = () => {
-    setRoom(2);
+    setLoggedIn(true);
   }
   const toConfigure = () => {
-    setRoom(3);
+    setLoggedIn(true);
   }
 
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
-    setRoom(localStorage.getItem("token") ? 2 : 0);
+    setLoggedIn(localStorage.getItem("token") ? true : false);
   }, []);
-
 
   return (
     <>
@@ -35,23 +39,35 @@ export default function Home() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>why-we-climb</title>
-        
-        {/* <script type="text/javascript" src="../components/main.js"></script> */}
+        <script type="text/javascript" src="../components/main.js"></script>
       </Head>
 
-      <main className="intro">
-        <header>
-          <h2>why we climb</h2>
-          <div className = "image-box">
-          <img className = "intro-image" src="images/intro.jpg"></img>
-          </div>
-        </header>
-        <section>
-          {room == 0 && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
-          {room == 1 && <Signup toMain={toMain} />}
-          {room == 2 && <ModeSelect toMain={toMain} toConfigure={toConfigure} />}
-          {room == 3 && <Configure toModeSelect={toModeSelect} />}
-        </section>
+      <main>
+        <Parallax 
+          pages={2}
+          ref={ref}
+          horizontal
+          style={{
+            overflow: "hidden",
+          }}
+        >
+          <ParallaxLayer offset={1}>
+            {!loggedIn && <Signup toMain={toMain} />}
+          </ParallaxLayer>
+          <ParallaxLayer 
+          offset={0}
+          style={{
+            backgroundImage: `url("/images/intro.jpg")`,
+            backgroundSize: 1100,
+            backgroundPositionX: "center",
+            backgroundPositionY: "bottom",
+          }}
+          >
+            {!loggedIn && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
+          </ParallaxLayer>
+        </Parallax>
+        {loggedIn && <ModeSelect toMain={toMain} toConfigure={toConfigure} />}
+        {loggedIn && <Configure toModeSelect={toModeSelect} />}
       </main>
     </>
   )
