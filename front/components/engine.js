@@ -1031,7 +1031,21 @@ class Engine extends Component {
       return new Vector(x, y);
     }
 
-    return <canvas id="cvs" width="1000" height="800" />;
+    ///
+    function test() {
+      console.log("onload");
+      init();
+      startTime = new Date();
+      playingTime = document.getElementById("time");
+      run();
+    }
+
+    return (
+      <div>
+        <canvas id="cvs" width="1000" height="800" />
+        <button onClick={this.test.bind(this)}>test</button>
+      </div>
+    );
   }
 }
 export default Engine;
