@@ -576,25 +576,15 @@ class Engine extends Component {
       }
     }
 
-    window.addEventListener("load", function () {
+    window.onload = function () {
       console.log("onload");
       init();
       startTime = new Date();
       playingTime = document.getElementById("time");
       run();
-    });
-
-    // window.onload = function ()
-    // {
-    //     console.log("onload")
-    //     init();
-    //     startTime = new Date()
-    //     playingTime = document.getElementById("time")
-    //     run();
-    // };
+    };
 
     function init() {
-      console.log("initin");
       cvs = document.getElementById("cvs");
       gfx = cvs.getContext("2d");
       gfx.font = "20px Georgia";
@@ -816,12 +806,10 @@ class Engine extends Component {
       player2 = new Player(833, 156);
 
       initLevels();
-      console.log("initout");
     }
 
     //Make game levels
     function initLevels() {
-      console.log("in");
       blocks.push(new Block(0, new AABB(0, 0, 1000, 156)));
       blocks.push(new Block(0, new AABB(330, 230, 150, 34)));
       blocks.push(new Block(0, new AABB(710, 410, 116, 34)));
@@ -881,7 +869,6 @@ class Engine extends Component {
       blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
       walls.push(new Wall(7, 715, 430, 0, 300));
       goals.push(new Block(7, new AABB(877, 634, 100, 34)));
-      console.log("out");
     }
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
@@ -1031,27 +1018,7 @@ class Engine extends Component {
       return new Vector(x, y);
     }
 
-    ///
-    function test() {
-      console.log("onload");
-      init();
-      startTime = new Date();
-      playingTime = document.getElementById("time");
-      run();
-    }
-
-    return (
-      <div>
-        <canvas id="cvs" width="1000" height="800" />
-        <button
-          onClick={() => {
-            this.test();
-          }}
-        >
-          test
-        </button>
-      </div>
-    );
+    return <canvas id="cvs" width="1000" height="800" />;
   }
 }
 export default Engine;
