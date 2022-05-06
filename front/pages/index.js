@@ -72,7 +72,7 @@ export default function Home() {
           </ParallaxLayer> */}
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2 }}>
-            <img className='animate-flicker' src='/images/cloud.svg' style={{ width: '10%', marginLeft: '55%' }} />
+            <img className='animate-flicker2' src='/images/cloud.svg' style={{ width: '10%', marginLeft: '55%' }} />
             <img src='/images/cloud.svg' style={{ width: '5%', marginLeft: '15%' }} />
           </ParallaxLayer>
 
@@ -104,8 +104,8 @@ export default function Home() {
 
           <ParallaxLayer offset={0.6} speed={-0.1} style={{ opacity: 0.8 }}>
             <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '15%' }} />
-            <img className='animate-flicker' src='/images/cloud.svg' style={{ width: '15%', marginLeft: '5%', marginBottom: '10%' }} />
-            <img className='animate-flicker' src='/images/cloud.svg' style={{ width: '5%', marginLeft: '80%' }} />
+            <img className='animate-flicker1' src='/images/cloud.svg' style={{ width: '15%', marginLeft: '5%', marginBottom: '10%' }} />
+            <img className='animate-flicker2' src='/images/cloud.svg' style={{ width: '5%', marginLeft: '80%' }} />
           </ParallaxLayer>
 
           <ParallaxLayer offset={1.6} speed={0.4} style={{ opacity: 1 }}>
