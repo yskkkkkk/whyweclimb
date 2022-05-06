@@ -63,6 +63,6 @@ public class Wall {
     }
 
     public Wall convert() {
-        return new Wall(this.level, this.x0, this.y0 + this.level * Constants.HEIGHT, this.wx, this.wy);
+        return new Wall(this.level, this.x0, this.y0 + this.level * Constants.HEIGHT.getConstant(), this.wx, this.wy);
     }
 }
