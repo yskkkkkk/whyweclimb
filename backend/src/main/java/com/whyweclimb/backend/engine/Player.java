@@ -48,19 +48,19 @@ public class Player {
 
     public void collideToLeft(double w) {
         this.x = w;
-        this.vx *= -1 * Constants.boundFriction;
+        this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
         //audios.bounce.start();
     }
 
     public void collideToRight(double w) {
         this.x = w - this.size;
-        this.vx *= -1 * Constants.boundFriction;
+        this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
         //audios.bounce.start();
     }
 
     public void collideToTop(double w) {
         this.y = w - this.size;
-        this.vy *= -1 * Constants.boundFriction;
+        this.vy *= -1 * Constants.BOUNDFRICTION.getConstant();
         //audios.bounce.start();
     }
 
@@ -75,7 +75,7 @@ public class Player {
     public void  collideToWall(Vector s, Vector r) {
         this.x = s.x;
         this.y = s.y;
-        this.vx = r.x * Constants.boundFriction;
+        this.vx = r.x * Constants.BOUNDFRICTION.getConstant();
         this.vy = r.y;
         // audios.bounce.start();
         // this.onGround = false;
@@ -83,13 +83,13 @@ public class Player {
 
     public void update() { // 원래 파라미터 : delta
         //Apply previous acceleration
-        this.vx *= Constants.globalFriction;
-        this.vy *= Constants.globalFriction;
+        this.vx *= Constants.GLOBALFRICTION.getConstant();
+        this.vy *= Constants.GLOBALFRICTION.getConstant();
         if (Math.abs(this.vx) < 0.0001) this.vx = 0;
         if (Math.abs(this.vy) < 0.0001) this.vy = 0;
         this.x += this.vx;
         if (this.vy != 0) {
-            this.y += this.vy - Constants.gravity / 2;
+            this.y += this.vy - Constants.GRAVITY.getConstant() / 2;
         } else {
             this.y += this.vy;
         }
@@ -97,7 +97,7 @@ public class Player {
         PlayerTestCollideRes c;
 
         //Calculate current level
-        this.game.level = (int) Math.floor(this.y / Constants.HEIGHT);
+        this.game.level = (int) Math.floor(this.y / Constants.HEIGHT.getConstant());
 
         this.game.levelMax = Math.max(this.game.level, this.game.levelMax);
     // 여기부터 시작하기
@@ -156,10 +156,10 @@ public class Player {
 //        }
 
         //Apply gravity
-        c = this.testCollide(0, Constants.gravity*-1);
+        c = this.testCollide(0, Constants.GRAVITY.getConstant()*-1);
         if (c.getSide().equals("")) {
             if (this.vy > -100) {
-                this.vy -= Constants.gravity;
+                this.vy -= Constants.GRAVITY.getConstant();
             }
 
             this.onGround = false;
@@ -184,9 +184,9 @@ public class Player {
             side = "left";
             set = 0;
         }
-        else if (box.X > Constants.WIDTH) {
+        else if (box.X > Constants.WIDTH.getConstant()) {
             side = "right";
-            set = Constants.WIDTH;
+            set = Constants.WIDTH.getConstant();
         }
         else if (box.y < 0) {
             side = "bottom";
