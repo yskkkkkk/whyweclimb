@@ -6,11 +6,11 @@ import Link from 'next/link';
 import SockJS from 'sockjs-client';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-
+// import Engine from '../../components/multiEngine'
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/multiEngine')}, {ssr:false});
 
-const basicURL = 'http://localhost:8081/api';
+const basicURL = 'https://k6a401.p.ssafy.io/api';
 const Stomp = StompJS.Stomp;
 const stomp = Stomp.over(function(){
   return new SockJS(`${basicURL}/ws-stomp`);
@@ -23,7 +23,7 @@ export default function WaitRoom() {
   const [isStart, setIsStart] = useState(true);
   const router = useRouter();
   const {roomID} = router.query;
-  const [msg, setMsg] = useState('');
+  const [userInfo, setUserInfo] = useState();
 
   // function sendMessage(msg){
   //   console.log('hii');
@@ -55,6 +55,18 @@ export default function WaitRoom() {
   //     }
   //   )
   // }
+
+  function getUserInfo(){
+    const token = localStorage.getItem("token");
+    const headers = {
+      'Authorization': token,
+      mode: 'no-cors'
+    }
+    fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
+      .then(res => res.json())
+      .then(data => setUserInfo(data))
+      .catch(err => console.log(err))
+  }
   
   useEffect(()=>{
     if(roomID){
@@ -63,7 +75,7 @@ export default function WaitRoom() {
         .then(data=>{
           if(data!==''){
             console.log(data);
-            // socketConnect();
+            getUserInfo();
           } else {
             location.href="/multi";
           }
@@ -88,7 +100,7 @@ export default function WaitRoom() {
           <p>점프컹스</p>
           <p id="mute">Mute<input type="checkbox"/></p>
         </div>
-          <Engine stomp={stomp} msg={msg} roomId={roomID}/>
+          <Engine stomp={stomp} userInfo={userInfo} roomId={roomID}/>
       </main>}
     </>
     

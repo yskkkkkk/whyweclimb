@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Create({toLobby}) {
-  const basicURL = 'http://localhost:8081/api'
+  const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [roomCode, setroomCode] = useState("");
   const [roomInterference, setroomInterference] = useState("");
   const [roomPrivate, setroomPrivate] = useState("");
@@ -50,25 +50,21 @@ export default function Create({toLobby}) {
 
 
   function createRoom(){
-    if(roomInfo.roomCode==="") {
-      alert("방 제목을 입력해 주세요!!");
-    } else {
-      const data = JSON.stringify(roomInfo);
-      axios.post(`${basicURL}/chat/room`, roomInfo)
-        .then(response => response.data)
-        .then(data=>location.href=`multi/${data.roomCode}`)
-        .catch(err=>console.error(err));
-    }
+    axios.post(`${basicURL}/chat/room`, roomInfo)
+      .then(response => response.data)
+      .then(data=>location.href=`multi/${data.roomCode}`)
+      .catch(err=>console.error(err));
+    
   }
 
   return (
     <main className={style.container}>
-      <section className={style.choice}>
+      {/* <section className={style.choice}>
         <span>roomCode</span>
         <div className={style.roomname}>
           <input type="text" name="roomCode" value={roomInfo.roomCode} onChange={handleChange} />
         </div>
-      </section>
+      </section> */}
       <section className={style.choice}>
         <span>Room Interference</span>
         <div className={style.buttons}>

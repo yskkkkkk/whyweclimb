@@ -8,6 +8,6 @@ public class Block {
     AABB aabb;
 
     public AABB convert(){
-        return new AABB(this.aabb.x, this.aabb.y + this.level * Constants.HEIGHT, this.aabb.width, this.aabb.height);
+        return new AABB(this.aabb.x, this.aabb.y + this.level * Constants.HEIGHT.getConstant(), this.aabb.width, this.aabb.height);
     }
 }
