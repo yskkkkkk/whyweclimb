@@ -30,8 +30,8 @@ export default function ModeSelect({toMain, toConfigure}) {
       <Link href={'/multi'} passHref>
         <h2>multi mode</h2>
       </Link>
-      <button onClick={toConfigure}>configure</button>
-      <button onClick={toMain}>logout</button>
+      {/* <button onClick={toConfigure}>configure</button> */}
+      <button className={style.btn} onClick={toMain}>logout</button>
     </main>
   )
 }

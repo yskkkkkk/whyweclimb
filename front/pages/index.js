@@ -18,11 +18,16 @@ export default function Home() {
   const toMain = () => {
     setLoggedIn(false);
     window.localStorage.clear();
-    mainRef.current.scrollTo(0);
     inRef.current.scrollTo(3);
+    mainRef.current.scrollTo(0);
+    setTimeout(() => {
+      inRef.current.scrollTo(3);
+      mainRef.current.scrollTo(0);
+    }, "50");
   }
   const toSignup = () => {
     setLoggedIn(false);
+    inRef.current.scrollTo(3);
     mainRef.current.scrollTo(1);
   }
   const toModeSelect = () => {
@@ -35,6 +40,10 @@ export default function Home() {
 
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
     setLoggedIn(localStorage.getItem("token") ? true : false);
+    setTimeout(() => {
+      inRef.current.scrollTo(3);
+      mainRef.current.scrollTo(0);
+    }, "50");
   }, []);
 
   return (
