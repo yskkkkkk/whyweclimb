@@ -1,6 +1,14 @@
-import {Component} from 'react'; 
+import {Component} from 'react';
+import { useRouter } from 'next/router'; 
 
 class Engine extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      notStart: true
+    }
+  }
 
   
   render() {
@@ -51,8 +59,7 @@ class Engine extends Component {
     let levelMax = 0;
     const stomp = this.props.stomp;
     const roomId = this.props.roomId;
-    const msg = this.props.msg;
-
+    const userInfo = this.props.userInfo;
     class Vector
     {
         constructor(x, y)
@@ -651,13 +658,22 @@ class Engine extends Component {
             drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
         }
     }
+    if(userInfo){
+      window.onload = function ()
+      {
+          console.log('load!!!!')
+          socketConnect();
+          init();
+          run();
+      };
 
-    window.onload = function ()
-    {
-        socketConnect();
-        init();
-        run();
-    };
+    }
+
+    function start(){
+      socketConnect();
+      init();
+      run();
+    }
 
     function init()
     {
@@ -909,10 +925,10 @@ class Engine extends Component {
     function keyDown(e)
     {   if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
             inputkeys[e.key] = true;
-            console.log('keys',keys);
             // if(player.onGround)
             {
-                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));
+                // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'}));       
             }
 
         }
@@ -925,7 +941,8 @@ class Engine extends Component {
             // console.log(keys);
             // if(player.onGround)
             {
-                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE', roomCode:roomId,sender:'noman1', space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+                // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'})); 
             }
 
         }
@@ -1102,6 +1119,7 @@ class Engine extends Component {
     return (
         <>
         <canvas id="cvs" width="1000" height="800" />
+        {this.state.notStart && <button onClick={()=>{start();this.setState({notStart:false})}}>start</button>}
         </>
     )
 
