@@ -8,7 +8,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Multi() {
-  const basicURL = 'http://localhost:8081/api'
+  const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [multiRoom, setMultiRoom] = useState(0);  // 0:lobby  1:create
   const [findModal, setFindModal] = useState(false);
   const [joinModal, setJoinModal] = useState(false);
