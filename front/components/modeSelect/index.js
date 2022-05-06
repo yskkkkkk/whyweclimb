@@ -4,20 +4,20 @@ import Link from 'next/link';
 
 export default function ModeSelect({toMain, toConfigure}) {
   
-  const test = (e) => {
-    e.preventDefault();
+  // const test = (e) => {
+  //   e.preventDefault();
 
-    const token = localStorage.getItem("token");
-    console.log(token);
-    const headers = {
-      'Authorization': token,
-      mode: 'no-cors'
-    }
-    fetch('https://k6a401.p.ssafy.io/api/user/information', {headers: headers})
-    .then((response) => {
-      console.log(response.json());
-    });
-  };
+  //   const token = localStorage.getItem("token");
+  //   console.log(token);
+  //   const headers = {
+  //     'Authorization': token,
+  //     mode: 'no-cors'
+  //   }
+  //   fetch('https://k6a401.p.ssafy.io/api/user/information', {headers: headers})
+  //   .then((response) => {
+  //     console.log(response.json());
+  //   });
+  // };
 
 
   return (
@@ -31,8 +31,7 @@ export default function ModeSelect({toMain, toConfigure}) {
         <h2>multi mode</h2>
       </Link>
       <button onClick={toConfigure}>configure</button>
-      <button onClick={toMain}>back</button>
-      <button onClick={test} >check</button>
+      <button onClick={toMain}>logout</button>
     </main>
   )
 }

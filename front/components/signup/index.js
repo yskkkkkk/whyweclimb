@@ -7,7 +7,8 @@ const PW_REGEX = /^[a-zA-Z0-9]{8,24}$/;
 export default function Signup ({toMain}) {
   
   const inputID = useRef();
-
+  const pw = useRef();
+  const pwConf = useRef();
   const [userId, setUserId] = useState("");
   const [validUserId, setValidUserId] = useState(false);
   const [availableUserId, setAvailableUserId] = useState(false);
@@ -21,6 +22,9 @@ export default function Signup ({toMain}) {
   const [errorMsg, setErrorMsg] = useState([]);
   
   const initializeData = () => {      // 모든 상태정보 초기화
+    inputID.current.value = '';
+    pw.current.value = '';
+    pwConf.current.value = '';
     setUserId("");
     setUserPassword("");
     setMatchPassword("");
@@ -83,6 +87,7 @@ export default function Signup ({toMain}) {
   const finalCheck = () => {          // 회원가입 버튼 눌렀을때 로직
     if (availableUserId && validUserPassword && validMatchPassword) {
       submitRegistration();
+      
     }
     else {
       if (!availableUserId) {
@@ -175,27 +180,29 @@ export default function Signup ({toMain}) {
   }, [])
 
   return (
-    <main className={style.container}>
-      <h2>
-        signup
-      </h2>
-      <section className={style.login}>
-        <div className={style.card}>
-          
-          <label>Id 
-            <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z, A-Z, 0-9" required />
-            <button onClick={userIdCheck}>중복확인</button>
-          </label>
-        </div>
-        <div className={style.card}>
-          <label>Password <input type="password" onChange={e => setUserPassword(e.target.value)} placeholder="a-z, A-Z, 0-9" required /></label>
-        </div>
-        <div className={style.card}>
-          <label>PW confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} required /></label>
-        </div>
-      </section>
-      <button onClick={finalCheck}>Signup!</button>
-      <a href="#" className={style.btns} onClick={toMain}>back</a>
+    <main className={style.signupContainer}>
+      <div className={style.semiContainer}>
+
+        <h2>
+          signup
+        </h2>
+        <section className={style.signup}>
+          <div className={style.card}>
+            <label>ID 
+              <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z,A-Z,0-9 / 3~20" required />
+              <button onClick={userIdCheck}>check ID</button>
+            </label>
+          </div>
+          <div className={style.card}>
+            <label>Password <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} placeholder="a-z,A-Z,0-9 / 8~24" required /></label>
+          </div>
+          <div className={style.card}>
+            <label>PW confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} ref={pwConf} required /></label>
+          </div>
+        </section>
+        <button className={style.signupBtn} onClick={finalCheck}>Signup!</button>
+        <a href="#" className={style.btns} onClick={toMain}>back</a>
+      </div>
     </main>
   )
 
