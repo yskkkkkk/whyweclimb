@@ -60,10 +60,10 @@ export default function Home() {
             {loggedIn && <ModeSelect toMain={toMain} toConfigure={toConfigure} />}
           </ParallaxLayer>
           <ParallaxLayer offset={1}>
-            <h2>you ready???</h2>
+            <h2>image2</h2>
           </ParallaxLayer>
           <ParallaxLayer offset={2}>
-            <h2>you ready?</h2>
+            <h2>image1</h2>
           </ParallaxLayer>
           <ParallaxLayer offset={3}>
             <Parallax 
