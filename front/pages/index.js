@@ -34,9 +34,6 @@ export default function Home() {
 
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
     setLoggedIn(localStorage.getItem("token") ? true : false);
-    return () => {
-      window.localStorage.clear();
-    }
   }, []);
 
   return (
