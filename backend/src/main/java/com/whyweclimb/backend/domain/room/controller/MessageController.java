@@ -26,8 +26,7 @@ public class MessageController {
 //        }	
     	log.info("[name: "+message.getSender()+", key input: space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight()+"]");
     	
-    	message.setId(1);
-    	messageService.readMessage(MessageFindRequest.builder()
+    	Message before = messageService.readMessage(MessageFindRequest.builder()
     			.id(message.getId())
     			.sender(message.getSender())
     			.build());

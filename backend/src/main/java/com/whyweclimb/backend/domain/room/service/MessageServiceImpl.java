@@ -16,15 +16,14 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public boolean saveMessage(Message message) {
 		messageRepository.save(message);
-		return false;
+		return true;
 	}
 
 	@Override
 	public Message readMessage(MessageFindRequest request) {
+		Message message = messageRepository.findByIdAndSender(request.getId(), request.getSender());
+		System.out.println(message);
 		
-		System.out.println(messageRepository.findByIdAndSender(request.getId(), request.getSender()));
-		
-		// TODO Auto-generated method stub
-		return null;
+		return message;
 	}
 }
