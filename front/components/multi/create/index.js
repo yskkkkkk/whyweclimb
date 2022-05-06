@@ -65,18 +65,18 @@ export default function Create({toLobby}) {
     <main className={style.container}>
       <section className={style.choice}>
         <span>roomCode</span>
-        <div>
+        <div className={style.roomname}>
           <input type="text" name="roomCode" value={roomInfo.roomCode} onChange={handleChange} />
         </div>
       </section>
       <section className={style.choice}>
-        <span>roomInterference</span>
-        <div>
-          <label>
+        <span>Room Interference</span>
+        <div className={style.buttons}>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomInterference" value="true" required />
             on
           </label>
-          <label>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomInterference" value="false" required />
             off
           </label>
@@ -84,12 +84,12 @@ export default function Create({toLobby}) {
       </section>
       <section className={style.choice}>
         <span>Private Room</span>
-        <div>
-          <label>
+        <div className={style.buttons}>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomPrivate" value="true" required />
             yes
           </label>
-          <label>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomPrivate" value="false" required />
             no
           </label>
@@ -97,23 +97,23 @@ export default function Create({toLobby}) {
       </section>
       <section className={style.choice}>
         <span>Max player number</span>
-        <div>
-          <label>
+        <div className={style.buttons}>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomMaxNum" value="2" required />
             2
           </label>
-          <label>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomMaxNum" value="3" required />
             3
           </label>
-          <label>
+          <label className={style.button}>
             <input onClick={handleChange} type="radio" name="roomMaxNum" value="4" required />
             4
           </label>
         </div>
       </section>
-      <button onClick={createRoom}>create room</button>
-      <button onClick={toLobby}>back</button>
+      <a className={style.links} onClick={createRoom}><h2>create room</h2></a>
+      <a className={style.links} onClick={toLobby}><h2>back</h2></a>
     </main>
   )
 }
