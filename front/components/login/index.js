@@ -54,6 +54,7 @@ export default function Login({toSignup, toModeSelect}) {
       <h1>why we climb</h1>
       <div className={style.loginContainer}> 
         <section className={style.login}>
+          <h2 className={style.title}>Login</h2>
           <div className={style.card}>
             <label>Id 
               <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
@@ -64,11 +65,11 @@ export default function Login({toSignup, toModeSelect}) {
               <input type="password" onChange={e => setUserPassword(e.target.value)} required />
             </label>
           </div>
+          <button className={style.loginBtn} onClick={handleLoginSubmit} >Enter</button>
+          <span className={style.btns}>no account?<br />click
+            <a href='#' onClick={toSignup} className={style.toSignup}> here!</a>
+          </span>
         </section>
-        <button className={style.loginBtn} onClick={handleLoginSubmit} >Enter</button>
-        <span className={style.btns}>no account?<br />click
-          <a href='#' onClick={toSignup} className={style.toSignup}> here!</a>
-        </span>
       </div>
     </main>
   )

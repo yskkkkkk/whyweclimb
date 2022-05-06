@@ -69,7 +69,7 @@ export default function Home() {
           factor={4}
           style={{
             backgroundImage: 'url("/images/stars.svg")',
-            backgroundColor: 'gray',
+            backgroundColor: '#565656',
             backgroundSize: 'cover',
             display: 'flex',
             justifyContent: 'center',
