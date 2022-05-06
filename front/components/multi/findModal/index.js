@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export default function FindModal({toggleFindModal}) {
-  const basicURL = 'http://localhost:8081'
+  const basicURL = 'http://localhost:8081/api'
   const router = useRouter();
   const [roomID, setRoomID] = useState('');
 
@@ -31,7 +31,7 @@ export default function FindModal({toggleFindModal}) {
       .then(res=>res.data)
       .then(data=>{
         if(data !== ""){
-          location.href=`/multi/${data.roomId}`;
+          location.href=`/multi/${data.roomCode}`;
         } else {
           alert("해당하는 방이 존재하지 않습니다. 다시 한번 확인해 주세요.");
         }

@@ -35,12 +35,16 @@ export default function Home() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <title>why-we-climb</title>
+        
         {/* <script type="text/javascript" src="../components/main.js"></script> */}
       </Head>
 
       <main className="intro">
         <header>
           <h2>why we climb</h2>
+          <div className = "image-box">
+          <img className = "intro-image" src="images/intro.jpg"></img>
+          </div>
         </header>
         <section>
           {room == 0 && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}

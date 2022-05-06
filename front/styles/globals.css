@@ -25,9 +25,42 @@ a {
   margin-top: 40vh;
 }
 
+.image-box{
+  
+  width:550px;
+  height:440px;
+  overflow:hidden;
+  margin:0 auto;
+  align-items:bottom;
+}
+.intro-image{
+  
+  width:100%;
+  position:relative;
+  bottom:3077px;
+  object-fit:cover;
+  animation-name: climb;
+  animation-duration : 8s;
+  
+  animation-iteration-count:infinite;
+  animation-direction:alternate;
+  animation-fill-mode:forwards;
+}
+
+@-webkit-keyframes climb{
+  0% {
+    bottom: 3077px;
+  }
+  100%{
+    bottom: 0px;
+  }
+}
+
 #mute {
   float: right;
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  margin-left: 20px;
+  display: inline;
 }
 
 #cvs {

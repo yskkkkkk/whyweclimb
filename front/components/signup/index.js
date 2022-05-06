@@ -34,15 +34,12 @@ export default function Signup ({toMain}) {
   const userIdCheck = (e) => {         // 아이디 중복 확인
     e.preventDefault();
     if (validUserId && userId) {
-      fetch(/**/)
+      fetch(`https://k6a401.p.ssafy.io/api/user/id?userId=${userId}`)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
             alert('유효한 아이디입니다');
             setAvailableUserId(data);
-            // if (errorMsg && errorMsg.includes("confirm your ID")) {
-            //   errorMsg.filter(msg => msg != "confirm your ID");
-            // }
           }
           else {
             alert('이미 사용중인 아이디입니다');
@@ -54,29 +51,34 @@ export default function Signup ({toMain}) {
     }
   }
 
-  // const submitRegistration = () => {    // 백단에 회원가입 요청
-  //   fetch(/**/, {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       userId: userId,
-  //       password: userPassword,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       alert(`회원가입 성공! : ${data}`);
-  //       initializeData();
-  //     })
-  //     .catch((error) => {
-  //       alert(`회원가입 실패 : ${error}`);
-  //     });
-  // };
+  const submitRegistration = () => {    // 백단에 회원가입 요청
+    fetch('https://k6a401.p.ssafy.io/api/user', {
+      method: "POST",
+      body: JSON.stringify({
+        userId: userId,
+        userPassword: userPassword,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          alert(`회원가입 성공! : ${data}`);
+          initializeData();
+          toMain();
+        } else {
+          alert(`회원가입 실패 : ${data}`);
+        }
+      })
+      .catch((error) => {
+        alert(`회원가입 실패 : ${error}`);
+      });
+  };
 
   const finalCheck = () => {          // 회원가입 버튼 눌렀을때 로직
     if (availableUserId && validUserPassword && validMatchPassword) {
@@ -92,7 +94,7 @@ export default function Signup ({toMain}) {
       if (!validMatchPassword) {
         addErrorConfirmPW();
       }
-      else {
+      else if (errorMsg && !errorMsg.includes("잘못된 접근입니다")) {
         setErrorMsg(errorMsg + ['잘못된 접근입니다']);
       }
 
@@ -137,7 +139,7 @@ export default function Signup ({toMain}) {
   }
   const removeErrorConfirmPW = () => {
     if (errorMsg && errorMsg.includes("inconsistent password")) {
-      errorMsg.filter(msg => msg != "inconsistent password");
+      Object.values(errorMsg).filter(msg => msg != "inconsistent password");
     }
   }
 
@@ -145,6 +147,7 @@ export default function Signup ({toMain}) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
     const result = ID_REGEX.test(userId);
     setValidUserId(result);
+    console.log(validUserId);
     setAvailableUserId(false);
     if (result) {
       removeErrorID();
@@ -178,18 +181,20 @@ export default function Signup ({toMain}) {
       </h2>
       <section className={style.login}>
         <div className={style.card}>
+          
           <label>Id 
-            <input type="text" ref={inputID} placeholder="a-z, A-Z, 0-9" required />
+            <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z, A-Z, 0-9" required />
             <button onClick={userIdCheck}>중복확인</button>
           </label>
         </div>
         <div className={style.card}>
-          <label>Password <input type="password" placeholder="a-z, A-Z, 0-9" required /></label>
+          <label>Password <input type="password" onChange={e => setUserPassword(e.target.value)} placeholder="a-z, A-Z, 0-9" required /></label>
         </div>
         <div className={style.card}>
-          <label>PW confirm <input type="password" required /></label>
+          <label>PW confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} required /></label>
         </div>
       </section>
+      <button onClick={finalCheck}>Signup!</button>
       <a href="#" className={style.btns} onClick={toMain}>back</a>
     </main>
   )
