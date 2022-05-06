@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 export default function JoinModal({toggleJoinModal}) {
-  const basicURL = 'http://localhost:8081/api'
+  const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [isInterference, setIsInterference] = useState("");
 
   const handleChange = (e) => {
