@@ -4,14 +4,22 @@ import style from './login.module.css';
 export default function Login({toSignup, toModeSelect}) {
   
   const inputID = useRef();
+  const pw = useRef();
 
   const [userID, setUserID] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const initializeData = () => {        // 로그인 입력 정보의 상태들 초기화
+    inputID.current.value = '';
+    pw.current.value = '';
     setUserID("");
     setUserPassword("");
   };
+
+  const toSignUp = () => {
+    initializeData();
+    toSignup();
+  }
 
   const handleLoginSubmit = () => {     // 로그인 버튼 누를시 post요청 (백에서 실패사유 알려주면 땡큐)
     fetch('https://k6a401.p.ssafy.io/api/user/login', {
@@ -62,12 +70,12 @@ export default function Login({toSignup, toModeSelect}) {
           </div>
           <div className={style.card}>
             <label>Password 
-              <input type="password" onChange={e => setUserPassword(e.target.value)} required />
+              <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required />
             </label>
           </div>
           <button className={style.loginBtn} onClick={handleLoginSubmit} >Enter</button>
           <span className={style.btns}>no account?<br />click
-            <a href='#' onClick={toSignup} className={style.toSignup}> here!</a>
+            <a href='#' onClick={toSignUp} className={style.toSignup}> here!</a>
           </span>
         </section>
       </div>
