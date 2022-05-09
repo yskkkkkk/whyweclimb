@@ -67,3 +67,38 @@ a {
   border: 2px solid black;
   margin: 0px 28px
 }
+
+/* ***************************************************************************** */
+
+@keyframes flickerAnimation {
+  0%   { opacity:1; transform: translatey(0px); }
+  50%  { opacity:0.5; transform: translatey(-20px); }
+  100% { opacity:1; transform: translatey(0px); }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; transform: translatey(0px); }
+  50%  { opacity:0.5; transform: translatey(-20px); }
+  100% { opacity:1; transform: translatey(0px); }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; transform: translatey(0px); }
+  50%  { opacity:0.5; transform: translatey(-20px); }
+  100% { opacity:1; transform: translatey(0px); }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; transform: translatey(0px); }
+  50%  { opacity:0.5; transform: translatey(-20px); }
+  100% { opacity:1; transform: translatey(0px); }
+}
+.animate-flicker1 {
+   -webkit-animation: flickerAnimation 6s ease-in-out infinite;
+   -moz-animation: flickerAnimation 6s ease-in-out infinite;
+   -o-animation: flickerAnimation 6s ease-in-out infinite;
+    animation: flickerAnimation 6s ease-in-out infinite;
+}
+.animate-flicker2 {
+  -webkit-animation: flickerAnimation 4s ease-in-out infinite;
+  -moz-animation: flickerAnimation 4s ease-in-out infinite;
+  -o-animation: flickerAnimation 4s ease-in-out infinite;
+   animation: flickerAnimation 4s ease-in-out infinite;
+}

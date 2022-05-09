@@ -148,6 +148,11 @@ export default function Signup ({toMain}) {
     }
   }
 
+  const goBack = () => {
+    initializeData();
+    toMain();
+  }
+
   useEffect(() => {                   // 아이디 조건 충족 여부 확인
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
     const result = ID_REGEX.test(userId);
@@ -201,7 +206,7 @@ export default function Signup ({toMain}) {
           </div>
         </section>
         <button className={style.signupBtn} onClick={finalCheck}>Signup!</button>
-        <a href="#" className={style.btns} onClick={toMain}>back</a>
+        <a href="#" className={style.btns} onClick={goBack}>back</a>
       </div>
     </main>
   )
