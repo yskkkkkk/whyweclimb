@@ -10,9 +10,11 @@ export default function Lobby({toggleJoinModal, toCreate, toggleFindModal}) {
         <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
         <h2><a href="#" onClick={toCreate} >create</a></h2>
       </nav>
-      <Link href={'/'} passHref>
-        <button>back</button>
-      </Link> 
+      
+        <Link href={'/'} passHref>
+          <button>back</button>
+        </Link> 
+      
     </>
   )
 }
