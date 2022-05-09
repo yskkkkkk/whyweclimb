@@ -10,3 +10,6 @@
 .lobby h2 a:hover {
   color: rgb(82, 82, 204);
 }
+.back{
+  justify-content:center;
+}
