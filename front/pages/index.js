@@ -3,10 +3,7 @@ import Login from "../components/login"
 import Signup from '../components/signup';
 import ModeSelect from '../components/modeSelect';
 import { useState, useEffect, useRef } from 'react';
-import Configure from '../components/configure';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import url from 'sockjs-client/lib/utils/url';
-
 
 
 export default function Home() {
@@ -40,10 +37,12 @@ export default function Home() {
 
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
     setLoggedIn(localStorage.getItem("token") ? true : false);
-    setTimeout(() => {
-      inRef.current.scrollTo(3);
-      mainRef.current.scrollTo(0);
-    }, "50");
+    if (!localStorage.getItem("token")) {
+      setTimeout(() => {
+        inRef.current.scrollTo(3);
+        mainRef.current.scrollTo(0);
+      }, "50");
+    }
   }, []);
 
   return (
