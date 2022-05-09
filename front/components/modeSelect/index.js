@@ -19,6 +19,8 @@ export default function ModeSelect({toMain, toConfigure}) {
   //   });
   // };
 
+
+
   return (
     <main className={style.container}>
       <section className={style.container2}>
@@ -28,10 +30,12 @@ export default function ModeSelect({toMain, toConfigure}) {
           </div>
           <h2>single mode</h2>
         </a>
-        <a className={style.btn} href={'/multi'}>
-          <div className={style.stage}>
+        <a className={style.btn1} href={'/multi'}>
+          <div className={style.stage1}>
             {/* https://css-tricks.com/making-css-animations-feel-natural/ 참고 */}
-            <img className={`${style.box} ${style.bounce7}`} src="/images/running_R1.png" alt="a character jumping image" />
+            <img className={`${style.box1} ${style.bounce1}`} src="/images/sourceror.png" alt="a character jumping image" />
+            <img className={`${style.box1} ${style.bounce2}`} src="/images/dwarf.png" alt="a character jumping image" />
+            <img className={`${style.box1} ${style.bounce3}`} src="/images/woodElf.png" alt="a character jumping image" />
           </div>
           <h2 className={style.glow}>multi mode</h2>
         </a>
