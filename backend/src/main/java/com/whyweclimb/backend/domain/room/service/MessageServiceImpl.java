@@ -9,55 +9,52 @@ import com.whyweclimb.backend.domain.room.model.MessageFindRequest;
 import com.whyweclimb.backend.domain.room.model.Room;
 import com.whyweclimb.backend.domain.room.repo.MessageRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.RoomRedisRepository;
+import com.whyweclimb.backend.domain.room.repo.RoomRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService{
-	private final MessageRedisRepository messageRepository;
-	private final RoomRedisRepository roomRepository;
+	private final MessageRedisRepository messageRedisRepository;
+	private final RoomRedisRepository roomRedisRepository;
+	private final RoomRepository roomRepository;
 	
 	@Override
 	public boolean saveMessage(Message message) {
-		messageRepository.save(message);
+		messageRedisRepository.save(message);
 		return true;
 	}
 
 	@Override
 	public Message readMessage(MessageFindRequest request) {
-		Message message = messageRepository.findByIdAndSender(request.getId(), request.getSender());
+		Message message = messageRedisRepository.findByIdAndSender(request.getId(), request.getSender());
 		System.out.println(message);
 		
 		return message;
 	}
 
 	@Override
-	public void increaseNumberOfPeople(String roomCode) {
-		Optional<Room> room = roomRepository.findById(roomCode);
-		room.ifPresent(selectRoom -> {
-			roomRepository.save(Room.builder()
-					.roomCode(roomCode)
-					.count(selectRoom.getCount()+1)
-					.build());
-		});
-		
-		if (!room.isPresent()) {
-			roomRepository.save(Room.builder()
-					.roomCode(roomCode)
-					.count(1)
-					.build());
-		}
+	public void increaseNumberOfPeople(Room room) {
+		roomRedisRepository.save(room);
 	}
 
 	@Override
-	public void decreaseNumberOfPeople(String roomCode) {
-		Optional<Room> room = roomRepository.findById(roomCode);
-		room.ifPresent(selectRoom -> {
-			roomRepository.save(Room.builder()
-					.roomCode(roomCode)
-					.count(selectRoom.getCount()-1)
-					.build());
-		});		
+	public void decreaseNumberOfPeople(String sessionId) {
+		roomRedisRepository.deleteById(sessionId);
 	}
+
+	@Override
+	public boolean roomStatus(String roomCode) {
+		boolean result = false;
+
+		int now = roomRedisRepository.countByRoomCode(roomCode).size();
+		int max = roomRepository.findByRoomCode(roomCode).orElse(null).getRoomMaxNum();
+		
+		if (now < max) result = true;
+
+		return result;
+	}
+	
+	
 }

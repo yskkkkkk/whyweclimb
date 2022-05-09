@@ -16,9 +16,9 @@ import lombok.ToString;
 @ToString
 @RedisHash(value = "room")
 public class Room {
-    @Id
+	@Id
+	@Indexed
+	private String sessionId;
     @Indexed
     private String roomCode;
-    @Indexed
-    private Integer count;
 }

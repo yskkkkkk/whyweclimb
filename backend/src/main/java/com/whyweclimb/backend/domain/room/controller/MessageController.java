@@ -21,21 +21,15 @@ public class MessageController {
     
     @MessageMapping("/chat/message")
     public void message(Message message){
-        if(Message.MessageType.ENTER.equals(message.getType())){
-        	messageService.increaseNumberOfPeople(message.getRoomCode());
-        } else if(Message.MessageType.LEAVE.equals(message.getType())){
-        	messageService.decreaseNumberOfPeople(message.getRoomCode());        	
-        } else {
-	    	log.info("[name: "+message.getSender()+", key input: space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight()+"]");
-	    	
-	    	Message before = messageService.readMessage(MessageFindRequest.builder()
-	    			.id(message.getId())
-	    			.sender(message.getSender())
-	    			.build());
-	
-	    	messageService.saveMessage(message);
-	    	
-	        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
-        }
+    	log.info("[name: "+message.getSender()+", key input: space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight()+"]");
+    	
+    	Message before = messageService.readMessage(MessageFindRequest.builder()
+    			.id(message.getId())
+    			.sender(message.getSender())
+    			.build());
+
+    	messageService.saveMessage(message);
+    	
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
     }
 }
