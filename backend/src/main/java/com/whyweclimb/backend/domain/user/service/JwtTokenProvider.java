@@ -36,8 +36,8 @@ public class JwtTokenProvider {
 		this.secret = Base64.getEncoder().encodeToString(secret.getBytes());
 	}
 
-	// 토큰 유효시간 30분
-	private long tokenValidTime = 30 * 60 * 1000L;
+	// 토큰 유효시간 12시간
+	private long tokenValidTime = 12 * 60 * 60 * 1000L;
 	private final UserDetailsService userDetailsService;
 
 	// JWT 토큰 생성

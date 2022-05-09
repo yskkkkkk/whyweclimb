@@ -15,7 +15,7 @@ import lombok.ToString;
 @RedisHash(value = "message")
 public class Message {
     public enum MessageType {
-        ENTER, MOVE
+        ENTER, LEAVE, MOVE
     }
     @Id
     @Indexed
