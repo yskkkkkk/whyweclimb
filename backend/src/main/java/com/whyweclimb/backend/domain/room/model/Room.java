@@ -1,30 +1,24 @@
 package com.whyweclimb.backend.domain.room.model;
 
-import javax.persistence.Id;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @ToString
-@RedisHash(value = "message")
-public class Message {
-    public enum MessageType {
-        ENTER, LEAVE, MOVE
-    }
+@RedisHash(value = "room")
+public class Room {
     @Id
     @Indexed
-    private Integer id;
-    private MessageType type;
     private String roomCode;
     @Indexed
-    private String sender;
-    private Boolean space;
-    private Boolean left;
-    private Boolean right;
+    private Integer count;
 }

@@ -8,4 +8,8 @@ public interface MessageService {
 	boolean saveMessage(Message message);
 	// message read
 	Message readMessage(MessageFindRequest request);
+	
+	void increaseNumberOfPeople(String roomCode);
+	
+	void decreaseNumberOfPeople(String roomCode);
 }
