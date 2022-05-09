@@ -60,6 +60,7 @@ export default function Home() {
         pages={4}
         style={{
           overflow: "hidden",
+          zIndex: "0",
         }}
         >
           <ParallaxLayer
