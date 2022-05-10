@@ -1,14 +1,12 @@
 package com.whyweclimb.backend.domain.room.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.whyweclimb.backend.domain.room.model.Message;
 import com.whyweclimb.backend.domain.room.model.MessageFindRequest;
-import com.whyweclimb.backend.domain.room.model.Room;
+import com.whyweclimb.backend.domain.room.model.Access;
 import com.whyweclimb.backend.domain.room.repo.MessageRedisRepository;
-import com.whyweclimb.backend.domain.room.repo.RoomRedisRepository;
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.RoomRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService{
 	private final MessageRedisRepository messageRedisRepository;
-	private final RoomRedisRepository roomRedisRepository;
+	private final AccessRedisRepository accessRedisRepository;
 	private final RoomRepository roomRepository;
 	
 	@Override
@@ -35,20 +33,20 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public void increaseNumberOfPeople(Room room) {
-		roomRedisRepository.save(room);
+	public void increaseNumberOfPeople(Access room) {
+		accessRedisRepository.save(room);
 	}
 
 	@Override
 	public void decreaseNumberOfPeople(String sessionId) {
-		roomRedisRepository.deleteById(sessionId);
+		accessRedisRepository.deleteById(sessionId);
 	}
 
 	@Override
 	public boolean roomStatus(String roomCode) {
 		boolean result = false;
 
-		int now = roomRedisRepository.countByRoomCode(roomCode).size();
+		int now = accessRedisRepository.countByRoomCode(roomCode).size();
 		int max = roomRepository.findByRoomCode(roomCode).orElse(null).getRoomMaxNum();
 		
 		if (now < max) result = true;
