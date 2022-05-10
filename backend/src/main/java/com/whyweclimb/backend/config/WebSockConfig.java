@@ -34,4 +34,5 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(new UserInterceptor(messageService));
     }
+    	// 때려 죽여도 메세지가 안보내짐 
 }
