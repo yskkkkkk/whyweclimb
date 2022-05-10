@@ -1,11 +1,12 @@
 .multi {
+  /* background-color: rgb(152, 149, 149); */
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 15vh;
-  position: relative;
+  /* position: relative; */
 }
 
 .multi button {
@@ -15,15 +16,30 @@
 
 .modalOn {
   background-color: rgb(152, 149, 149);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 15vh;
-  position: relative;
 }
+
 .modalOn button {
   width: 10vw;
   align-self: center;
+}
+
+
+/* ---------------------------------------------------------------------------------- */
+
+.lobby {
+  /* width: 100vw; */
+  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15vw;
+}
+
+.lobby h2 a:hover {
+  color: rgb(82, 82, 204);
+}
+.back{
+  justify-content:center;
+  align-self: center;
+  justify-self: center;
 }

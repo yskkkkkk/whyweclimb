@@ -1,30 +1,16 @@
-import {useRouter} from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import style from './findModal.module.css';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 
-export default function FindModal({toggleFindModal}) {
+export default function FindModal() {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
-  const router = useRouter();
   const [roomID, setRoomID] = useState('');
 
   const writeRoomID = (e) => {
     setRoomID(e.target.value);
   };
-
-  // const findRoom = () => {                       // 찾는 방이 있으면 해당 페이지로 route. 다만 여기서 ws으로 바로 연결할지는 미정.
-  //   fetch(`https://${roomID}/exists`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data) {
-  //         router.push(`/multi/${roomID}`);
-  //       }
-  //       else {
-  //         alert('invalid RoomID');
-  //       }
-  //     });
-  // };
 
   const findRoom = () => {
     axios.get(`${basicURL}/chat/room/${roomID}`)
@@ -39,6 +25,10 @@ export default function FindModal({toggleFindModal}) {
       .catch(err=>console.error(err))
   }
 
+  const closeModal = () => {
+    toast.dismiss();
+  }
+
   return (
     <section className={style.modal}>
       <div className={style.card}>
@@ -47,7 +37,7 @@ export default function FindModal({toggleFindModal}) {
       </div>
       <div className={style.btns}>
         <button onClick={findRoom} >join</button>
-        <button onClick={toggleFindModal} >close</button>
+        <button onClick={closeModal} >close</button>
       </div>
     </section>
   )

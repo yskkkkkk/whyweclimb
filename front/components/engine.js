@@ -44,6 +44,7 @@ let flag = false;
 let level = 0;
 let levelMax = 0;
 let goalLevel = 7;
+
 class Vector {
   constructor(x, y) {
     this.x = x;
@@ -89,7 +90,6 @@ class Vector {
     return this.x == v.x && this.y == v.y;
   }
 }
-
 class Goal {
   constructor(level, aabb) {
     this.level = level;
@@ -155,7 +155,6 @@ class Wall {
     return new Wall(this.level, this.x0, this.y0 + this.level * HEIGHT, this.wx, this.wy);
   }
 }
-
 class AABB {
   constructor(x, y, w, h) {
     this.x = x;
@@ -195,7 +194,6 @@ class AABB {
     this.Y += dy;
   }
 }
-
 class Block {
   constructor(level, aabb) {
     this.level = level;
@@ -206,7 +204,6 @@ class Block {
     return new AABB(this.aabb.x, this.aabb.y + this.level * HEIGHT, this.aabb.width, this.aabb.height);
   }
 }
-
 class Player {
   constructor(x, y) {
     this.direction_L = false;
@@ -573,9 +570,9 @@ class Player {
     gfx.stroke();
     //gfx.fillStyle= 'rgb(0,0,0)'
     drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
-    
   }
 }
+
 function init() {
   cvs = document.getElementById("cvs");
   gfx = cvs.getContext("2d");
@@ -821,7 +818,6 @@ function init() {
 
   player = new Player((WIDTH - 32) / 2.0, 156);
   
-
   initLevels();
 }
 
@@ -905,9 +901,7 @@ function run(time) {
   playingTime.innerText = `${parseInt((currentTime - startTime) / 1000)}초`;
   while (passedTime >= msPerFrame) {
     update(msPerFrame);
-    
     rendering();
-    
     passedTime -= msPerFrame;
     if(flag){
       return
@@ -953,8 +947,6 @@ function rendering() {
   });
   
   player.render();
-  
-  
 }
 
 function drawWall(wall) {
@@ -1035,6 +1027,7 @@ function getIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
 
 
 class Engine extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -1080,21 +1073,15 @@ class Engine extends Component {
       goalLevel : goalLevel,
       levelMax : levelMax,
     }
-    
-    
   }
+
   componentDidMount() {
-    
     console.log("onload");
     init();
     
     playingTime = document.getElementById("time");
     run();
-    
   }
-  
-  
-
   
   render() {
     //Make game levels

@@ -9,6 +9,7 @@ export default function Create({toLobby}) {
   const [roomPrivate, setroomPrivate] = useState("");
   const [roomMaxNum, setroomMaxNum] = useState("");
   const [roomInfo, setRoomInfo] = useState({roomCode:"", roomroomInterference:"", roomPrivate:"", roomMaxNum:""});
+  
   const nameChange = (e) => {
     setroomCode(e.target.value);
   }
@@ -48,13 +49,11 @@ export default function Create({toLobby}) {
     }
   }
 
-
   function createRoom(){
     axios.post(`${basicURL}/chat/room`, roomInfo)
       .then(response => response.data)
       .then(data=>location.href=`multi/${data.roomCode}`)
       .catch(err=>console.error(err));
-    
   }
 
   return (
