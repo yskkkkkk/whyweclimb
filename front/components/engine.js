@@ -40,7 +40,7 @@ const JumpConst = 15.0;
 const chargingConst = 600.0;
 let player;
 
-
+let flag = false;
 let level = 0;
 let levelMax = 0;
 let goalLevel = 7;
@@ -390,6 +390,7 @@ class Player {
         let r = aabb.checkCollideBox(box);
         if (r.collide) {
           console.log("Goal!!!!");
+          flag = true;
         }
       }
       for (let b of blocks) {
@@ -897,6 +898,7 @@ function keyUp(e) {
 }
 
 function run(time) {
+  
   let currentTime = new Date().getTime();
   passedTime += currentTime - previousTime;
   previousTime = currentTime;
@@ -907,6 +909,9 @@ function run(time) {
     rendering();
     
     passedTime -= msPerFrame;
+    if(flag){
+      return
+    }
   }
 
   requestAnimationFrame(run);
@@ -1002,9 +1007,12 @@ function drawBlock(x, y, w, h) {
 }
 function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
+  // player.x=evt.clientX-rect.left;
+  // player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
   return {
     x: Math.trunc(evt.clientX - rect.left),
     y: HEIGHT - Math.trunc(evt.clientY - rect.top),
+    
   };
 }
 function getTouchPos(canvas, evt) {
