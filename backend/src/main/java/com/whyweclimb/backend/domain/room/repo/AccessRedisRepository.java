@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import com.whyweclimb.backend.domain.room.model.Message;
-import com.whyweclimb.backend.domain.room.model.Room;
+import com.whyweclimb.backend.domain.room.model.Access;
 
-public interface RoomRedisRepository extends CrudRepository<Room, String> {
+public interface AccessRedisRepository extends CrudRepository<Access, String> {
 	
-	List<Room> countByRoomCode(String roomCode);
+	List<Access> countByRoomCode(String roomCode);
 }
