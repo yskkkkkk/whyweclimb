@@ -21,13 +21,9 @@ public class MessageController {
     
     @MessageMapping("/chat/message")
     public void message(Message message){
-//        if(ChatMessage.MessageType.ENTER.equals(message.getType())){
-//            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
-//        }	
     	log.info("[name: "+message.getSender()+", key input: space-"+message.getSpace()+" left-"+message.getLeft()+" right-"+message.getRight()+"]");
     	
-    	message.setId(1);
-    	messageService.readMessage(MessageFindRequest.builder()
+    	Message before = messageService.readMessage(MessageFindRequest.builder()
     			.id(message.getId())
     			.sender(message.getSender())
     			.build());

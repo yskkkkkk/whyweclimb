@@ -20,18 +20,28 @@ export default function ModeSelect({toMain, toConfigure}) {
   // };
 
 
+
   return (
     <main className={style.container}>
-      {/* <Link href={'/single/singleGame'} passHref> */}
-      <a href={'/single/singleGame'}>
-        <h2>single mode</h2>
-      </a>
-      {/* </Link> */}
-      <Link href={'/multi'} passHref>
-        <h2>multi mode</h2>
-      </Link>
-      <button onClick={toConfigure}>configure</button>
-      <button onClick={toMain}>logout</button>
+      <section className={style.container2}>
+        <a className={style.btn} href={'/single/singleGame'}>
+          <div className={style.stage}>
+            <img className={`${style.box} ${style.bounce7}`} src="/images/running_R1.png" alt="a character jumping image" />
+          </div>
+          <h2>single mode</h2>
+        </a>
+        <a className={style.btn1} href={'/multi'}>
+          <div className={style.stage1}>
+            {/* https://css-tricks.com/making-css-animations-feel-natural/ 참고 */}
+            <img className={`${style.box1} ${style.bounce1}`} src="/images/sourceror.png" alt="a character jumping image" />
+            <img className={`${style.box1} ${style.bounce2}`} src="/images/dwarf.png" alt="a character jumping image" />
+            <img className={`${style.box1} ${style.bounce3}`} src="/images/woodElf.png" alt="a character jumping image" />
+          </div>
+          <h2 className={style.glow}>multi mode</h2>
+        </a>
+      </section>
+      {/* <button onClick={toConfigure}>configure</button> */}
+      <button className={style.btnBack} onClick={toMain}>logout</button>
     </main>
   )
 }
