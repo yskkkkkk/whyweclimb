@@ -54,6 +54,7 @@ class Engine extends Component {
     const chargingConst = 600.0;
     let player;
     let player2;
+    let players = [];
     let level = 0;
     let goalLevel = 7
     let levelMax = 0;
@@ -851,7 +852,9 @@ class Engine extends Component {
 
         player = new Player((WIDTH - 32) / 2.0,156);
         player2 = new Player(833,156);
-
+        players.push(player);
+        players.push(player2);
+                
 
         initLevels();
     }
@@ -966,7 +969,8 @@ class Engine extends Component {
 
     function update(delta)
     {
-        player.update(delta);
+        //player.update(delta);
+        players.map(player => player.update(delta))
     }
 
     function render()
@@ -1097,7 +1101,7 @@ class Engine extends Component {
     function socketConnect(){
         stomp.connect({},
             function(){
-                stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+                stomp.subscribe(`/sub/chat/room/`+roomId, function(message){//소켓 통신에서 addEventListener 처럼 상시로 메시지를 받도록 설정
                     var recv = JSON.parse(message.body);
                     receiveMessage(recv);
                 });
