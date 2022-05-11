@@ -1,13 +1,15 @@
 package com.whyweclimb.backend.domain.room.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.whyweclimb.backend.domain.room.model.Message;
 import com.whyweclimb.backend.domain.room.model.MessageFindRequest;
-import com.whyweclimb.backend.domain.room.model.Access;
 import com.whyweclimb.backend.domain.room.repo.MessageRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.RoomRepository;
+import com.whyweclimb.backend.entity.Access;
+import com.whyweclimb.backend.entity.Message;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,13 +48,17 @@ public class MessageServiceImpl implements MessageService{
 	public boolean roomStatus(String roomCode) {
 		boolean result = false;
 
-		int now = accessRedisRepository.countByRoomCode(roomCode).size();
+		int now = accessRedisRepository.findByRoomCode(roomCode).size();
 		int max = roomRepository.findByRoomCode(roomCode).orElse(null).getRoomMaxNum();
 		
 		if (now < max) result = true;
 
 		return result;
 	}
-	
+
+	@Override
+	public List<Access> playerList(String roomCode) {
+		return accessRedisRepository.findByRoomCode(roomCode);
+	}
 	
 }
