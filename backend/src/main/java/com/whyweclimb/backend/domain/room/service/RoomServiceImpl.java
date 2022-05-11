@@ -2,8 +2,8 @@ package com.whyweclimb.backend.domain.room.service;
 
 import org.springframework.stereotype.Service;
 
-import com.whyweclimb.backend.domain.room.model.RoomCreateRequest;
-import com.whyweclimb.backend.domain.room.model.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
+import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.domain.room.repo.RoomRepository;
 
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.domain.user.model;
+package com.whyweclimb.backend.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

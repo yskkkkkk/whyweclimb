@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
 import com.whyweclimb.backend.entity.User;
 
