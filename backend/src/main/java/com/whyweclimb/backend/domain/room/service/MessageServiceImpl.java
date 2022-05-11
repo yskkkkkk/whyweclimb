@@ -25,8 +25,28 @@ public class MessageServiceImpl implements MessageService{
 	private final RoomRepository roomRepository;
 
 	@Override
-	public boolean saveStatus(Status status) {
-		statusRedisRepository.save(status);
+	public boolean saveStatus(PlayerResponse input) {
+		statusRedisRepository.save(Status.builder()
+				.userSeq(input.getUserSeq())
+				.direction_L(input.isDirection_L())
+				.crouching(input.isCrouching())
+				.running_R(input.isRunning_R())
+				.running_L(input.isRunning_L())
+				.onGround(input.isOnGround())
+				.x(input.getX())
+				.y(input.getY())
+				.vx(input.getVx())
+				.vy(input.getVy())
+				.size(input.getSize())
+				.radius(input.getRadius())
+				.jumpGauge(input.getJumpGauge())
+				.runningTime(input.getRunningTime())
+				.level(input.getLevel())
+				.levelMax(input.getLevelMax())
+				.isLanding(input.isLanding())
+				.isCollide(input.isCollide())
+				.isJump(input.isJump())
+				.build());
 		return true;
 	}
 

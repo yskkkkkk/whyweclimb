@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MessageService {
 
-	public boolean saveStatus(Status status);
+	public boolean saveStatus(PlayerResponse status);
 	public PlayerResponse readStatus(Integer userSeq);
 	
 	boolean saveMessage(Message message);
