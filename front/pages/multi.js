@@ -4,8 +4,7 @@ import JoinModal from "../components/multi/joinModal";
 import CreateModal from '../components/multi/createModal';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
-// import { useState } from 'react';
-// import axios from 'axios';
+import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import toast from 'react-hot-toast';
 
 export default function Multi() {
@@ -35,17 +34,53 @@ export default function Multi() {
   // }
 
   return (
-    <main className={style.multi}>
-      
-      <nav className={style.lobby}>
-        <h2><a href="#" onClick={toggleJoinModal} >join</a></h2>
-        <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
-        <h2><a href="#" onClick={toggleCreateModal} >create</a></h2>
-      </nav>
-      <Link href={'/'} passHref>
-        <button className={style.back} >back</button>
-      </Link>
-    
-    </main>
+    <Parallax 
+      pages={1}
+      style={{
+        overflow: "hidden",
+      }}
+    >
+      <ParallaxLayer
+        offset={0}
+        style={{
+          backgroundImage: 'url("/images/stars.svg")',
+          backgroundColor: '#565656',
+          backgroundSize: 'cover',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      />
+
+      {/* <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.1 }}>
+        <img src='/images/intro.svg' style={{ width: '100%'}} />
+      </ParallaxLayer> */}
+
+      <ParallaxLayer
+        offset={0}
+        factor={4}
+        style={{
+          backgroundImage: 'url("/images/intro.svg")',
+          backgroundSize: 'cover',
+          position: 'absolute',
+          left: '50%',
+          top: '-110%',
+          opacity: '0.2',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+
+      <ParallaxLayer offset={0}>
+      <main className={style.multi}>
+        <nav className={style.lobby}>
+          <h2><a href="#" onClick={toggleJoinModal} >join</a></h2>
+          <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
+          <h2><a href="#" onClick={toggleCreateModal} >create</a></h2>
+        </nav>
+        <Link href={'/'} passHref>
+          <button className={style.back} >back</button>
+        </Link>
+      </main>
+      </ParallaxLayer>
+    </Parallax>
   )
 }

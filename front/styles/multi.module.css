@@ -1,12 +1,10 @@
 .multi {
-  /* background-color: rgb(152, 149, 149); */
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 15vh;
-  /* position: relative; */
 }
 
 .multi button {
