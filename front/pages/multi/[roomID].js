@@ -11,13 +11,12 @@ const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/multiEngine')}, {ssr:false});
 
 const basicURL = 'https://k6a401.p.ssafy.io/api';
+// const basicURL = `http://localhost:8081/api`
 const Stomp = StompJS.Stomp;
 const stomp = Stomp.over(function(){
   return new SockJS(`${basicURL}/ws-stomp`);
 })
 stomp.reconnect_delay = 5000;
-
-
 
 export default function WaitRoom() {
   const [isStart, setIsStart] = useState(true);
@@ -85,7 +84,7 @@ export default function WaitRoom() {
 
   return (
     <>
-      {!isStart && <main className={style.container}>
+      {/* {!isStart && <main className={style.container}>
           <header>welcome to room: {roomID}</header>
           <section>
             3 / 4
@@ -101,7 +100,22 @@ export default function WaitRoom() {
           <p id="mute">Mute<input type="checkbox"/></p>
         </div>
           <Engine stomp={stomp} userInfo={userInfo} roomId={roomID}/>
-      </main>}
+      </main>} */}
+      <main className={style.container}>
+        <div className={style.head}>
+          <p className={style.title}>Why We Climb</p>
+          
+            <p id="mute">Mute<input type="checkbox" /></p>
+            <p className={style.time} id="time"></p>
+          
+        </div>
+        <Engine stomp={stomp} roomId={roomID} userInfo={userInfo}/>
+        <div className={style.buttons}>
+          <Link href={'/'} passHref>
+            <a><h3>Back</h3></a>
+          </Link>
+        </div>
+      </main>
     </>
     
   )

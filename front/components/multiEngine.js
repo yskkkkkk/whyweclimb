@@ -1102,13 +1102,15 @@ class Engine extends Component {
     function socketConnect(){
         stomp.connect({},
             function(){
-                console.log(stomp);
+                console.log('stomp',stomp.webSocket._transport.url);
+                const strings = stomp.webSocket._transport.url.split('/');
+                const sessionId = strings[strings.length-2];
                 stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
                     console.log('message',message);
                     var recv = JSON.parse(message.body);
                     receiveMessage(recv);
                 });
-                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:'21dm13jd9831', userSeq:userInfo.userSeq, userId:userInfo.userId}));
+                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
             },
             function(error){
                 console.log('error', error.headers.message);
