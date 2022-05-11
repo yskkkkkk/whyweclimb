@@ -1,3 +1,7 @@
 /* .gameScreen {
   display:flex;
 } */
+.resultText {
+  
+  text-align: center;
+}
