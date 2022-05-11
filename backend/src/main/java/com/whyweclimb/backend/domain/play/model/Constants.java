@@ -17,7 +17,6 @@ public enum Constants {
     CHARGINGCONST(600.0),
     MSPERFRAME(1000.0 / 70.0);
 
-
     private Double constant;
 
     Constants(double constant) {

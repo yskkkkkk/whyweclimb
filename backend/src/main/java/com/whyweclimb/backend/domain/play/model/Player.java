@@ -1,20 +1,15 @@
-package com.whyweclimb.backend.domain.play.model;
+package com.whyweclimb.backend.domain.model;
 
-import com.whyweclimb.backend.domain.play.controller.PlayController;
-import com.whyweclimb.backend.domain.play.model.inner.CollideAABB;
-import com.whyweclimb.backend.domain.play.model.inner.CollideBox;
-import com.whyweclimb.backend.domain.play.model.inner.Command;
-import com.whyweclimb.backend.domain.play.model.inner.PlayerTestCollideRes;
+import com.whyweclimb.backend.domain.model.inner.CollideAABB;
+import com.whyweclimb.backend.domain.model.inner.PlayerTestCollideRes;
+import com.whyweclimb.backend.domain.model.inner.CollideBox;
+import com.whyweclimb.backend.domain.model.inner.Command;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class Player {
-    List<Command> direction = new ArrayList<>();
-    String userId;
-
     boolean direction_L;
     boolean crouching;
     boolean running_R;
@@ -30,10 +25,13 @@ public class Player {
     double runningTime;
     int level;
     int levelMax;
-    // collide 상태 추가 wall left right top wall
-    // jump 상태
+    int userId;
+    /// audio boolean
+    boolean isLanding;
+    boolean isCollide;
+    boolean isJump;
 
-    public Player(double x, double y){
+    public Player(double x, double y, int id){
 
         this.direction_L = false;
         this.runningTime = 0;
@@ -50,13 +48,16 @@ public class Player {
         this.jumpGauge = 0;
         this.level = 0;
         this.levelMax = 0;
+        this.userId = id;
+        this.isJump = false;
+        this.isLanding = false;
+        this.isCollide = false;
     }
 
     public AABB aabb(){
         return new AABB(this.x, this.y, this.size, this.size);
     }
 
-    // res를 만들지?
     public double[] getCenter(){
         return new double[] {this.x + this.size/2, this.y + this.size/2};
     }
@@ -64,19 +65,19 @@ public class Player {
     public void collideToLeft(double w) {
         this.x = w;
         this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToRight(double w) {
         this.x = w - this.size;
         this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToTop(double w) {
         this.y = w - this.size;
         this.vy *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToBottom(double w) {
@@ -84,7 +85,7 @@ public class Player {
         this.y = w;
         this.vx = 0;
         this.vy = 0;
-        //audios.landing.start();
+        this.isLanding = true; //audios.landing.start();
     }
 
     public void  collideToWall(Vector s, Vector r) {
@@ -92,11 +93,18 @@ public class Player {
         this.y = s.y;
         this.vx = r.x * Constants.BOUNDFRICTION.getConstant();
         this.vy = r.y;
-        // audios.bounce.start();
+        this.isCollide = true; // audios.bounce.start();
         // this.onGround = false;
     }
 
-    public void update(double delta, Command keys, List<Block> blocks, List<Wall> walls) {
+    public void audioInit(){
+        this.isCollide = false;
+        this.isLanding = false;
+        this.isJump = false;
+    }
+
+    public void update(double delta, Command keys, List<Block> blocks, List<Wall> walls, List<Block> goals) {
+        audioInit();
         //Apply previous acceleration
         this.vx *= Constants.GLOBALFRICTION.getConstant();
         this.vy *= Constants.GLOBALFRICTION.getConstant();
@@ -137,7 +145,7 @@ public class Player {
                     this.jumpGauge += delta / Constants.CHARGINGCONST.getConstant();
                 }
             } else if (keys.getLeft() && !this.crouching) {
-                c = this.testCollide(-Constants.SIDEJUMP.getConstant(),0, blocks, walls);
+                c = this.testCollide(-Constants.SIDEJUMP.getConstant(),0, blocks, walls, goals);
                 this.running_R = false;
                 this.running_L = true;
                 this.runningTime += 1;
@@ -151,7 +159,7 @@ public class Player {
                 this.running_L = false;
                 this.runningTime += 1;
                 this.runningTime = this.runningTime % 16;
-                c = this.testCollide(Constants.SPEED.getConstant(), 0, blocks, walls);
+                c = this.testCollide(Constants.SPEED.getConstant(), 0, blocks, walls, goals);
 
                 if (c.getSide() == null) // undefine -> null;
                     this.vx = Constants.SPEED.getConstant();
@@ -160,7 +168,7 @@ public class Player {
             } else if (!keys.getSpace() && this.crouching) {
                 if (keys.getLeft()) this.vx = -Constants.SIDEJUMP.getConstant();
                 else if (keys.getRight()) this.vx = Constants.SIDEJUMP.getConstant();
-                //audios.jump.start();
+                this.isJump = true; //audios.jump.start();
 
                 this.vy = this.jumpGauge * Constants.JUMPCONST.getConstant() * 2;
                 this.jumpGauge = 0;
@@ -174,7 +182,7 @@ public class Player {
         }
 
         //Apply gravity
-        c = this.testCollide(0, Constants.GRAVITY.getConstant()*-1, blocks, walls);
+        c = this.testCollide(0, Constants.GRAVITY.getConstant()*-1, blocks, walls, goals);
         if (c.getSide().equals("")) {
             if (this.vy > -100) {
                 this.vy -= Constants.GRAVITY.getConstant();
@@ -184,14 +192,14 @@ public class Player {
         }
 
         //Test if current acceleration make collision happen or not
-        c = this.testCollide(this.vx, this.vy, blocks, walls);
+        c = this.testCollide(this.vx, this.vy, blocks, walls, goals);
         if (!c.getSide().equals("")) {
             if (!c.getSide().equals("error"))
                 this.responseCollide(c);
         }
     }
 
-    public PlayerTestCollideRes testCollide(double nvx, double nvy, List<Block> blocks, List<Wall> walls) {
+    public PlayerTestCollideRes testCollide(double nvx, double nvy, List<Block> blocks, List<Wall> walls, List<Block> goals) {
         String side = "";
         double set = 0;
 
@@ -211,6 +219,9 @@ public class Player {
             set = 0;
         }
         else {
+            for(Block g : goals){
+
+            }
             for (Block b : blocks) {
                 if (b.level != this.level) continue;
 
@@ -312,7 +323,7 @@ public class Player {
                     Vector ref = nv.sub(n.mul(2).mul(nv.dot(n)));
                     // let ref = nv.sub(n.mul(nv.dot(n)));
 
-                    return new com.whyweclimb.backend.domain.play.model.inner.PlayerTestCollideRes(side, vSet, ref); // issue : set이 double이랑 Vector 둘 다 사용되는 문제
+                    return new PlayerTestCollideRes(side, vSet, ref); // issue : set이 double이랑 Vector 둘 다 사용되는 문제
                 }
             }
         }
