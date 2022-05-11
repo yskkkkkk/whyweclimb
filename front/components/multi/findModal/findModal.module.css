@@ -6,12 +6,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: goldenrod;
-  border-radius: 20px;
+  border-radius: 30px;
+}
+.modal h2 {
+  text-align: center;
+  margin-top: 1.5em;
 }
 
 .card {
   padding: 2.5rem;
-  margin: 2.5rem;
+  margin: 1rem 2.5rem;
   width: 20em;
   text-align: left;
   color: inherit;
@@ -25,11 +29,9 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 2vw;
   align-items: center;
 }
 .card input {
-    width: 15em;
     height: 2em;
     margin-left: 2em;
 }
@@ -37,6 +39,7 @@
 .btns {
   display: flex;
   justify-content: space-evenly;
+  margin: 1.5em 0;
 }
 /* ------------------------------------ responsive design ↓ --------------------------------------- */
 

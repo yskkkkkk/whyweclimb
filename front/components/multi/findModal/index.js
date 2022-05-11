@@ -31,6 +31,7 @@ export default function FindModal() {
 
   return (
     <section className={style.modal}>
+      <h2>Find room</h2>
       <div className={style.card}>
         <label>search room 
           <input type="text" required onChange={writeRoomID} /></label>
