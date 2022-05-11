@@ -1,7 +1,7 @@
 package com.whyweclimb.backend.domain.room.service;
 
-import com.whyweclimb.backend.domain.room.model.RoomCreateRequest;
-import com.whyweclimb.backend.domain.room.model.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
+import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 
 public interface RoomService {
 	// 방생성

@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.domain.room.model;
+package com.whyweclimb.backend.domain.room.dto;
 
 import com.whyweclimb.backend.entity.Room;
 

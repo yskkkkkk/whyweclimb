@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.whyweclimb.backend.domain.room.model.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.entity.Room;
 
 @Repository

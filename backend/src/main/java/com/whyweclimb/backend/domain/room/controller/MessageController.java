@@ -11,8 +11,8 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
-import com.whyweclimb.backend.domain.room.model.AccessResponse;
-import com.whyweclimb.backend.domain.room.model.MessageFindRequest;
+import com.whyweclimb.backend.domain.room.dto.AccessResponse;
+import com.whyweclimb.backend.domain.room.dto.MessageFindRequest;
 import com.whyweclimb.backend.domain.room.service.MessageService;
 import com.whyweclimb.backend.entity.Access;
 import com.whyweclimb.backend.entity.Message;
