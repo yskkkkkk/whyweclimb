@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.whyweclimb.backend.domain.room.model.Message;
-import com.whyweclimb.backend.domain.room.model.Access;
+import com.whyweclimb.backend.entity.Access;
+import com.whyweclimb.backend.entity.Message;
 
 public interface AccessRedisRepository extends CrudRepository<Access, String> {
 	
-	List<Access> countByRoomCode(String roomCode);
+	List<Access> findByRoomCode(String roomCode);
 }

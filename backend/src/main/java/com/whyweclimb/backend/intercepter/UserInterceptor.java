@@ -9,8 +9,8 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
-import com.whyweclimb.backend.domain.room.model.Access;
 import com.whyweclimb.backend.domain.room.service.MessageService;
+import com.whyweclimb.backend.entity.Access;
 
 import lombok.RequiredArgsConstructor;
  
