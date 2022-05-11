@@ -1,6 +1,6 @@
-package com.whyweclimb.backend.engine;
+package com.whyweclimb.backend.domain.play.model;
 
-import com.whyweclimb.backend.engine.inner.CollideAABB;
+import com.whyweclimb.backend.domain.play.model.inner.CollideAABB;
 
 public class Wall {
     int level;

@@ -1,6 +1,6 @@
-package com.whyweclimb.backend.engine;
+package com.whyweclimb.backend.domain.play.model;
 
-import com.whyweclimb.backend.engine.inner.CollideBox;
+import com.whyweclimb.backend.domain.play.model.inner.CollideBox;
 
 public class AABB {
     double x;

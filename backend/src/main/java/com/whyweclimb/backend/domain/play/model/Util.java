@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.engine;
+package com.whyweclimb.backend.domain.play.model;
 
 public class Util {
     public static Vector getIntersect(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4){
