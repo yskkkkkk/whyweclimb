@@ -1110,7 +1110,7 @@ class Engine extends Component {
                     var recv = JSON.parse(message.body);
                     receiveMessage(recv);
                 });
-                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:'sessionId', userSeq:userInfo.userSeq, userId:userInfo.userId}));
+                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
             },
             function(error){
                 console.log('error', error.headers.message);
