@@ -13,9 +13,6 @@ function MyApp({ Component, pageProps }) {
         toastOptions={{
           blank: {
             duration: Infinity,
-            style: {
-              // color: '#713200',
-            },
           },
         }}
       />

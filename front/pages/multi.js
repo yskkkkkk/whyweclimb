@@ -1,15 +1,15 @@
 
 import FindModal from '../components/multi/findModal';
 import JoinModal from "../components/multi/joinModal";
-import Create from '../components/multi/create';
+import CreateModal from '../components/multi/createModal';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
-import axios from 'axios';
+// import { useState } from 'react';
+// import axios from 'axios';
 import toast from 'react-hot-toast';
 
 export default function Multi() {
-  const basicURL = 'https://k6a401.p.ssafy.io/api'
+  // const basicURL = 'https://k6a401.p.ssafy.io/api'
 
   const toggleCreateModal = () => {
     toast(<CreateModal />)
@@ -21,18 +21,18 @@ export default function Multi() {
     toast(<JoinModal />)
   }
 
-  const joinRoom = () => {
-    axios.get(`${basicURL}/chat/rooms`)
-      .then(res=>res.data)
-      .then(data=>{
-        if(data.length === 0) {
-          alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
-        } else {
-          location.href=`multi/${data[data.length-1].roomId}`;
-        }
-      })
-      .catch(e=>console.error(e))
-  }
+  // const joinRoom = () => {
+  //   axios.get(`${basicURL}/chat/rooms`)
+  //     .then(res=>res.data)
+  //     .then(data=>{
+  //       if(data.length === 0) {
+  //         alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
+  //       } else {
+  //         location.href=`multi/${data[data.length-1].roomId}`;
+  //       }
+  //     })
+  //     .catch(e=>console.error(e))
+  // }
 
   return (
     <main className={style.multi}>
@@ -44,7 +44,7 @@ export default function Multi() {
       </nav>
       <Link href={'/'} passHref>
         <button className={style.back} >back</button>
-      </Link> 
+      </Link>
     
     </main>
   )
