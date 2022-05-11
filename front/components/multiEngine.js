@@ -55,7 +55,6 @@ class Engine extends Component {
     const players = [];
     let player;
     let player2;
-    let players = [];
     let level = 0;
     let goalLevel = 7
     let levelMax = 0;
