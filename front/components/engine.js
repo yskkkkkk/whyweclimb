@@ -1064,6 +1064,10 @@ class Engine extends Component {
   closeModal = () => {
     this.setState({ Modalshow:false})
   }
+  refresh () {
+    console.log("awfawf")
+    location.reload();
+  }
   run(time) {
   
     this.currentTime = new Date().getTime();
@@ -1100,9 +1104,9 @@ class Engine extends Component {
         <Modal visible={this.state.Modalshow}> 
           <h1 className={style.resultText}>축하합니다!!!</h1>
           <h2 className={style.resultText}>{parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
-          <Link href={'/single/singleGame'} passHref>
-            <a><h3 className={style.resultText}>Replay</h3></a>
-          </Link> 
+          <Link href={''} passHref>
+            <a onClick={this.refresh}><h3 className={style.resultText}>Replay</h3></a>
+          </Link>
           <Link href={'/'} passHref>
             <a><h3 className={style.resultText}>Back</h3></a>
           </Link> 
