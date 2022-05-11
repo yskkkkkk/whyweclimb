@@ -1,6 +1,6 @@
 import { Component } from "react";
 import style from "./engine.module.css";
-
+import Modal from "./ui/modal/modal";
 let cvs;
 let gfx;
 let mute;
@@ -389,8 +389,9 @@ class Player {
         let aabb = g.convert();
         let r = aabb.checkCollideBox(box);
         if (r.collide) {
-          console.log("Goal!!!!");
+          // console.log("Goal!!!!");
           flag = true;
+          
         }
       }
       for (let b of blocks) {
@@ -897,25 +898,27 @@ function keyUp(e) {
   keys[e.key] = false;
 }
 
-function run(time) {
+// function run(time) {
   
-  let currentTime = new Date().getTime();
-  passedTime += currentTime - previousTime;
-  previousTime = currentTime;
-  playingTime.innerText = `${parseInt((currentTime - startTime) / 1000)}초`;
-  while (passedTime >= msPerFrame) {
-    update(msPerFrame);
+//   let currentTime = new Date().getTime();
+//   passedTime += currentTime - previousTime;
+//   previousTime = currentTime;
+//   playingTime.innerText = `${parseInt((currentTime - startTime) / 1000)}초`;
+//   while (passedTime >= msPerFrame) {
+//     update(msPerFrame);
     
-    rendering();
+//     rendering();
     
-    passedTime -= msPerFrame;
-    if(flag){
-      return
-    }
-  }
-
-  requestAnimationFrame(run);
-}
+//     passedTime -= msPerFrame;
+//     if(flag){
+//       //console.log("goal!@#!@#!@#")
+//       return;
+//     }
+//   }
+//   if(!flag){
+//     requestAnimationFrame(run);
+//   }
+// }
 
 function update(delta) {
 
@@ -1009,6 +1012,8 @@ function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
   // player.x=evt.clientX-rect.left;
   // player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
+  // player.x=927;
+  // player.y =695+7*HEIGHT;
   return {
     x: Math.trunc(evt.clientX - rect.left),
     y: HEIGHT - Math.trunc(evt.clientY - rect.top),
@@ -1038,50 +1043,9 @@ class Engine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cvs:null,
-      gfx:null,
-      mute:null,
-      startTime:null,
-      playingTime:null,
-
-      WIDTH : WIDTH,
-      HEIGHT : HEIGHT,
-      volume : volume,
-      guideMsg : guideMsg,
-      guideMsg2 : guideMsg2,
-      isMuted : isMuted,
-      isTouch : isTouch,
-
-      d : new Date(),
-      previousTime : previousTime,
-      currentTime : currentTime,
-      passedTime : passedTime,
-      msPerFrame : msPerFrame,
-
-      numResource : numResource,
-      resourceLoaded : resourceLoaded,
-
-      images : images,
-      audios : audios,
-      keys : keys,
-      blocks : blocks,
-      walls : walls,
-      goals : goals,
-      speed : speed,
-      gravity : gravity,
-      globalFriction : globalFriction,
-      groundFriction : groundFriction,
-      sideJump : sideJump,
-      boundFriction : boundFriction,
-      JumpConst : JumpConst,
-      chargingConst : chargingConst,
-      player : null,
-      level : level,
-      goalLevel : goalLevel,
-      levelMax : levelMax,
+      Modalshow:false,
+      
     }
-    
-    
   }
   componentDidMount() {
     
@@ -1089,18 +1053,55 @@ class Engine extends Component {
     init();
     
     playingTime = document.getElementById("time");
-    run();
+    this.run();
+  }
+  openModal = () => {
+    // console.log("abcd")
+    this.setState({Modalshow:true})
     
   }
+  closeModal = () => {
+    this.setState({ Modalshow:false})
+  }
+  run(time) {
   
-  
-
-  
+    let currentTime = new Date().getTime();
+    passedTime += currentTime - previousTime;
+    previousTime = currentTime;
+    playingTime.innerText = `${parseInt((currentTime - startTime) / 1000)}초`;
+    while (passedTime >= msPerFrame) {
+      update(msPerFrame);
+      
+      rendering();
+      
+      passedTime -= msPerFrame;
+      
+      if(flag){
+        
+        this.openModal()
+        
+        return;
+      }
+    }
+    if(flag){
+      
+      this.openModal()
+    }
+    if(!flag){
+      requestAnimationFrame(this.run.bind(this));
+    }
+  }
   render() {
     //Make game levels
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
-    return <canvas id="cvs" width="1000" height="800" />;
+    return (
+      <div>
+        <canvas id="cvs" width="1000" height="800" />
+        <Modal visible={this.state.Modalshow}> Hello</Modal>
+      </div>
+    )
+      
   }
 }
 export default Engine;
