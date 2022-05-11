@@ -1,9 +1,9 @@
-package com.whyweclimb.backend.domain.model;
+package com.whyweclimb.backend.domain.play.model;
 
-import com.whyweclimb.backend.domain.model.inner.CollideAABB;
-import com.whyweclimb.backend.domain.model.inner.PlayerTestCollideRes;
-import com.whyweclimb.backend.domain.model.inner.CollideBox;
-import com.whyweclimb.backend.domain.model.inner.Command;
+import com.whyweclimb.backend.domain.play.model.inner.CollideAABB;
+import com.whyweclimb.backend.domain.play.model.inner.PlayerTestCollideRes;
+import com.whyweclimb.backend.domain.play.model.inner.CollideBox;
+import com.whyweclimb.backend.domain.play.model.inner.Command;
 import lombok.Getter;
 
 import java.util.List;

@@ -19,6 +19,8 @@ public class PlayerResponse {
     double runningTime;
     int level;
     int levelMax;
-    // collide 상태 추가 wall left right top wall
-    // jump 상태
+    /// audio boolean
+    boolean isLanding;
+    boolean isCollide;
+    boolean isJump;
 }
