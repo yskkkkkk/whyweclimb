@@ -2,28 +2,15 @@ import {useRouter} from 'next/router';
 import { useState, useEffect } from 'react';
 import style from './joinModal.module.css';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
-
-export default function JoinModal({toggleJoinModal}) {
+export default function JoinModal() {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [isInterference, setIsInterference] = useState("");
 
   const handleChange = (e) => {
     setIsInterference(e.target.value);
   }
-
-  // const findRoom = () => {                       // 찾는 방이 있으면 해당 페이지로 route. 다만 여기서 ws으로 바로 연결할지는 미정.
-  //   fetch(`https://${roomID}/exists`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data) {
-  //         router.push(`/multi/${roomID}`);
-  //       }
-  //       else {
-  //         alert('invalid RoomID');
-  //       }
-  //     });
-  // };
 
   const joinRoom = () => {
     axios.get(`${basicURL}/chat/room?roomInterference=${isInterference}`)
@@ -38,10 +25,15 @@ export default function JoinModal({toggleJoinModal}) {
       .catch(e=>console.error(e))
   }
 
+  const closeModal = () => {
+    toast.dismiss();
+  }
+
   return (
     <section className={style.modal}>
+      <h2>join room</h2>
       <div className={style.card}>
-      <span>roomInterference</span>
+        <span>set interference</span>
         <div>
           <label>
             <input onClick={handleChange} type="radio" name="roomInterference" value="true" required />
@@ -52,10 +44,11 @@ export default function JoinModal({toggleJoinModal}) {
             off
           </label>
         </div>
+
       </div>
       <div className={style.btns}>
         <button onClick={joinRoom} >join</button>
-        <button onClick={toggleJoinModal} >close</button>
+        <button onClick={closeModal} >close</button>
       </div>
     </section>
   )

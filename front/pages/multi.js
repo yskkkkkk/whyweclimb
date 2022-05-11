@@ -1,69 +1,95 @@
-import Lobby from '../components/multi/lobby';
+
 import FindModal from '../components/multi/findModal';
 import JoinModal from "../components/multi/joinModal";
-import Create from '../components/multi/create';
+import CreateModal from '../components/multi/createModal';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
-import axios from 'axios';
+import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import toast from 'react-hot-toast';
 
 export default function Multi() {
-  const basicURL = 'https://k6a401.p.ssafy.io/api'
-  const [multiRoom, setMultiRoom] = useState(0);  // 0:lobby  1:create
-  const [findModal, setFindModal] = useState(false);
-  const [joinModal, setJoinModal] = useState(false);
+  // const basicURL = 'https://k6a401.p.ssafy.io/api'
 
-  const toLobby = () => {
-    setMultiRoom(0);
-  };
-  const toCreate = () => {
-    setMultiRoom(1);
-  };
+  const toggleCreateModal = () => {
+    toast(<CreateModal />)
+  }
   const toggleFindModal = () => {
-    setFindModal(!findModal);
+    toast(<FindModal />)
   }
-
   const toggleJoinModal = () => {
-    setJoinModal(!joinModal);
+    toast(<JoinModal />)
   }
 
-  // const joinRoom = () => {          // 방 들어가지는 로직 정해야함. 가장 먼저 만들어진 순서로 넣을지, 가장 사람이 많은 순서로 넣을지, http request로 방이 있으면 일단 들어가지게할지 ws으로 인원이 다 모이면 하나의 방으로 들어가서 바로 시작하게 할지(롤처럼).
-  //   fetch(`https://rooms`)
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     if (data) {
-  //       router.push(`/${data[0]}`);
-  //     }
-  //     else {
-  //       alert('no rooms to join');
-  //     }
-  //   });
+  // const joinRoom = () => {
+  //   axios.get(`${basicURL}/chat/rooms`)
+  //     .then(res=>res.data)
+  //     .then(data=>{
+  //       if(data.length === 0) {
+  //         alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
+  //       } else {
+  //         location.href=`multi/${data[data.length-1].roomId}`;
+  //       }
+  //     })
+  //     .catch(e=>console.error(e))
   // }
 
-  const joinRoom = () => {
-    axios.get(`${basicURL}/chat/rooms`)
-      .then(res=>res.data)
-      .then(data=>{
-        if(data.length === 0) {
-          alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
-        } else {
-          location.href=`multi/${data[data.length-1].roomId}`;
-        }
-      })
-      .catch(e=>console.error(e))
-  }
-
   return (
-    <main className={findModal ? style.modalOn : style.multi}>
+    <Parallax 
+      pages={1}
+      style={{
+        overflow: "hidden",
+      }}
+    >
+      <ParallaxLayer
+        offset={0}
+        style={{
+          backgroundImage: 'url("/images/stars.svg")',
+          backgroundColor: '#565656',
+          backgroundSize: 'cover',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: '0',
+        }}
+      />
 
-      {multiRoom == 0 && <Lobby toggleJoinModal={toggleJoinModal} toCreate={toCreate} toggleFindModal={toggleFindModal} />}
+      {/* <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.1 }}>
+        <img src='/images/intro.svg' style={{ width: '100%'}} />
+      </ParallaxLayer> */}
 
-      {multiRoom == 1 && <Create toLobby={toLobby} />}
+      <ParallaxLayer
+        offset={0}
+        factor={4}
+        style={{
+          backgroundImage: 'url("/images/intro.svg")',
+          backgroundSize: 'cover',
+          position: 'absolute',
+          left: '50%',
+          top: '-110%',
+          opacity: '0.2',
+          transform: 'translate(-50%, -50%)',
+          zIndex: '0',
+        }}
+      />
 
-      {findModal && <FindModal toggleFindModal={toggleFindModal} />} 
-
-      {joinModal && <JoinModal toggleJoinModal={toggleJoinModal} />}
-        
-    </main>
+      <ParallaxLayer offset={0} style={{zIndex: 6}} >
+      <main className={style.multi}>
+        <nav className={style.lobby}>
+          <div className={style.joinBtn} onClick={toggleJoinModal}>
+            <div>
+              <div className={style.joinImg1} />
+              <div className={style.joinImg2} />
+              <div className={style.spark} />
+            </div>
+            <h2>join</h2>
+          </div>
+          <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
+          <h2><a href="#" onClick={toggleCreateModal} >create</a></h2>
+        </nav>
+        <Link href={'/'} passHref>
+          <button className={style.back} >back</button>
+        </Link>
+      </main>
+      </ParallaxLayer>
+    </Parallax>
   )
 }

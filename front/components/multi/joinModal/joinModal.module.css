@@ -1,40 +1,64 @@
 .modal {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* gap: 3vh; */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: goldenrod;
+  border-radius: 30px;
+  width: 29vw;
+  height: fit-content;
+  border: 8px solid #eaeaea;
+}
+.modal h2 {
+  text-align: center;
+  margin: 1.5em 0;
 }
 
 .card {
-  padding: 2.5rem;
-  margin: 2.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
+  padding: 2em;
+  padding-left: 4em;
+  width: 30em;
+  display: flex;
+  flex-direction: row;
+  max-width: fit-content;
+  justify-content: center;
+  align-self: center;
+  overflow: hidden;
   font-size: large;
-  border: 2px solid #eaeaea;
+  border: 3px solid #eaeaea;
   border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
 }
-.card label {
+.card span {
+  display: flex;
+  align-items: center;
+}
+.card div {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 2vw;
+  padding-left: 3em;
+}
+.card label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2vh;
+  width: 5vw;
   align-items: center;
 }
 .card input {
-    width: 15em;
+    width: 2em;
     height: 2em;
-    margin-left: 2em;
 }
 
 .btns {
   display: flex;
   justify-content: space-evenly;
+  margin: 1.5em 0;
 }
 /* ------------------------------------ responsive design ↓ --------------------------------------- */
 
