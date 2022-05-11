@@ -7,6 +7,7 @@
   transform: translate(-50%, -50%);
   background-color: goldenrod;
   border-radius: 30px;
+  border: 8px solid #eaeaea;
 }
 .modal h2 {
   text-align: center;

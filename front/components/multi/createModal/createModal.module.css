@@ -8,7 +8,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: goldenrod;
-  border: 2px solid #eaeaea;
+  border: 8px solid #eaeaea;
   border-radius: 40px;
 }
 .container h2 {

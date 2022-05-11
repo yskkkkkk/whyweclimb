@@ -11,6 +11,7 @@
   border-radius: 30px;
   width: 29vw;
   height: fit-content;
+  border: 8px solid #eaeaea;
 }
 .modal h2 {
   text-align: center;
