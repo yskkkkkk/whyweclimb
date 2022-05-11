@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.whyweclimb.backend.domain.room.model.RoomCreateRequest;
-import com.whyweclimb.backend.domain.room.model.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
+import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.domain.room.service.RoomService;
 
 @RequiredArgsConstructor

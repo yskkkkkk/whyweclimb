@@ -1,24 +1,26 @@
-package com.whyweclimb.backend.domain.room.model;
-
+package com.whyweclimb.backend.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
 @ToString
-@RedisHash(value = "room")
-public class Room {
+@RedisHash(value = "access")
+public class Access {
 	@Id
 	@Indexed
 	private String sessionId;
     @Indexed
     private String roomCode;
+    private Integer userSeq;
+    private String userId;
+    private Boolean ready;
 }

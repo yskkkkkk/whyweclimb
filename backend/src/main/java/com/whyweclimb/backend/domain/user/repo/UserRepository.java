@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
-import com.whyweclimb.backend.domain.user.model.UserRequest;
+import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.entity.User;
 
 @Repository

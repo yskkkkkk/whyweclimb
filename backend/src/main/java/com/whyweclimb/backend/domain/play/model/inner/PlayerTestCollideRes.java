@@ -1,6 +1,6 @@
-package com.whyweclimb.backend.engine.inner;
+package com.whyweclimb.backend.domain.play.model.inner;
 
-import com.whyweclimb.backend.engine.Vector;
+import com.whyweclimb.backend.domain.play.model.Vector;
 import lombok.Getter;
 
 @Getter

@@ -1,9 +1,14 @@
-package com.whyweclimb.backend.engine;
+package com.whyweclimb.backend.domain.play.model;
 
-import com.whyweclimb.backend.engine.inner.CollideAABB;
-import com.whyweclimb.backend.engine.inner.CollideBox;
-import com.whyweclimb.backend.engine.inner.PlayerTestCollideRes;
+import com.whyweclimb.backend.domain.play.model.inner.CollideAABB;
+import com.whyweclimb.backend.domain.play.model.inner.PlayerTestCollideRes;
+import com.whyweclimb.backend.domain.play.model.inner.CollideBox;
+import com.whyweclimb.backend.domain.play.model.inner.Command;
+import lombok.Getter;
 
+import java.util.List;
+
+@Getter
 public class Player {
     boolean direction_L;
     boolean crouching;
@@ -18,9 +23,15 @@ public class Player {
     double radius;
     double jumpGauge;
     double runningTime;
-    Game game = new Game();
+    int level;
+    int levelMax;
+    int userId;
+    /// audio boolean
+    boolean isLanding;
+    boolean isCollide;
+    boolean isJump;
 
-    public Player(double x, double y){
+    public Player(double x, double y, int id){
 
         this.direction_L = false;
         this.runningTime = 0;
@@ -35,13 +46,18 @@ public class Player {
         this.size = 32;
         this.radius = this.size / 2.0 * 1.414;
         this.jumpGauge = 0;
+        this.level = 0;
+        this.levelMax = 0;
+        this.userId = id;
+        this.isJump = false;
+        this.isLanding = false;
+        this.isCollide = false;
     }
 
     public AABB aabb(){
         return new AABB(this.x, this.y, this.size, this.size);
     }
 
-    // res를 만들지?
     public double[] getCenter(){
         return new double[] {this.x + this.size/2, this.y + this.size/2};
     }
@@ -49,19 +65,19 @@ public class Player {
     public void collideToLeft(double w) {
         this.x = w;
         this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToRight(double w) {
         this.x = w - this.size;
         this.vx *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToTop(double w) {
         this.y = w - this.size;
         this.vy *= -1 * Constants.BOUNDFRICTION.getConstant();
-        //audios.bounce.start();
+        this.isCollide = true; //audios.bounce.start();
     }
 
     public void collideToBottom(double w) {
@@ -69,7 +85,7 @@ public class Player {
         this.y = w;
         this.vx = 0;
         this.vy = 0;
-        //audios.landing.start();
+        this.isLanding = true; //audios.landing.start();
     }
 
     public void  collideToWall(Vector s, Vector r) {
@@ -77,11 +93,18 @@ public class Player {
         this.y = s.y;
         this.vx = r.x * Constants.BOUNDFRICTION.getConstant();
         this.vy = r.y;
-        // audios.bounce.start();
+        this.isCollide = true; // audios.bounce.start();
         // this.onGround = false;
     }
 
-    public void update() { // 원래 파라미터 : delta
+    public void audioInit(){
+        this.isCollide = false;
+        this.isLanding = false;
+        this.isJump = false;
+    }
+
+    public void update(double delta, Command keys, List<Block> blocks, List<Wall> walls, List<Block> goals) {
+        audioInit();
         //Apply previous acceleration
         this.vx *= Constants.GLOBALFRICTION.getConstant();
         this.vy *= Constants.GLOBALFRICTION.getConstant();
@@ -97,66 +120,69 @@ public class Player {
         PlayerTestCollideRes c;
 
         //Calculate current level
-        this.game.level = (int) Math.floor(this.y / Constants.HEIGHT.getConstant());
+        this.level = (int) Math.floor(this.y / Constants.HEIGHT.getConstant());
+        this.levelMax = Math.max(this.level, this.levelMax);
 
-        this.game.levelMax = Math.max(this.game.level, this.game.levelMax);
-    // 여기부터 시작하기
-        // let moving = this.vx * this.vx + this.vy + this.vy;
-        // let falling = this.vy < 0 ? true : false;
-//        if (keys.ArrowLeft) {
-//            this.direction_L = true
-//        } else if (keys.ArrowRight) {
-//            this.direction_L = false
-//        }
-//
-//        if (this.onGround) {
-//            this.vx *= Constants.groundFriction;
-//
-//            if (keys[' '] && !this.crouching) {
-//                this.running_R = false
-//                this.running_L = false
-//                this.crouching = true;
-//            } else if (keys[' '] && this.crouching) {
-//                this.jumpGauge >= 1 ? this.jumpGauge = 1 : this.jumpGauge += delta / chargingConst;
-//            } else if (keys.ArrowLeft && !this.crouching) {
-//                c = this.testCollide(-speed, 0);
-//                this.running_R = false
-//                this.running_L = true
-//                this.runningTime += 1
-//                this.runningTime = this.runningTime % 16
-//                if (c.side == undefined)
-//                    this.vx = -speed;
-//                else
-//                    this.vx = 0;
-//            } else if (keys.ArrowRight && !this.crouching) {
-//                this.running_R = true
-//                this.running_L = false
-//                this.runningTime += 1
-//                this.runningTime = this.runningTime % 16
-//                c = this.testCollide(speed, 0);
-//
-//                if (c.side == undefined)
-//                    this.vx = speed;
-//                else
-//                    this.vx = 0;
-//            } else if (!keys[' '] && this.crouching) {
-//                if (keys.ArrowLeft) this.vx = -sideJump;
-//                else if (keys.ArrowRight) this.vx = sideJump;
-//                audios.jump.start();
-//
-//                this.vy = this.jumpGauge * JumpConst * 2;
-//                this.jumpGauge = 0;
-//                this.onGround = false;
-//                this.crouching = false;
-//            } else if (!keys.ArrowRight && !keys.ArrowLeft) {
-//                this.running_R = false
-//                this.running_L = false
-//                this.runningTime = 0
-//            }
-//        }
+        //double moving = this.vx * this.vx + this.vy + this.vy;
+        //boolean falling = this.vy < 0;
+        if (keys.getLeft()) {
+            this.direction_L = true;
+        } else if (keys.getRight()) {
+            this.direction_L = false;
+        }
+
+        if (this.onGround) {
+            this.vx *= Constants.GLOBALFRICTION.getConstant();
+
+            if (keys.getSpace() && !this.crouching) {
+                this.running_R = false;
+                this.running_L = false;
+                this.crouching = true;
+            } else if (keys.getSpace() && this.crouching) {
+                if(this.jumpGauge >= 1){
+                    this.jumpGauge = 1;
+                }else {
+                    this.jumpGauge += delta / Constants.CHARGINGCONST.getConstant();
+                }
+            } else if (keys.getLeft() && !this.crouching) {
+                c = this.testCollide(-Constants.SIDEJUMP.getConstant(),0, blocks, walls, goals);
+                this.running_R = false;
+                this.running_L = true;
+                this.runningTime += 1;
+                this.runningTime = this.runningTime % 16;
+                if (c.getSide() == null) // undefine -> null
+                    this.vx = -Constants.SPEED.getConstant();
+                else
+                    this.vx = 0;
+            } else if (keys.getRight() && !this.crouching) {
+                this.running_R = true;
+                this.running_L = false;
+                this.runningTime += 1;
+                this.runningTime = this.runningTime % 16;
+                c = this.testCollide(Constants.SPEED.getConstant(), 0, blocks, walls, goals);
+
+                if (c.getSide() == null) // undefine -> null;
+                    this.vx = Constants.SPEED.getConstant();
+                else
+                    this.vx = 0;
+            } else if (!keys.getSpace() && this.crouching) {
+                if (keys.getLeft()) this.vx = -Constants.SIDEJUMP.getConstant();
+                else if (keys.getRight()) this.vx = Constants.SIDEJUMP.getConstant();
+                this.isJump = true; //audios.jump.start();
+
+                this.vy = this.jumpGauge * Constants.JUMPCONST.getConstant() * 2;
+                this.jumpGauge = 0;
+                this.onGround = false;
+                this.crouching = false;
+            } else if (!keys.getRight() && !keys.getLeft()) {
+                this.running_R = false;
+                this.running_L = false;
+                this.runningTime = 0;
+            }
+        }
 
         //Apply gravity
-        c = this.testCollide(0, Constants.GRAVITY.getConstant()*-1);
+        c = this.testCollide(0, Constants.GRAVITY.getConstant()*-1, blocks, walls, goals);
         if (c.getSide().equals("")) {
             if (this.vy > -100) {
                 this.vy -= Constants.GRAVITY.getConstant();
@@ -166,14 +192,14 @@ public class Player {
         }
 
         //Test if current acceleration make collision happen or not
-        c = this.testCollide(this.vx, this.vy);
+        c = this.testCollide(this.vx, this.vy, blocks, walls, goals);
         if (!c.getSide().equals("")) {
             if (!c.getSide().equals("error"))
                 this.responseCollide(c);
         }
     }
 
-    public PlayerTestCollideRes testCollide(double nvx, double nvy) {
+    public PlayerTestCollideRes testCollide(double nvx, double nvy, List<Block> blocks, List<Wall> walls, List<Block> goals) {
         String side = "";
         double set = 0;
 
@@ -193,8 +219,11 @@ public class Player {
             set = 0;
         }
         else {
-            for (Block b : this.game.blocks) {
-                if (b.level != this.game.level) continue;
+            for(Block g : goals){
+
+            }
+            for (Block b : blocks) {
+                if (b.level != this.level) continue;
 
                 AABB aabb = b.convert();
                 CollideBox r = aabb.checkCollideBox(box);
@@ -265,14 +294,14 @@ public class Player {
                 }
             }
 
-            for (Wall w : this.game.walls) {
-                if (w.level != this.game.level) continue;
+            for (Wall w : walls) {
+                if (w.level != this.level) continue;
 
                 w = w.convert();
 
                 CollideAABB r = w.checkCollideAABB(box, nvx, nvy);
 
-                if (r.getCollide() != null) { // 일단 undefine에서 null로 변경
+                if (r.getCollide() != null) { // undefine -> null
                     side = "wall";
                     Vector nv = new Vector(nvx, nvy);
                     Vector n;
@@ -320,10 +349,5 @@ public class Player {
                 break;
 
         }
-    }
-
-    // 이것도
-    public void render(){
-
     }
 }

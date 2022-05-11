@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.engine;
+package com.whyweclimb.backend.domain.play.model;
 
 import lombok.Getter;
 
@@ -14,7 +14,8 @@ public enum Constants {
     SIDEJUMP(5.1 * 2),
     BOUNDFRICTION(0.66),
     JUMPCONST(15.0),
-    CHARGINGCONST(600.0);
+    CHARGINGCONST(600.0),
+    MSPERFRAME(1000.0 / 70.0);
 
     private Double constant;
 

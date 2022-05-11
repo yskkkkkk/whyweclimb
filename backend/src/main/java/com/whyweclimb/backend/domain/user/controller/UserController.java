@@ -1,8 +1,8 @@
 package com.whyweclimb.backend.domain.user.controller;
 
-import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
-import com.whyweclimb.backend.domain.user.model.UserRequest;
-import com.whyweclimb.backend.domain.user.model.UserUpdateRequest;
+import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserRequest;
+import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.service.JwtTokenProvider;
 import com.whyweclimb.backend.domain.user.service.SecurityService;
 import com.whyweclimb.backend.domain.user.service.UserService;

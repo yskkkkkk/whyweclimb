@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.domain.user.model;
+package com.whyweclimb.backend.domain.user.dto;
 
 import com.whyweclimb.backend.entity.User;
 

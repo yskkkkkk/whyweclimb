@@ -52,6 +52,7 @@ class Engine extends Component {
     const boundFriction = 0.66;
     const JumpConst = 15.0;
     const chargingConst = 600.0;
+    const players = [];
     let player;
     let player2;
     let level = 0;
@@ -658,16 +659,16 @@ class Engine extends Component {
             drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
         }
     }
-    if(userInfo){
-      window.onload = function ()
-      {
-          console.log('load!!!!')
-          socketConnect();
-          init();
-          run();
-      };
+    // if(userInfo){
+    //   window.onload = function ()
+    //   {
+    //       console.log('load!!!!')
+    //       socketConnect();
+    //       init();
+    //       run();
+    //   };
 
-    }
+    // }
 
     function start(){
       socketConnect();
@@ -848,9 +849,12 @@ class Engine extends Component {
             audios.jump.currentTime = 0;
             audios.jump.play();
         };
-
+        
         player = new Player((WIDTH - 32) / 2.0,156);
         player2 = new Player(833,156);
+        players.push(player);
+        players.push(player2);
+        
 
 
         initLevels();
@@ -966,7 +970,8 @@ class Engine extends Component {
 
     function update(delta)
     {
-        player.update(delta);
+        // player2.update(delta);
+        players.map(player => player.update(delta));
     }
 
     function render()
@@ -1097,11 +1102,15 @@ class Engine extends Component {
     function socketConnect(){
         stomp.connect({},
             function(){
+                console.log('stomp',stomp.webSocket._transport.url);
+                const strings = stomp.webSocket._transport.url.split('/');
+                const sessionId = strings[strings.length-2];
                 stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+                    console.log('message',message);
                     var recv = JSON.parse(message.body);
                     receiveMessage(recv);
                 });
-                // stomp.send(`/pub/chat/message`,{},JSON.stringify({type:'ENTER',roomCode:roomId, sender:"noman"}));
+                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
             },
             function(error){
                 console.log('error', error.headers.message);

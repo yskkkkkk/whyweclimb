@@ -1,4 +1,4 @@
-package com.whyweclimb.backend.engine.inner;
+package com.whyweclimb.backend.domain.play.model.inner;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
