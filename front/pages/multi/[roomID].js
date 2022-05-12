@@ -40,6 +40,7 @@ export default function WaitRoom() {
     setGroupInfo(msg.data);
   }
 
+
   function socketConnect(data){
     stomp.connect({},
       function(){
@@ -47,7 +48,7 @@ export default function WaitRoom() {
         const strings = stomp.webSocket._transport.url.split('/');
         const sessionId = strings[strings.length-2];
         stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
-            console.log('message',message);
+            console.log('here !!!message',message);
             var recv = JSON.parse(message.body);
             receiveMessage(recv);
         });
