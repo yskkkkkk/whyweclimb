@@ -95,7 +95,7 @@ export default function WaitRoom() {
             {groupInfo && groupInfo.length} / {roomInfo && roomInfo.roomMaxNum}
           </section>
           <section>
-            {groupInfo && groupInfo.map(player => <div>{player.userId}</div>)}
+            {groupInfo && groupInfo.map(player => <div key={player.userSeq}>{player.userId}</div>)}
           </section>
           <button onClick={startGame}>Start Game</button>
           <Link href={'/multi'}>
