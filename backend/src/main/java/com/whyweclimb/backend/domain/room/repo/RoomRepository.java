@@ -1,5 +1,6 @@
 package com.whyweclimb.backend.domain.room.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +13,8 @@ import com.whyweclimb.backend.entity.Room;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 	Optional<RoomInfoResponse> findByRoomCode(String roomCode);
-	Optional<RoomInfoResponse> findTop1ByRoomInterferenceTrueOrderByRoomSeq();
-	Optional<RoomInfoResponse> findTop1ByRoomInterferenceFalseOrderByRoomSeq();
+	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceTrueOrderByRoomSeqDesc();
+	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceFalseOrderByRoomSeqDesc();
 	@Transactional
 	Integer deleteByRoomCode(String roomCode);
 

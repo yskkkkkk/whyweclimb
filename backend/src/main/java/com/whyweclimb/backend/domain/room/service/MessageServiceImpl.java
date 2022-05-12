@@ -104,5 +104,9 @@ public class MessageServiceImpl implements MessageService{
 		
 		return access.getRoomCode();
 	}
-	
+
+	@Override
+	public Access getAccess(String sessionId) {
+		return accessRedisRepository.findBySessionId(sessionId);
+	}
 }
