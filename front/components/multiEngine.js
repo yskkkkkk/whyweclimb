@@ -659,7 +659,7 @@ class Engine extends Component {
             gfx.rect(941, HEIGHT - 779, 52, -14);
             gfx.stroke();
             //gfx.fillStyle= 'rgb(0,0,0)'
-            // drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
+            drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
         }
     }
     // if(userInfo){
@@ -863,7 +863,12 @@ class Engine extends Component {
                 myIdx = i;
             }
         }
-
+        players.push(players[myIdx]);
+        groupInfo.push(groupInfo[myIdx]);
+        groupInfo.splice(myIdx,1);
+        players.splice(myIdx,1);
+        myIdx = players.length - 1;
+        player = players[myIdx];
 
         initLevels();
     }
@@ -1137,17 +1142,15 @@ class Engine extends Component {
 
     function receiveMessage(msg){
         console.log('msg',msg);
+        console.log('level!!!',level, levelMax);
         for (var i=0; i<groupInfo.length; i++){
             if(groupInfo[i].userSeq === msg.id){
                 if(players[i].x !== msg.x) {
                     players[i].x = msg.x;
-                    console.log('diff x!!');
                 }
                 if(players[i].y !== msg.y) {
                     players[i].y = msg.y;
-                    console.log('diff y!!');
                 }
-                console.log('stopped!!', i);
                 const tempKeys = {" ":msg.space, ArrowLeft:msg.left, ArrowRight:msg.right};
                 players[i].keys = tempKeys;
                 console.log('x,y!!',players[i].x,players[i].y);
