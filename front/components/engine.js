@@ -1012,8 +1012,8 @@ function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
   // player.x=evt.clientX-rect.left;
   // player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
-  // player.x=927;
-  // player.y =695+7*HEIGHT;
+  player.x=927;
+  player.y =695+7*HEIGHT;
   return {
     x: Math.trunc(evt.clientX - rect.left),
     y: HEIGHT - Math.trunc(evt.clientY - rect.top),
