@@ -16,5 +16,9 @@ import lombok.ToString;
 public class AccessResponse {
 	private List<Access> data;
 	private String message;
-
+	public AccessResponse(List<Access> data) {
+		super();
+		this.data = data;
+	}
+	
 }

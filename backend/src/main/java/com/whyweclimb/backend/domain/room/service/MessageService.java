@@ -22,4 +22,5 @@ public interface MessageService {
 	boolean roomStatus(String roomCode);
 	
 	List<Access> playerList(String roomCode); 
+	public String getReady(Integer userSeq);
 }
