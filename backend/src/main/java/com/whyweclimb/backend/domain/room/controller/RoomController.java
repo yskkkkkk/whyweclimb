@@ -61,10 +61,4 @@ public class RoomController {
 		}
 		return new ResponseEntity<RoomInfoResponse>(response, status);
     }
-
-    // 방 삭제
-    @DeleteMapping("/room/{roomCode}")
-    public ResponseEntity<Boolean> roomInfo(@PathVariable String roomCode){
-		return new ResponseEntity<Boolean>( roomService.deleteRoom(roomCode), HttpStatus.OK);
-    }
 }
