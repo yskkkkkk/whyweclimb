@@ -11,4 +11,5 @@ public interface AccessRedisRepository extends CrudRepository<Access, String> {
 	
 	List<Access> findByRoomCode(String roomCode);
 	Access findByUserSeq(Integer userSeq);
+	Access findBySessionId(String sessionId);
 }

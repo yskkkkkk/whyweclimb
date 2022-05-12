@@ -23,4 +23,5 @@ public interface MessageService {
 	
 	List<Access> playerList(String roomCode); 
 	public String getReady(Integer userSeq);
+	public Access getAccess(String sessionId);
 }

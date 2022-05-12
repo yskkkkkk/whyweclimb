@@ -9,6 +9,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import com.whyweclimb.backend.domain.room.service.MessageService;
+import com.whyweclimb.backend.domain.room.service.RoomService;
 import com.whyweclimb.backend.intercepter.UserInterceptor;
 
 @Configuration
@@ -17,6 +18,8 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Autowired
 	private MessageService messageService;
+	@Autowired
+	private RoomService roomService;
 	
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config){
@@ -32,7 +35,7 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new UserInterceptor(messageService));
+        registration.interceptors(new UserInterceptor(messageService, roomService));
     }
     	// 때려 죽여도 메세지가 안보내짐 
 }
