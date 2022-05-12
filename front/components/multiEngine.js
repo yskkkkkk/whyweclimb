@@ -40,7 +40,7 @@ class Engine extends Component {
     let images = {};
     let audios = {};
     let inputkeys = {" ":false, ArrowLeft:false, ArrowRight:false, up:true};
-    let keys= {};
+    // let keys= {};
     let blocks = [];
     let walls = [];
     let goals = [];
@@ -52,16 +52,17 @@ class Engine extends Component {
     const boundFriction = 0.66;
     const JumpConst = 15.0;
     const chargingConst = 600.0;
+    const locations = [[200,156], [400,156], [600,156], [800,156]];
     const players = [];
     let player;
-    let player2;
-    let players = [];
+    let myIdx;
     let level = 0;
     let goalLevel = 7
     let levelMax = 0;
     const stomp = this.props.stomp;
     const roomId = this.props.roomId;
     const userInfo = this.props.userInfo;
+    const groupInfo = this.props.groupInfo;
     class Vector
     {
         constructor(x, y)
@@ -268,6 +269,7 @@ class Engine extends Component {
             this.size = 32;
             this.radius = this.size / 2.0 * 1.414;
             this.jumpGauge = 0;
+            this.keys = {" ":false, ArrowLeft:false, ArrowRight:false};
         }
 
         aabb()
@@ -323,9 +325,9 @@ class Engine extends Component {
             this.vy = 0;
             if (isTouch)
             {
-                keys.ArrowLeft = false;
-                keys.ArrowRight = false;
-                keys.up= false;
+                this.keys.ArrowLeft = false;
+                this.keys.ArrowRight = false;
+                this.keys.up= false;
             }
             audios.landing.start();
         }
@@ -364,26 +366,26 @@ class Engine extends Component {
             
             // let moving = this.vx * this.vx + this.vy + this.vy;
             // let falling = this.vy < 0 ? true : false;
-            if (keys.ArrowLeft){
+            if (this.keys.ArrowLeft){
                 this.direction_L = true
-            }else if (keys.ArrowRight){
+            }else if (this.keys.ArrowRight){
                 this.direction_L = false
             }
             if (this.onGround)
             {
                 this.vx *= groundFriction;
 
-                if (keys[' '] && !this.crouching)
+                if (this.keys[' '] && !this.crouching)
                 {
                     this.running_R=false
                     this.running_L=false
                     this.crouching = true;
                 }
-                else if (keys[' '] && this.crouching)
+                else if (this.keys[' '] && this.crouching)
                 {
                     this.jumpGauge >= 1 ? this.jumpGauge = 1 : this.jumpGauge += delta / chargingConst;
                 }
-                else if (keys.ArrowLeft && !this.crouching)
+                else if (this.keys.ArrowLeft && !this.crouching)
                 {
                     c = this.testCollide(-speed, 0);
                     this.running_R = false
@@ -395,7 +397,7 @@ class Engine extends Component {
                     else
                         this.vx = 0;
                 }
-                else if (keys.ArrowRight && !this.crouching)
+                else if (this.keys.ArrowRight && !this.crouching)
                 {
                     this.running_R = true
                     this.running_L = false
@@ -408,10 +410,10 @@ class Engine extends Component {
                     else
                         this.vx = 0;
                 }
-                else if (!keys[' '] && this.crouching)
+                else if (!this.keys[' '] && this.crouching)
                 {
-                    if (keys.ArrowLeft) this.vx = -sideJump;
-                    else if (keys.ArrowRight) this.vx = sideJump;
+                    if (this.keys.ArrowLeft) this.vx = -sideJump;
+                    else if (this.keys.ArrowRight) this.vx = sideJump;
                     audios.jump.start();
 
                     this.vy = this.jumpGauge * JumpConst * 2;
@@ -419,7 +421,7 @@ class Engine extends Component {
                     this.onGround = false;
                     this.crouching = false;
                 }
-                else if(!keys.ArrowRight && !keys.ArrowLeft){
+                else if(!this.keys.ArrowRight && !this.keys.ArrowLeft){
                     this.running_R=false
                     this.running_L=false
                     this.runningTime=0
@@ -657,7 +659,7 @@ class Engine extends Component {
             gfx.rect(941, HEIGHT - 779, 52, -14);
             gfx.stroke();
             //gfx.fillStyle= 'rgb(0,0,0)'
-            drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
+            // drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
         }
     }
     // if(userInfo){
@@ -701,46 +703,46 @@ class Engine extends Component {
             console.log(message);
         }, false);
 
-        cvs.addEventListener('touchstart', function (e)
-        {
-            let pos = getTouchPos(cvs, e);
+        // cvs.addEventListener('touchstart', function (e)
+        // {
+        //     let pos = getTouchPos(cvs, e);
 
-            if (pos.x < WIDTH / 2 && pos.y < HEIGHT / 2)
-            {
-                keys.ArrowLeft = true;
-            }
-            else if (pos.x >= WIDTH / 2 && pos.y < HEIGHT / 2)
-            {
-                keys.ArrowRight = true;
-            }
-            else if (pos.x < WIDTH / 5 * 2 && pos.y >= HEIGHT / 2)
-            {
-                keys[' '] = true;
-                keys.ArrowLeft = true;
-            }
-            else if (pos.x >= WIDTH / 5 * 3 && pos.y >= HEIGHT / 2)
-            {
-                keys[' '] = true;
-                keys.ArrowRight = true;
-            }
-            else if (pos.x >= WIDTH / 5 * 2 && pos.x < WIDTH / 5 * 3 && pos.y >= HEIGHT / 2)
-            {
-                keys[' '] = true;
-            }
+        //     if (pos.x < WIDTH / 2 && pos.y < HEIGHT / 2)
+        //     {
+        //         keys.ArrowLeft = true;
+        //     }
+        //     else if (pos.x >= WIDTH / 2 && pos.y < HEIGHT / 2)
+        //     {
+        //         keys.ArrowRight = true;
+        //     }
+        //     else if (pos.x < WIDTH / 5 * 2 && pos.y >= HEIGHT / 2)
+        //     {
+        //         keys[' '] = true;
+        //         keys.ArrowLeft = true;
+        //     }
+        //     else if (pos.x >= WIDTH / 5 * 3 && pos.y >= HEIGHT / 2)
+        //     {
+        //         keys[' '] = true;
+        //         keys.ArrowRight = true;
+        //     }
+        //     else if (pos.x >= WIDTH / 5 * 2 && pos.x < WIDTH / 5 * 3 && pos.y >= HEIGHT / 2)
+        //     {
+        //         keys[' '] = true;
+        //     }
 
-            isTouch = true;
-        }, false);
+        //     isTouch = true;
+        // }, false);
 
-        cvs.addEventListener('touchend', function (e)
-        {
-            if (!keys[' '])
-            {
-                keys.ArrowLeft = false;
-                keys.ArrowRight = false;
-            }
-            else
-                keys[' '] = false;
-        }, false);
+        // cvs.addEventListener('touchend', function (e)
+        // {
+        //     if (!keys[' '])
+        //     {
+        //         keys.ArrowLeft = false;
+        //         keys.ArrowRight = false;
+        //     }
+        //     else
+        //         keys[' '] = false;
+        // }, false);
 
         mute.addEventListener('click', function (e)
         {
@@ -851,11 +853,16 @@ class Engine extends Component {
             audios.jump.play();
         };
         
-        player = new Player((WIDTH - 32) / 2.0,156);
-        player2 = new Player(833,156);
-        players.push(player);
-        players.push(player2);
-        
+        // player = new Player((WIDTH - 32) / 2.0,156);
+        // player2 = new Player(833,156);
+        // players.push(player);
+        // players.push(player2);
+        for (var i=0; i < groupInfo.length; i++){
+            players.push(new Player(locations[i][0],locations[i][1]));
+            if(userInfo.userSeq === groupInfo[i].userSeq){
+                myIdx = i;
+            }
+        }
 
 
         initLevels();
@@ -932,7 +939,8 @@ class Engine extends Component {
             inputkeys[e.key] = true;
             // if(player.onGround)
             {
-                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
+                    x:players[myIdx].x, y:players[myIdx].y, vx:players[myIdx].vx, vy:players[myIdx].vy}));
                 // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'}));       
             }
 
@@ -946,7 +954,8 @@ class Engine extends Component {
             // console.log(keys);
             // if(player.onGround)
             {
-                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight']}));        
+                stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
+                    x:players[myIdx].x, y:players[myIdx].y, vx:players[myIdx].vx, vy:players[myIdx].vy}));        
                 // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'})); 
             }
 
@@ -1008,8 +1017,9 @@ class Engine extends Component {
 
             drawWall(w);
         });
-        player.render();
-        player2.render();
+        // player.render();
+        // player2.render();
+        players.map(player => player.render())
         if (levelMax == 0)
         {
             gfx.fillText("Let's go up!", 550, HEIGHT - 80);
@@ -1101,27 +1111,50 @@ class Engine extends Component {
     }
 
     function socketConnect(){
-        stomp.connect({},
-            function(){
-                console.log(stomp);
-                stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
-                    console.log('message',message);
-                    var recv = JSON.parse(message.body);
-                    receiveMessage(recv);
-                });
-                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:'21dm13jd9831', userSeq:userInfo.userSeq, userId:userInfo.userId}));
-            },
-            function(error){
-                console.log('error', error.headers.message);
-            }
-        )
+        // stomp.connect({},
+        //     function(){
+        //         console.log('stomp',stomp.webSocket._transport.url);
+        //         const strings = stomp.webSocket._transport.url.split('/');
+        //         const sessionId = strings[strings.length-2];
+        //         stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+        //             console.log('message',message);
+        //             var recv = JSON.parse(message.body);
+        //             receiveMessage(recv);
+        //         });
+        //         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
+        //     },
+        //     function(error){
+        //         console.log('error', error.headers.message);
+        //     }
+        // )
+        console.log(stomp);
+        stomp.subscribe('/sub/chat/room/' + roomId, function(message){
+            console.log('game Start!!');
+            var recv = JSON.parse(message.body);
+            receiveMessage(recv);
+        })
     }
 
     function receiveMessage(msg){
         console.log('msg',msg);
-        keys[" "] = msg.space;
-        keys['ArrowLeft'] = msg.left;
-        keys['ArrowRight'] = msg.right;
+        for (var i=0; i<groupInfo.length; i++){
+            if(groupInfo[i].userSeq === msg.id){
+                if(players[i].x !== msg.x) {
+                    players[i].x = msg.x;
+                    console.log('diff x!!');
+                }
+                if(players[i].y !== msg.y) {
+                    players[i].y = msg.y;
+                    console.log('diff y!!');
+                }
+                console.log('stopped!!', i);
+                const tempKeys = {" ":msg.space, ArrowLeft:msg.left, ArrowRight:msg.right};
+                players[i].keys = tempKeys;
+                console.log('x,y!!',players[i].x,players[i].y);
+                console.log('x,y!!!',msg.x, msg.y);
+                break;
+            }
+        }
     }
 
     return (

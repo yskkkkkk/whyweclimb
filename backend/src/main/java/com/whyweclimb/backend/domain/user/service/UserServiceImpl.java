@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.whyweclimb.backend.domain.user.model.UserInfoResponse;
-import com.whyweclimb.backend.domain.user.model.UserRequest;
-import com.whyweclimb.backend.domain.user.model.UserUpdateRequest;
+import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserRequest;
+import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
 import com.whyweclimb.backend.entity.User;
 

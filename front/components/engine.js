@@ -1,5 +1,6 @@
 import { Component } from "react";
 import style from "./engine.module.css";
+import Link from 'next/link';
 import Modal from "./ui/modal/modal";
 let cvs;
 let gfx;
@@ -44,6 +45,7 @@ let flag = false;
 let level = 0;
 let levelMax = 0;
 let goalLevel = 7;
+
 class Vector {
   constructor(x, y) {
     this.x = x;
@@ -89,7 +91,6 @@ class Vector {
     return this.x == v.x && this.y == v.y;
   }
 }
-
 class Goal {
   constructor(level, aabb) {
     this.level = level;
@@ -155,7 +156,6 @@ class Wall {
     return new Wall(this.level, this.x0, this.y0 + this.level * HEIGHT, this.wx, this.wy);
   }
 }
-
 class AABB {
   constructor(x, y, w, h) {
     this.x = x;
@@ -195,7 +195,6 @@ class AABB {
     this.Y += dy;
   }
 }
-
 class Block {
   constructor(level, aabb) {
     this.level = level;
@@ -206,7 +205,6 @@ class Block {
     return new AABB(this.aabb.x, this.aabb.y + this.level * HEIGHT, this.aabb.width, this.aabb.height);
   }
 }
-
 class Player {
   constructor(x, y) {
     this.direction_L = false;
@@ -574,9 +572,9 @@ class Player {
     gfx.stroke();
     //gfx.fillStyle= 'rgb(0,0,0)'
     drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
-    
   }
 }
+
 function init() {
   cvs = document.getElementById("cvs");
   gfx = cvs.getContext("2d");
@@ -822,7 +820,6 @@ function init() {
 
   player = new Player((WIDTH - 32) / 2.0, 156);
   
-
   initLevels();
 }
 
@@ -956,8 +953,6 @@ function rendering() {
   });
   
   player.render();
-  
-  
 }
 
 function drawWall(wall) {
@@ -1040,15 +1035,16 @@ function getIntersect(x1, y1, x2, y2, x3, y3, x4, y4) {
 
 
 class Engine extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       Modalshow:false,
-      
+      currentTime:null,
     }
   }
+
   componentDidMount() {
-    
     console.log("onload");
     init();
     
@@ -1063,21 +1059,23 @@ class Engine extends Component {
   closeModal = () => {
     this.setState({ Modalshow:false})
   }
+  refresh () {
+    console.log("awfawf")
+    location.reload();
+  }
   run(time) {
   
-    let currentTime = new Date().getTime();
-    passedTime += currentTime - previousTime;
-    previousTime = currentTime;
-    playingTime.innerText = `${parseInt((currentTime - startTime) / 1000)}초`;
+    this.currentTime = new Date().getTime();
+    passedTime += this.currentTime - previousTime;
+    previousTime = this.currentTime;
+    playingTime.innerText = `${parseInt((this.currentTime - startTime) / 1000)}초`;
     while (passedTime >= msPerFrame) {
       update(msPerFrame);
-      
       rendering();
-      
       passedTime -= msPerFrame;
       
       if(flag){
-        
+        console.log(startTime)
         this.openModal()
         
         return;
@@ -1098,7 +1096,16 @@ class Engine extends Component {
     return (
       <div>
         <canvas id="cvs" width="1000" height="800" />
-        <Modal visible={this.state.Modalshow}> Hello</Modal>
+        <Modal visible={this.state.Modalshow}> 
+          <h1 className={style.resultText}>축하합니다!!!</h1>
+          <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}분{parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
+          <Link href={''} passHref>
+            <a onClick={this.refresh}><h3 className={style.resultText}>Replay</h3></a>
+          </Link>
+          <Link href={'/'} passHref>
+            <a><h3 className={style.resultText}>Back</h3></a>
+          </Link> 
+        </Modal>
       </div>
     )
       

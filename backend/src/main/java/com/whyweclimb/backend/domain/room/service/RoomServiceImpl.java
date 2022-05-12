@@ -1,9 +1,12 @@
 package com.whyweclimb.backend.domain.room.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.whyweclimb.backend.domain.room.model.RoomCreateRequest;
-import com.whyweclimb.backend.domain.room.model.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
+import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.RoomRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 	private final RoomRepository roomRepository;
+	private final AccessRedisRepository accessRedisRepository;
 
 	@Override
 	public RoomInfoResponse createRoom(RoomCreateRequest request) {
@@ -30,12 +34,22 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public RoomInfoResponse joinRoom(boolean interference) {
-		RoomInfoResponse room;
+		List<RoomInfoResponse> rooms;
+		RoomInfoResponse room = null;
 		if (interference) {
-			room = roomRepository.findTop1ByRoomInterferenceTrueOrderByRoomSeq().orElse(null);
+			rooms = roomRepository.findTop10ByRoomInterferenceTrueOrderByRoomSeqDesc().orElse(null);
 		}else {
-			room = roomRepository.findTop1ByRoomInterferenceFalseOrderByRoomSeq().orElse(null);
+			rooms = roomRepository.findTop10ByRoomInterferenceFalseOrderByRoomSeqDesc().orElse(null);
 		}
+		for (RoomInfoResponse roomInfoResponse : rooms) {
+			int now = accessRedisRepository.findByRoomCode(roomInfoResponse.getRoomCode()).size();
+			int max = roomInfoResponse.getRoomMaxNum();
+			if (now < max) {
+				room = roomInfoResponse;
+				break;
+			}
+		}
+		
 		return room;
 	}
 

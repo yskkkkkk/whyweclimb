@@ -63,17 +63,17 @@ export default function Home() {
         }}
         >
           <ParallaxLayer
-          offset={0}
-          speed={0}
-          factor={4}
-          style={{
-            backgroundImage: 'url("/images/stars.svg")',
-            backgroundColor: '#565656',
-            backgroundSize: 'cover',
-            display: 'flex',
-            justifyContent: 'center',
-            zIndex: 0,
-          }}
+            offset={0}
+            speed={0}
+            factor={4}
+            style={{
+              backgroundImage: 'url("/images/stars.svg")',
+              backgroundColor: '#565656',
+              backgroundSize: 'cover',
+              display: 'flex',
+              justifyContent: 'center',
+              zIndex: 0,
+            }}
           />
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2, zIndex: 0, }}>
@@ -95,8 +95,8 @@ export default function Home() {
             <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '75%' }} />
           </ParallaxLayer>
 
-
-          <ParallaxLayer 
+          {/*모드선택 컴포넌트*/}
+          <ParallaxLayer
           offset={0}
           style={{
             display: 'flex',
@@ -128,7 +128,7 @@ export default function Home() {
             <h2>image1</h2>
           </ParallaxLayer>
 
-          <ParallaxLayer offset={3}>
+          <ParallaxLayer offset={3}>        {/* 로그인 & 회원가입 컴포넌트 */}
             <Parallax 
               pages={2}
               ref={mainRef}
@@ -145,10 +145,8 @@ export default function Home() {
               </ParallaxLayer>
             </Parallax>
           </ParallaxLayer>
-          
+  
         </Parallax>
-        {/* {loggedIn && <ModeSelect toMain={toMain} toConfigure={toConfigure} />} */}
-        {/* {loggedIn && <Configure toModeSelect={toModeSelect} />} */}
       </main>
     </>
   )

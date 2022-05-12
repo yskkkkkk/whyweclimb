@@ -9,8 +9,9 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
-import com.whyweclimb.backend.domain.room.model.Access;
 import com.whyweclimb.backend.domain.room.service.MessageService;
+import com.whyweclimb.backend.domain.room.service.RoomService;
+import com.whyweclimb.backend.entity.Access;
 
 import lombok.RequiredArgsConstructor;
  
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UserInterceptor implements ChannelInterceptor {
 
 	private final MessageService messageService;
+	private final RoomService roomService;
 	
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -50,7 +52,12 @@ public class UserInterceptor implements ChannelInterceptor {
 ////            customChannel.send(MessageBuilder.createMessage(new byte[0], headerAccessor.getMessageHeaders()));
 //        }else 
         if(StompCommand.DISCONNECT.equals(accessor.getCommand())) {
-        	messageService.decreaseNumberOfPeople(accessor.getSessionId());        	
+        	String roomCode = messageService.getAccess(accessor.getSessionId()).getRoomCode();
+        	messageService.decreaseNumberOfPeople(accessor.getSessionId());
+        	
+        	if (messageService.playerList(roomCode).size() == 0) {
+        		roomService.deleteRoom(roomCode);
+        	}
         }
         return message;
     }

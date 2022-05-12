@@ -27,6 +27,7 @@
   height: 300px;
   width: 90%;
 }
+
 .box {
   align-self: flex-end;
   animation-duration: 2s;
@@ -36,25 +37,16 @@
   transform-origin: bottom;
   width: 125px;
 }
+
 .btn:hover .bounce7 {
   animation-name: bounce7;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
-}
-@keyframes bounce7 {
-  0%   { transform: scale(1,1)      translateY(0); }
-  10%  { transform: scale(1.1,.9)   translateY(0); }
-  30%  { transform: scale(.9,1.1)   translateY(-100px); }
-  50%  { transform: scale(1.05,.95) translateY(0); }
-  57%  { transform: scale(1,1)      translateY(-7px); }
-  64%  { transform: scale(1,1)      translateY(0); }
-  100% { transform: scale(1,1)      translateY(0); }
 }
 
 /* 멀티모드 */
 .stage1 {
   border-bottom: 3px solid #444;
   display: flex;
-  /* gap: 3em; */
   height: 300px;
   width: 90%;
 }
@@ -70,38 +62,20 @@
 }
 
 .btn1:hover .bounce1 {
-  animation-name: bounce1;
+  animation-name: bounce7;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
 }
 .btn1:hover .bounce2 {
-  animation-name: bounce2;
+  animation-name: bounce7;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-duration: 2.5s;
 }
 .btn1:hover .bounce3 {
-  animation-name: bounce3;
+  animation-name: bounce7;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-duration: 1.5s;
 }
-@keyframes bounce1 {
-  0%   { transform: scale(1,1)      translateY(0); }
-  10%  { transform: scale(1.1,.9)   translateY(0); }
-  30%  { transform: scale(.9,1.1)   translateY(-100px); }
-  50%  { transform: scale(1.05,.95) translateY(0); }
-  57%  { transform: scale(1,1)      translateY(-7px); }
-  64%  { transform: scale(1,1)      translateY(0); }
-  100% { transform: scale(1,1)      translateY(0); }
-}
-@keyframes bounce2 {
-  0%   { transform: scale(1,1)      translateY(0); }
-  10%  { transform: scale(1.1,.9)   translateY(0); }
-  30%  { transform: scale(.9,1.1)   translateY(-100px); }
-  50%  { transform: scale(1.05,.95) translateY(0); }
-  57%  { transform: scale(1,1)      translateY(-7px); }
-  64%  { transform: scale(1,1)      translateY(0); }
-  100% { transform: scale(1,1)      translateY(0); }
-}
-@keyframes bounce3 {
+@keyframes bounce7 {
   0%   { transform: scale(1,1)      translateY(0); }
   10%  { transform: scale(1.1,.9)   translateY(0); }
   30%  { transform: scale(.9,1.1)   translateY(-100px); }
