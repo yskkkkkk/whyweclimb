@@ -27,4 +27,8 @@ public class Message {
     private Boolean space;
     private Boolean left;
     private Boolean right;
+    private Double x;
+    private Double y;
+    private Double vx;
+    private Double vy;
 }

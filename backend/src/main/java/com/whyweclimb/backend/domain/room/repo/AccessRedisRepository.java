@@ -10,4 +10,5 @@ import com.whyweclimb.backend.entity.Message;
 public interface AccessRedisRepository extends CrudRepository<Access, String> {
 	
 	List<Access> findByRoomCode(String roomCode);
+	Access findByUserSeq(Integer userSeq);
 }

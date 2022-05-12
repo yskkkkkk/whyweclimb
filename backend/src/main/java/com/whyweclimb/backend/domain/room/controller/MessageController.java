@@ -33,24 +33,25 @@ public class MessageController {
 //    			.sender(message.getSender())
 //    			.build());	// 이전 커맨드 기록
     	
-    	PlayerResponse before = messageService.readStatus(message.getId()); // before (이전상태 레디스에서 불러오기)
-    	
-    	PlayerResponse now = before; // 여기에서 before (이전상태) + message (입력받은 커맨드로 현재상태 계산) - 임시로 해놨어요 일단
-    	
-    	messageService.saveStatus(now);
+//    	PlayerResponse before = messageService.readStatus(message.getId()); // before (이전상태 레디스에서 불러오기)
+//    	
+//    	PlayerResponse now = before; // 여기에서 before (이전상태) + message (입력받은 커맨드로 현재상태 계산) - 임시로 해놨어요 일단
+//    	
+//    	messageService.saveStatus(now);
     	
 //    	messageService.saveMessage(message);
     	// saveMessage -> saveStatus (현재 상태 저장) 
     	
-        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), now); // 상태 반환 
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message); // 상태 반환 
     }
     
     @MessageMapping("/room/entrance")
     public void checkPeopleNumber(Access access) {
     	if (messageService.roomStatus(access.getRoomCode())) {
+    		access.setReady(false);
     		messageService.increaseNumberOfPeople(access);
     		log.info("[user come: created session - "+access.getSessionId()+"]");
-    		    		
+    		   
     		AccessResponse response = new AccessResponse(messageService.playerList(access.getRoomCode()), "OK");
     		messagingTemplate.convertAndSend("/sub/chat/room/" + access.getRoomCode(), response);
     	}else {
@@ -62,7 +63,10 @@ public class MessageController {
     
     
     @MessageMapping("/room/reday")
-    public void playerReady(Access access) {
-    	
+    public void playerReady(Integer userSeq) {
+    	String roomCode = messageService.getReady(userSeq);
+    	AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
+		
+    	messagingTemplate.convertAndSend("/sub/chat/room/" + roomCode, response);
     }
 }

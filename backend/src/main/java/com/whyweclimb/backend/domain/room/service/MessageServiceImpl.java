@@ -96,4 +96,13 @@ public class MessageServiceImpl implements MessageService{
 		return accessRedisRepository.findByRoomCode(roomCode);
 	}
 
+	@Override
+	public String getReady(Integer userSeq){
+		Access access = accessRedisRepository.findByUserSeq(userSeq);
+		access.setReady(true);
+		accessRedisRepository.save(access);
+		
+		return access.getRoomCode();
+	}
+	
 }

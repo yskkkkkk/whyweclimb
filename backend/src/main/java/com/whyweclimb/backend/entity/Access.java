@@ -20,6 +20,7 @@ public class Access {
 	private String sessionId;
     @Indexed
     private String roomCode;
+    @Indexed
     private Integer userSeq;
     private String userId;
     private Boolean ready;
