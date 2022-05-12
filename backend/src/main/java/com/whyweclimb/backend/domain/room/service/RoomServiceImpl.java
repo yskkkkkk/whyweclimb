@@ -1,6 +1,7 @@
 package com.whyweclimb.backend.domain.room.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,18 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public RoomInfoResponse findRoom(String roomCode) {
-		return roomRepository.findByRoomCode(roomCode).orElse(null);
+		Optional<RoomInfoResponse> RoomInfo = roomRepository.findByRoomCode(roomCode);
+		RoomInfoResponse response = null;
+		
+		if(RoomInfo.isPresent()) {
+			int now = accessRedisRepository.findByRoomCode(roomCode).size();
+			int max = RoomInfo.get().getRoomMaxNum();
+			if (now < max) {
+				response = RoomInfo.get();
+			}
+		}
+		
+		return response;
 	}
 
 	@Override
