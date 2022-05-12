@@ -29,7 +29,14 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public RoomInfoResponse findRoom(String roomCode) {
-		return roomRepository.findByRoomCode(roomCode).orElse(null);
+		RoomInfoResponse response = roomRepository.findByRoomCode(roomCode).orElse(null);
+
+		int now = accessRedisRepository.findByRoomCode(roomCode).size();
+		int max = response.getRoomMaxNum();
+		
+		if (now >= max) response = null; 
+		
+		return response;
 	}
 
 	@Override
