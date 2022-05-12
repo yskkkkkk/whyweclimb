@@ -52,6 +52,7 @@ class Engine extends Component {
     const boundFriction = 0.66;
     const JumpConst = 15.0;
     const chargingConst = 600.0;
+    const locations = [(200,156), (400,156), (600,156), (800,156)];
     const players = [];
     let player;
     let player2;
@@ -1100,22 +1101,27 @@ class Engine extends Component {
     }
 
     function socketConnect(){
-        stomp.connect({},
-            function(){
-                console.log('stomp',stomp.webSocket._transport.url);
-                const strings = stomp.webSocket._transport.url.split('/');
-                const sessionId = strings[strings.length-2];
-                stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
-                    console.log('message',message);
-                    var recv = JSON.parse(message.body);
-                    receiveMessage(recv);
-                });
-                stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
-            },
-            function(error){
-                console.log('error', error.headers.message);
-            }
-        )
+        // stomp.connect({},
+        //     function(){
+        //         console.log('stomp',stomp.webSocket._transport.url);
+        //         const strings = stomp.webSocket._transport.url.split('/');
+        //         const sessionId = strings[strings.length-2];
+        //         stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+        //             console.log('message',message);
+        //             var recv = JSON.parse(message.body);
+        //             receiveMessage(recv);
+        //         });
+        //         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
+        //     },
+        //     function(error){
+        //         console.log('error', error.headers.message);
+        //     }
+        // )
+        stomp.subscribe('/sub/chat/room/' + roomId, function(message){
+            console.log('game Start!!');
+            var recv = JSON.parse(message.body);
+            receiveMessage(recv);
+        })
     }
 
     function receiveMessage(msg){
