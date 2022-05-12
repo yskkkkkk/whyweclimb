@@ -19,10 +19,12 @@ const stomp = Stomp.over(function(){
 stomp.reconnect_delay = 5000;
 
 export default function WaitRoom() {
-  const [isStart, setIsStart] = useState(true);
+  const [isStart, setIsStart] = useState(false);
   const router = useRouter();
   const {roomID} = router.query;
   const [userInfo, setUserInfo] = useState();
+  const [roomInfo, setRoomInfo] = useState();
+  const [groupInfo, setGroupInfo] = useState();
 
   // function sendMessage(msg){
   //   console.log('hii');
@@ -33,27 +35,29 @@ export default function WaitRoom() {
     setIsStart(prev=>!prev);
   }
 
-  // function receiveMessage(msg){
-  //   console.log('msg',msg)
-  //   setMsg(msg);
-  // }
+  function receiveMessage(msg){
+    console.log('msg',msg)
+    setGroupInfo(msg.data);
+  }
 
-  // function socketConnect(){
-  //   stomp.connect({},
-  //     function(){
-  //       stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
-  //         var recv = JSON.parse(message.body);
-  //         receiveMessage(recv);
-  //         console.log(message);
-  //       });
-  //       stomp.send(`/pub/chat/message`,{},JSON.stringify({type:'ENTER', roomCode:roomID, sender:"noman"}));
-  //       // console.log('stomp',stomp);
-  //     },
-  //     function(error){
-  //       console.log('error',error.headers.message);
-  //     }
-  //   )
-  // }
+  function socketConnect(data){
+    stomp.connect({},
+      function(){
+        console.log('stomp',stomp.webSocket._transport.url);
+        const strings = stomp.webSocket._transport.url.split('/');
+        const sessionId = strings[strings.length-2];
+        stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
+            console.log('message',message);
+            var recv = JSON.parse(message.body);
+            receiveMessage(recv);
+        });
+        stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomID, sessionId:sessionId, userSeq:data.userSeq, userId:data.userId}));
+      },
+      function(error){
+        console.log('error',error.headers.message);
+      }
+    )
+  }
 
   function getUserInfo(){
     const token = localStorage.getItem("token");
@@ -63,7 +67,7 @@ export default function WaitRoom() {
     }
     fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
       .then(res => res.json())
-      .then(data => setUserInfo(data))
+      .then(data => {socketConnect(data);setUserInfo(data)})
       .catch(err => console.log(err))
   }
   
@@ -74,6 +78,7 @@ export default function WaitRoom() {
         .then(data=>{
           if(data!==''){
             console.log(data);
+            setRoomInfo(data);
             getUserInfo();
           } else {
             location.href="/multi";
@@ -84,24 +89,20 @@ export default function WaitRoom() {
 
   return (
     <>
-      {/* {!isStart && <main className={style.container}>
+      {!isStart && <main className={style.container}>
           <header>welcome to room: {roomID}</header>
           <section>
-            3 / 4
+            {groupInfo && groupInfo.length} / {roomInfo && roomInfo.roomMaxNum}
           </section>
+          <section>
+            {groupInfo && groupInfo.map(player => <div>{player.userId}</div>)}
+          </section>
+          <button onClick={startGame}>Start Game</button>
           <Link href={'/multi'}>
             <button>back to Lobby</button>
           </Link>
-          <button onClick={startGame}>Start Game</button>
-      </main> }
+      </main> }      
       {isStart && <main className={style.container}>
-        <div>
-          <p>점프컹스</p>
-          <p id="mute">Mute<input type="checkbox"/></p>
-        </div>
-          <Engine stomp={stomp} userInfo={userInfo} roomId={roomID}/>
-      </main>} */}
-      <main className={style.container}>
         <div className={style.head}>
           <p className={style.title}>Why We Climb</p>
           
@@ -109,13 +110,13 @@ export default function WaitRoom() {
             <p className={style.time} id="time"></p>
           
         </div>
-        <Engine stomp={stomp} roomId={roomID} userInfo={userInfo}/>
+        <Engine stomp={stomp} roomId={roomID} userInfo={userInfo} groupInfo={groupInfo}/>
         <div className={style.buttons}>
           <Link href={'/'} passHref>
             <a><h3>Back</h3></a>
           </Link>
         </div>
-      </main>
+      </main>}
     </>
     
   )
