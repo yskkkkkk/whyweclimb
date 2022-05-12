@@ -82,7 +82,16 @@ export default function Multi() {
             </div>
             <h2>join</h2>
           </div>
-          <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
+          <div className={style.findBtn} onClick={toggleFindModal}>
+            <div>
+              <div className={style.findImg}>
+                <div className={style.blingSS} />
+                <div className={style.blingS} />
+                <div className={style.blingM} />
+              </div>
+            </div>
+            <h2>find</h2>
+          </div>
           <h2><a href="#" onClick={toggleCreateModal} >create</a></h2>
         </nav>
         <Link href={'/'} passHref>
