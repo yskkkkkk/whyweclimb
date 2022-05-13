@@ -17,7 +17,7 @@ public class SingleGameController {
 
     private final SingleGameService singleGameService;
 
-    @PostMapping("/")
+    @PostMapping("/level")
     public ResponseEntity<Boolean> settingUserLevel(@RequestBody UserUpdateRequest request){
         System.out.println(request.getMaxLevel());
         return new ResponseEntity<Boolean>(singleGameService.setUserLevel(request), HttpStatus.OK);
