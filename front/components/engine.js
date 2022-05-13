@@ -37,7 +37,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 28;
+const numResource = 27;
 let resourceLoaded = 0;
 let startTime;
 let playingTime;
@@ -595,7 +595,7 @@ class Player {
 
 function init() {
   axios({
-    url:`https://k6a401.p.ssafy.io:8081/api/user/information/`,
+    url:`https://k6a401.p.ssafy.io/api/user/information/`,
     method:'get',
     headers: {
       "Authorization": localStorage.getItem("token")
@@ -605,7 +605,7 @@ function init() {
     levelMax = res.data.maxLevel
     userSeq = res.data.userSeq
     console.log(levelMax)
-    resourceLoaded++;
+    
   }).catch(err=>console.error(err))
   
   cvs = document.getElementById("cvs");
@@ -982,7 +982,7 @@ function update(delta) {
 
 function rendering() {
   
-  if ( numResource>resourceLoaded && resourceLoaded%numResource!=0) return;
+  if ( numResource>=resourceLoaded || resourceLoaded%numResource!=0 || levelMax==-1) return;
   
   gfx.clearRect(0, 0, WIDTH, HEIGHT);
   
@@ -1128,7 +1128,7 @@ class Engine extends Component {
   
   componentWillUnmount() {
     axios({
-      url:`https://k6a401.p.ssafy.io:8081/api/single/level/`,
+      url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
       headers: {
         "Authorization": localStorage.getItem("token")
@@ -1166,7 +1166,7 @@ class Engine extends Component {
     }
     if(flag){
       axios({
-        url:`https://k6a401.p.ssafy.io:8081/api/single/level/`,
+        url:`https://k6a401.p.ssafy.io/api/single/level/`,
         method:'POST',
         headers: {
           "Authorization": localStorage.getItem("token")
