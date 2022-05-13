@@ -70,8 +70,9 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public void increaseNumberOfPeople(Access room) {
-		accessRedisRepository.save(room);
+	public void increaseNumberOfPeople(Access access) {
+		access.setReady(false);
+		accessRedisRepository.save(access);
 	}
 
 	@Override
