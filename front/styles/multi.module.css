@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15vh;
+  gap: 10vh;
 }
 
 .multi button {
-  width: 10vw;
+  width: fit-content;
   align-self: center;
 }
 
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8vw;
+  gap: 6vw;
 }
 
 .back{
@@ -49,7 +49,6 @@
   background-repeat: no-repeat;
   animation-iteration-count: infinite;
   transform: translateX(-10%);
-  filter: grayscale(100%);
 }
 .joinImg2 {
   width: 140px;
@@ -59,7 +58,6 @@
   animation-iteration-count: infinite;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1) translateX(-10%);
-  filter: grayscale(100%);
 }
 
 .joinBtn:hover h2 {
@@ -70,14 +68,12 @@
   animation-name: cross1;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-duration: 2.5s;
-  filter: none;
 }
 .joinBtn:hover .joinImg2 {
   background: url("/images/sourceror.png");
   animation-name: cross2;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-duration: 2.5s;
-  filter: none;
 }
 @keyframes cross1 {
   0%   { transform: skew(0)                scale(1, 1)      translateX(-15%)  translateY(0px); }
@@ -153,15 +149,13 @@
   background-image: url("/images/magnify.png");
   background-repeat: no-repeat;
   transform: scale(.3, .3) skew(-0.12turn, 45deg) translateX(0%)  translateY(0%);
-  filter: grayscale(100%);
 }
 
 .findBtn:hover .findImg {
   animation: search;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-iteration-count: infinite;
-  animation-duration: 1.2s;
-  filter: none;
+  animation-duration: 1s;
 }
 @keyframes search {
   0%     { transform: scale(.3, .3) skew(-0.12turn, 45deg) translateX(10%)   translateY(0%); } /*우하*/
@@ -286,12 +280,8 @@
   background-image: url("/images/furnace.png");
   background-repeat: no-repeat;
   transform: scale(.4, .4) scaleX(-1) translateX(0%)  translateY(-8%);
-  filter: grayscale(100%);
 }
 
-.createBtn:hover .createImg1 {
-  filter: none;
-}
 .createBtn:hover h2 {
   color: rgb(82, 82, 204);
 }

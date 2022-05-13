@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import BasicButton from '../ui/basicButton';
 import style from './login.module.css';
 
 export default function Login({toSignup, toModeSelect}) {
@@ -73,10 +74,13 @@ export default function Login({toSignup, toModeSelect}) {
               <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required />
             </label>
           </div>
-          <button className={style.loginBtn} onClick={handleLoginSubmit} >Enter</button>
-          <span className={style.btns}>no account?<br />click
-            <a href='#' onClick={toSignUp} className={style.toSignup}> here!</a>
-          </span>
+          <div className={style.btnGroup}>
+            <button className={style.loginBtn} onClick={handleLoginSubmit} >Login</button>
+            <div className={style.signBtnGroup}>
+              <div className={style.btns}>no account?</div>
+              <button className={style.signupBtn} onClick={toSignUp} >signup</button>
+            </div>
+          </div>
         </section>
       </div>
     </main>
