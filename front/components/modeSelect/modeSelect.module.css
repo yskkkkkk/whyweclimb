@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   z-index: 6;
-  /* justify-content: center; */
-  /* align-items: center; */
+  margin-bottom: 6vh;
 }
 .container2 {
   display: flex;
@@ -12,10 +11,32 @@
   z-index: 6;
   margin-left: 6vw;
 }
-.btnBack {
+/* .btnBack {
   margin-top: 2em;
   width: fit-content;
   align-self: center;
+} */
+
+.btnBack{
+  background: #8d6e63;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 0px #6d4c41; 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  top: 1.4vh;
+  cursor: pointer;
+  font-size: medium;
+  padding: 5px 3vw;
+  margin-top: 5em;
+  width: fit-content;
+  align-self: center;
+}
+.btnBack:active {
+  top: 1.6vh;
+  box-shadow: 0 2px 0px #6d4c41;
+  transition: all .1s;
 }
 
 /* ------------------------------------------------------------------------------------ */

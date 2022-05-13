@@ -19,12 +19,6 @@
   gap: 6vw;
 }
 
-.back{
-  justify-content:center;
-  align-self: center;
-  justify-self: center;
-}
-
 
 /* ---------------------------------------------------------------------------------- */
 /* join 버튼 애니메이션 */
@@ -284,4 +278,26 @@
 
 .createBtn:hover h2 {
   color: rgb(82, 82, 204);
+}
+
+
+/* ---------------------------------------------------------------------------------- */
+/* 뒤로가기 버튼 */
+.back{
+  background: #8d6e63;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 0px #6d4c41; 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  top: 1.4vh;
+  cursor: pointer;
+  font-size: medium;
+  padding: 5px 3vw;
+}
+.back:active {
+  top: 1.6vh;
+  box-shadow: 0 2px 0px #6d4c41;
+  transition: all .1s;
 }
