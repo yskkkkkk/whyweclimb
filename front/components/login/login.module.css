@@ -14,6 +14,7 @@
   align-items: center;
   gap: 0.5;
   height: 100vh;
+  
   /* width: 100vw; */
 }
 
@@ -25,6 +26,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1vh;
+  background-color: #afb2b781;
 }
 
 .card {

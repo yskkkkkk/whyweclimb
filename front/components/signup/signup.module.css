@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #afb2b781;
 }
 
 .signup {
@@ -23,6 +24,7 @@
   justify-content: center;
   gap: 1vh;
 }
+
 
 .card {
   padding: 1.5rem;
@@ -48,18 +50,6 @@
     margin-left: 2em;
 }
 
-.btns {
-  margin-left: 21em;
-}
-
-.signupBtn {
-  margin-top: 2em;
-}
-
-.btns:hover {
-  color: rgb(82, 82, 204);
-}
-
 #idInput:active {
   border: 4px solid #d0afd4;
 }
@@ -71,3 +61,60 @@
 #pwConfInput:focus {
   border: 4px solid #d0afd4;
 }
+
+
+/* ----------------------------------------------------------------------------------------------- */
+/* buttons */
+.btnGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.backBtn {
+  margin-left: 21em;
+  background: #8d6e63;
+  font-size: 10px;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 0px #6d4c41; 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  top: 1.4vh;
+  cursor: pointer;
+  margin:1vh 3vw;
+  margin-bottom: .5vh;
+
+  font-size: medium;
+  padding: 5px 20px;
+  margin-top: -1vh;
+}
+.backBtn:active {
+  top: 1.6vh;
+  box-shadow: 0 2px 0px #6d4c41;
+  transition: all .1s;
+}
+
+.signupBtn {
+  background: #5EA5DD;
+  font-size: 20px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px #3672a0;
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 10px 25px;
+  margin:1.5vh 1vw;
+  margin-top: 2vh;
+  top: 0px;
+  
+  position: relative;
+  cursor: pointer;
+}
+.signupBtn:active {
+  top: 0.2vh;
+  box-shadow: 0 2px 0px #3672a0;
+  transition: all .1s;
+}
+
