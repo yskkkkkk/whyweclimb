@@ -48,10 +48,9 @@ public class MessageController {
     @MessageMapping("/room/entrance")
     public void checkPeopleNumber(Access access) {
     	if (messageService.roomStatus(access.getRoomCode())) {
-    		access.setReady(false);
-    		messageService.increaseNumberOfPeople(access);
     		log.info("[user come: created session - "+access.getSessionId()+"]");
-    		   
+    		messageService.increaseNumberOfPeople(access);
+    		
     		AccessResponse response = new AccessResponse(messageService.playerList(access.getRoomCode()), "OK");
     		messagingTemplate.convertAndSend("/sub/chat/room/" + access.getRoomCode(), response);
     	}else {
@@ -62,7 +61,7 @@ public class MessageController {
     }
     
     
-    @MessageMapping("/room/reday")
+    @MessageMapping("/room/ready")
     public void playerReady(Integer userSeq) {
     	String roomCode = messageService.getReady(userSeq);
     	AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
