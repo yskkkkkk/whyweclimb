@@ -6,10 +6,12 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +34,10 @@ public class User implements UserDetails{
     private Integer backgroundSound;
     @Column
     private Integer effectSound;
+	@Column
+	@ColumnDefault("0")
+	private Integer maxLevel;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
