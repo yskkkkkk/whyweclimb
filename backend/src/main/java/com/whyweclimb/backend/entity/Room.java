@@ -23,5 +23,6 @@ public class Room {
     private Boolean roomInterference;
     @Column
     private Integer roomMaxNum;
-    
+    @Column
+    private Boolean roomStart;
 }

@@ -2,16 +2,13 @@ package com.whyweclimb.backend.intercepter;
 
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
 import com.whyweclimb.backend.domain.room.service.MessageService;
 import com.whyweclimb.backend.domain.room.service.RoomService;
-import com.whyweclimb.backend.entity.Access;
 
 import lombok.RequiredArgsConstructor;
  
