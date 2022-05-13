@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Modal from "./ui/modal/modal";
 import axios from 'axios'
 import Confetti from 'react-dom-confetti';
-
+import { forwardRef, useImperativeHandle } from "react";
 const config = {
   angle: 90,
   spread: 360,
@@ -1103,6 +1103,12 @@ class Engine extends Component {
     
   }
   
+  reset() {
+    console.log("reset??")
+    player.x = (WIDTH - 32) / 2.0
+    player.y = 156
+  }
+  
   componentDidMount() {
     console.log("onload");
     
@@ -1114,7 +1120,24 @@ class Engine extends Component {
   }
   openModal = () => {
     // console.log("abcd")
-    
+    axios({
+      url:`https://k6a401.p.ssafy.io/api/single/level/`,
+      method:'POST',
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      },
+      data:{
+        "backgroundSound": 50,
+        "effectSound": 50,
+        "maxLevel":levelMax,
+        "userSeq": userSeq,
+        
+      }
+    }).then(res=>{
+      
+      console.log(res)
+      
+    }).catch(err=>console.error(err))
     this.setState({Modalshow:true})
     this.confetti=true;
   }
@@ -1146,6 +1169,8 @@ class Engine extends Component {
     }).catch(err=>console.error(err))
   }
   
+  
+  
   run(time) {
   
     this.currentTime = new Date().getTime();
@@ -1159,36 +1184,21 @@ class Engine extends Component {
       
       if(flag){
         console.log(startTime)
+        levelMax = 8
         this.openModal()
         
         return;
       }
     }
     if(flag){
-      axios({
-        url:`https://k6a401.p.ssafy.io/api/single/level/`,
-        method:'POST',
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        },
-        data:{
-          "backgroundSound": 50,
-          "effectSound": 50,
-          "maxLevel":8,
-          "userSeq": userSeq,
-          
-        }
-      }).then(res=>{
-        
-        console.log(res)
-        
-      }).catch(err=>console.error(err))
+      
       this.openModal()
     }
     if(!flag){
       requestAnimationFrame(this.run.bind(this));
     }
   }
+  
   render() {
     //Make game levels
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
@@ -1196,6 +1206,15 @@ class Engine extends Component {
     return (
       <div>
         <canvas id="cvs" width="1000" height="800" />
+        <div className={style.buttons}>
+          <a className={style.h3button} onClick={()=>{
+            console.log("reset?")
+            this.reset()
+          }}><h3>Reset</h3></a>
+          <Link href={'/'} passHref>
+            <a className={style.h3button}><h3>Back</h3></a>
+          </Link>
+        </div>
         <Modal visible={this.state.Modalshow}> 
         <Confetti active={ this.confetti } config={ config }/>
           <h1 className={style.resultText}>축하합니다!!!</h1>
