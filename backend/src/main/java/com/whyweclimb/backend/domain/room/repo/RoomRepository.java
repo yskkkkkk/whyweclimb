@@ -12,9 +12,9 @@ import com.whyweclimb.backend.entity.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
-	Optional<RoomInfoResponse> findByRoomCode(String roomCode);
-	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceTrueOrderByRoomSeqDesc();
-	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceFalseOrderByRoomSeqDesc();
+	Optional<Room> findByRoomCode(String roomCode);
+	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();
+	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();
 	@Transactional
 	Integer deleteByRoomCode(String roomCode);
 

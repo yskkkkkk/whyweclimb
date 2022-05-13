@@ -12,4 +12,6 @@ public interface RoomService {
 	RoomInfoResponse joinRoom(boolean interference);
 	// 방 삭제하기 
 	boolean deleteRoom(String roomCode);
+	// 게임 시작
+	RoomInfoResponse startGame(String roomCode);
 }

@@ -28,6 +28,7 @@ public class RoomCreateRequest {
     			.roomPrivate(request.roomPrivate)
     			.roomInterference(request.roomInterference)
     			.roomMaxNum(request.roomMaxNum)
+    			.roomStart(false)
     			.build();
     }
 }

@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @ToString
 @RedisHash(value = "access")
@@ -23,5 +22,9 @@ public class Access {
     @Indexed
     private Integer userSeq;
     private String userId;
-    private Boolean ready;
+	private Boolean ready;
+
+	public void setReady(Boolean ready) {
+		this.ready = ready;
+	}
 }
