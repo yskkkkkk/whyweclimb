@@ -195,7 +195,7 @@ export default function Signup ({toMain}) {
           <div className={style.card}>
             <label>ID 
               <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z,A-Z,0-9 / 3~20" required />
-              <button onClick={userIdCheck}>check ID</button>
+              <button className={style.checkBtn} onClick={userIdCheck}>check ID</button>
             </label>
           </div>
           <div className={style.card}>

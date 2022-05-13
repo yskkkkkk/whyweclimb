@@ -25,7 +25,6 @@
   gap: 1vh;
 }
 
-
 .card {
   padding: 1.5rem;
   text-align: left;
@@ -36,14 +35,12 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
-
 .card label {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-
 .card input {
     width: 15em;
     height: 2em;
@@ -71,7 +68,6 @@
 }
 
 .backBtn {
-  margin-left: 21em;
   background: #8d6e63;
   font-size: 10px;
   color: white;
@@ -118,3 +114,27 @@
   transition: all .1s;
 }
 
+.checkBtn {
+  background: #6ad399;
+  font-size: 10px;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 0px rgb(62, 116, 86); 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  top: 1.4vh;
+  cursor: pointer;
+
+  margin-bottom: 2vh;
+  margin-left: .7vw;
+
+  font-size: medium;
+  padding: 5px 20px;
+  margin-top: -1vh;
+}
+.checkBtn:active {
+  top: 1.6vh;
+  box-shadow: 0 2px 0px rgb(62, 116, 86);
+  transition: all .1s;
+}
