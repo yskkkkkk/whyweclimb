@@ -9,9 +9,7 @@ import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
 import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.room.repo.RoomRepository;
-import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.entity.Room;
-import com.whyweclimb.backend.entity.User;
 
 import lombok.RequiredArgsConstructor;
 
