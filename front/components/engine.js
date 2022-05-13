@@ -2,7 +2,7 @@ import { Component } from "react";
 import style from "./engine.module.css";
 import Link from 'next/link';
 import Modal from "./ui/modal/modal";
-
+import axios from 'axios'
 import Confetti from 'react-dom-confetti';
 
 const config = {
@@ -37,7 +37,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 27;
+const numResource = 28;
 let resourceLoaded = 0;
 let startTime;
 let playingTime;
@@ -57,10 +57,10 @@ const boundFriction = 0.66;
 const JumpConst = 15.0;
 const chargingConst = 600.0;
 let player;
-
+let userSeq;
 let flag = false;
 let level = 0;
-let levelMax = 0;
+let levelMax = -1;
 let goalLevel = 7;
 
 class Vector {
@@ -594,6 +594,20 @@ class Player {
 }
 
 function init() {
+  axios({
+    url:`http://k6a401.p.ssafy.io:8081/api/user/information/`,
+    method:'get',
+    headers: {
+      "Authorization": localStorage.getItem("token")
+    }
+  }).then(res=>{
+    console.log(res.data)
+    levelMax = res.data.maxLevel
+    userSeq = res.data.userSeq
+    console.log(levelMax)
+    resourceLoaded++;
+  }).catch(err=>console.error(err))
+  
   cvs = document.getElementById("cvs");
   gfx = cvs.getContext("2d");
   
@@ -1050,8 +1064,8 @@ function drawBlock(x, y, w, h) {
 function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
     
-  // player.x=927;
-  // player.y =695+7*HEIGHT;
+  player.x=927;
+  player.y =695+7*HEIGHT;
   return {
     x: Math.trunc(evt.clientX - rect.left),
     y: HEIGHT - Math.trunc(evt.clientY - rect.top),
@@ -1091,17 +1105,18 @@ class Engine extends Component {
   
   componentDidMount() {
     console.log("onload");
-    init();
     
+    init();
+    console.log(localStorage,"localStorage")
     playingTime = document.getElementById("time");
+    
     this.run();
   }
   openModal = () => {
     // console.log("abcd")
+    
     this.setState({Modalshow:true})
     this.confetti=true;
-    
-    
   }
   closeModal = () => {
     this.setState({ Modalshow:false})
@@ -1111,7 +1126,25 @@ class Engine extends Component {
     location.reload();
   }
   
-  
+  componentWillUnmount() {
+    axios({
+      url:`http://k6a401.p.ssafy.io:8081/api/single/level/`,
+      method:'POST',
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      },
+      data:{
+        "backgroundSound": 50,
+        "effectSound": 50,
+        "maxLevel":levelMax,
+        "userSeq": userSeq,
+        
+      }
+    }).then(res=>{
+      console.log(res)
+      
+    }).catch(err=>console.error(err))
+  }
   
   run(time) {
   
@@ -1132,7 +1165,24 @@ class Engine extends Component {
       }
     }
     if(flag){
-      
+      axios({
+        url:`http://k6a401.p.ssafy.io:8081/api/single/level/`,
+        method:'POST',
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        },
+        data:{
+          "backgroundSound": 50,
+          "effectSound": 50,
+          "maxLevel":8,
+          "userSeq": userSeq,
+          
+        }
+      }).then(res=>{
+        
+        console.log(res)
+        
+      }).catch(err=>console.error(err))
       this.openModal()
     }
     if(!flag){
