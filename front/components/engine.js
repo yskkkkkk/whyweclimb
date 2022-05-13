@@ -982,7 +982,7 @@ function update(delta) {
 
 function rendering() {
   
-  if ( numResource>=resourceLoaded || resourceLoaded%numResource!=0 || levelMax==-1) return;
+  if ( numResource>resourceLoaded || resourceLoaded%numResource!=0 || levelMax==-1) return;
   
   gfx.clearRect(0, 0, WIDTH, HEIGHT);
   
