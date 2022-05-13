@@ -595,7 +595,7 @@ class Player {
 
 function init() {
   axios({
-    url:`http://k6a401.p.ssafy.io:8081/api/user/information/`,
+    url:`https://k6a401.p.ssafy.io:8081/api/user/information/`,
     method:'get',
     headers: {
       "Authorization": localStorage.getItem("token")
@@ -1107,7 +1107,7 @@ class Engine extends Component {
     console.log("onload");
     
     init();
-    console.log(localStorage,"localStorage")
+    //console.log(localStorage,"localStorage")
     playingTime = document.getElementById("time");
     
     this.run();
@@ -1128,7 +1128,7 @@ class Engine extends Component {
   
   componentWillUnmount() {
     axios({
-      url:`http://k6a401.p.ssafy.io:8081/api/single/level/`,
+      url:`https://k6a401.p.ssafy.io:8081/api/single/level/`,
       method:'POST',
       headers: {
         "Authorization": localStorage.getItem("token")
@@ -1166,7 +1166,7 @@ class Engine extends Component {
     }
     if(flag){
       axios({
-        url:`http://k6a401.p.ssafy.io:8081/api/single/level/`,
+        url:`https://k6a401.p.ssafy.io:8081/api/single/level/`,
         method:'POST',
         headers: {
           "Authorization": localStorage.getItem("token")
