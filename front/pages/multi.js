@@ -74,6 +74,16 @@ export default function Multi() {
       <ParallaxLayer offset={0} style={{zIndex: 6}} >
       <main className={style.multi}>
         <nav className={style.lobby}>
+          <div className={style.findBtn} onClick={toggleFindModal}>
+            <div>
+              <div className={style.findImg}>
+                <div className={style.blingSS} />
+                <div className={style.blingS} />
+                <div className={style.blingM} />
+              </div>
+            </div>
+            <h2>find</h2>
+          </div>
           <div className={style.joinBtn} onClick={toggleJoinModal}>
             <div>
               <div className={style.joinImg1} />
@@ -82,8 +92,13 @@ export default function Multi() {
             </div>
             <h2>join</h2>
           </div>
-          <h2><a href="#" onClick={toggleFindModal} >find</a></h2>
-          <h2><a href="#" onClick={toggleCreateModal} >create</a></h2>
+          <div className={style.createBtn} onClick={toggleCreateModal}>
+            <div>
+              <div className={style.createImg1} />
+              <div className={style.createImg2} />
+            </div>
+            <h2>create</h2>
+          </div>
         </nav>
         <Link href={'/'} passHref>
           <button className={style.back} >back</button>

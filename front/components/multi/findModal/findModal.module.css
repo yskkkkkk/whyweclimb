@@ -5,9 +5,9 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: goldenrod;
-  border-radius: 30px;
+  background-color: #9a9898;
   border: 8px solid #eaeaea;
+  border-radius: 30px;
 }
 .modal h2 {
   text-align: center;

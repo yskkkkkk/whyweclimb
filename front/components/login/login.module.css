@@ -14,6 +14,7 @@
   align-items: center;
   gap: 0.5;
   height: 100vh;
+  
   /* width: 100vw; */
 }
 
@@ -25,6 +26,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1vh;
+  background-color: #afb2b781;
 }
 
 .card {
@@ -52,19 +54,10 @@
 }
 
 .btns {
-  margin-top: 1em;
-  margin-left: 17em;
+  /* margin-top: 0vh; */
+  margin-left: 9vw;
 }
 
-.loginBtn {
-  margin-top: 2em;
-  width: fit-content;
-  align-self: center;
-}
-
-.btns a:hover {
-  color: rgb(82, 82, 204);
-}
 
 .title {
   display: flex;
@@ -74,3 +67,60 @@
 @media only screen and (min-width : 1201px) {
   /* Add Your CSS Styling Here */
   }
+
+
+/* ------------------------------------------------------------------------------------ */
+/* 버튼들 */
+.btnGroup {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1vh;
+}
+.signBtnGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginBtn {
+  background: #5EA5DD;
+  font-size: 20px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px #3672a0;
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 20px 25px;
+  top: 0;
+  position: relative;
+  cursor: pointer;
+}
+.loginBtn:active {
+  top: 3px;
+  box-shadow: 0 2px 0px #3672a0;
+  transition: all .1s;
+}
+
+.signupBtn {
+  background: #8d6e63;
+  font-size: 20px;
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 6px 0px #6d4c41; 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  top: 23px;
+  cursor: pointer;
+  margin:0 3vw;
+  left: 3vw;
+
+  font-size: medium;
+  padding: 5px 20px;
+  margin-top: -1vh;
+}
+.signupBtn:active {
+  top: 26px;
+  box-shadow: 0 2px 0px #6d4c41;
+  transition: all .1s;
+}

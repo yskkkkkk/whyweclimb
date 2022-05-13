@@ -195,7 +195,7 @@ export default function Signup ({toMain}) {
           <div className={style.card}>
             <label>ID 
               <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z,A-Z,0-9 / 3~20" required />
-              <button onClick={userIdCheck}>check ID</button>
+              <button className={style.checkBtn} onClick={userIdCheck}>check ID</button>
             </label>
           </div>
           <div className={style.card}>
@@ -205,8 +205,10 @@ export default function Signup ({toMain}) {
             <label>PW confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} ref={pwConf} required /></label>
           </div>
         </section>
-        <button className={style.signupBtn} onClick={finalCheck}>Signup!</button>
-        <a href="#" className={style.btns} onClick={goBack}>back</a>
+        <div className={style.btnGroup}>
+          <button className={style.signupBtn} onClick={finalCheck}>Signup!</button>
+          <button className={style.backBtn} onClick={goBack} >back</button>
+        </div>
       </div>
     </main>
   )
