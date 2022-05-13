@@ -6,6 +6,8 @@ import com.whyweclimb.backend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SingleGameServiceImpl implements SingleGameService{
@@ -14,10 +16,12 @@ public class SingleGameServiceImpl implements SingleGameService{
 
     @Override
     public boolean setUserLevel(UserUpdateRequest request) {
-        User user = userRepository.findById(request.getUserSeq()).orElse(null);
-        if(user == null) return false;
-        user.setMaxLevel(request.getMaxLevel());
-        userRepository.save(user);
-        return true;
+        Optional<User> userOptional = userRepository.findById(request.getUserSeq());
+        userOptional.ifPresent(user -> {
+                user.setMaxLevel(request.getMaxLevel());
+                userRepository.save(user);
+            }
+        );
+        return userOptional.isPresent();
     }
 }
