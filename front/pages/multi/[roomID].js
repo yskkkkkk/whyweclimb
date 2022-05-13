@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 // import Engine from '../../components/multiEngine'
 const StompJS = require('@stomp/stompjs');
-const Engine = dynamic(() => { return import('../../components/multiEngine')}, {ssr:false});
+const Engine = dynamic(() => { return import('../../components/new_multi')}, {ssr:false});
 
 const basicURL = 'https://k6a401.p.ssafy.io/api';
 // const basicURL = `http://localhost:8081/api`
@@ -25,6 +25,7 @@ export default function WaitRoom() {
   const [userInfo, setUserInfo] = useState();
   const [roomInfo, setRoomInfo] = useState();
   const [groupInfo, setGroupInfo] = useState();
+  const [isReady, setIsReady] = useState();
 
   // function sendMessage(msg){
   //   console.log('hii');
@@ -32,12 +33,29 @@ export default function WaitRoom() {
   // }
 
   function startGame(){
-    setIsStart(prev=>!prev);
+    var count = 0;
+    for (const player of groupInfo){
+      if (player.ready === true) count++;
+    }
+    if (count === groupInfo.length){
+      axios.put(`${basicURL}/chat/room/start/${roomID}`)
+      .then(res=>console.log('start!!!',res))
+      .catch(err=>console.error(err))
+    }
   }
 
   function receiveMessage(msg){
     console.log('msg',msg)
-    setGroupInfo(msg.data);
+    if(msg.data){
+      setGroupInfo(msg.data);
+    }    
+    if(msg.message && msg.message==="start"){
+      setIsStart(prev => !prev);
+    }
+  }
+
+  function ready(){
+    stomp.send(`/pub/room/ready`,{},userInfo.userSeq);
   }
 
 
@@ -69,7 +87,18 @@ export default function WaitRoom() {
     fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
       .then(res => res.json())
       .then(data => {socketConnect(data);setUserInfo(data)})
-      .catch(err => console.log(err))
+      .catch(err => {
+        alert("다시 로그인을 해주세요");
+        localStorage.removeItem("token");
+        location.href="/";        
+      })
+  }
+
+  function goBack(){
+    stomp.disconnect(function(){
+      alert("go back");
+      location.href="/multi";
+    })
   }
   
   useEffect(()=>{
@@ -82,9 +111,11 @@ export default function WaitRoom() {
             setRoomInfo(data);
             getUserInfo();
           } else {
+            alert("존재하지 않는 방입니다.");
             location.href="/multi";
           }
         })
+        .catch(err => console.error(err))
     }
   },roomID)
 
@@ -96,12 +127,11 @@ export default function WaitRoom() {
             {groupInfo && groupInfo.length} / {roomInfo && roomInfo.roomMaxNum}
           </section>
           <section>
-            {groupInfo && groupInfo.map(player => <div key={player.userSeq}>{player.userId}</div>)}
+            {groupInfo && groupInfo.map(player => <div key={player.userSeq}>{player.userId} - {player.ready? "ready" : "not ready"}</div>)}
           </section>
+          <button onClick={ready}>ready Button</button>
           <button onClick={startGame}>Start Game</button>
-          <Link href={'/multi'}>
-            <button>back to Lobby</button>
-          </Link>
+          <button onClick={goBack}>back to Lobby</button>
       </main> }      
       {isStart && <main className={style.container}>
         <div className={style.head}>
