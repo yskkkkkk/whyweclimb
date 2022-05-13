@@ -12,16 +12,18 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UserInfoResponse {
-    private Integer userSeq;
-    private String userId;
-    private Integer backgroundSound;
-    private Integer effectSound;
+	private Integer userSeq;
+	private String userId;
+	private Integer backgroundSound;
+	private Integer effectSound;
+	private Integer maxLevel;
 
 	public UserInfoResponse(User user) {
 		this.userSeq = user.getUserSeq();
 		this.userId = user.getUserId();
 		this.backgroundSound = user.getBackgroundSound();
 		this.effectSound = user.getEffectSound();
+		this.maxLevel = user.getMaxLevel();
 	}
-	
+
 }

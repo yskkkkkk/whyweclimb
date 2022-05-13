@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService{
 					.userPassword(selectUser.getUserPassword())
 					.backgroundSound(request.getBackgroundSound())
 					.effectSound(request.getEffectSound())
+					.maxLevel(selectUser.getMaxLevel())
 					.build());
 		});
 		return new UserInfoResponse(user.orElse(null));
