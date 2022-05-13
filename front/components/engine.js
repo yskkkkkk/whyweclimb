@@ -37,7 +37,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 23;
+const numResource = 27;
 let resourceLoaded = 0;
 let startTime;
 let playingTime;
@@ -237,6 +237,7 @@ class Player {
     this.size = 32;
     this.radius = (this.size / 2.0) * 1.414;
     this.jumpGauge = 0;
+    this.skin = 1;
   }
 
   aabb() {
@@ -537,7 +538,7 @@ class Player {
     
     if (this.running_L == false && this.running_R == false && this.direction_L && !this.crouching) {
       gfx.drawImage(
-        images["running_L1"],
+        images[`running_${this.skin}_L1`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -545,7 +546,7 @@ class Player {
       );
     } else if (this.running_L == false && this.running_R == false && this.direction_L && this.crouching) {
       gfx.drawImage(
-        images["running_L1"],
+        images[`running_${this.skin}_L1`],
         this.x,
         HEIGHT - this.size * (1 - this.jumpGauge * 0.2) - this.y + level * HEIGHT,
         this.size,
@@ -553,7 +554,7 @@ class Player {
       );
     } else if (this.running_L == false && this.running_R == false && !this.direction_L && !this.crouching) {
       gfx.drawImage(
-        images["running_R1"],
+        images[`running_${this.skin}_R1`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -561,7 +562,7 @@ class Player {
       );
     } else if (this.running_L == false && this.running_R == false && !this.direction_L && this.crouching) {
       gfx.drawImage(
-        images["running_R1"],
+        images[`running_${this.skin}_R1`],
         this.x,
         HEIGHT - this.size * (1 - this.jumpGauge * 0.2) - this.y + level * HEIGHT,
         this.size,
@@ -569,7 +570,7 @@ class Player {
       );
     } else if (this.running_L) {
       gfx.drawImage(
-        images[`running_L${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_L${parseInt(this.runningTime / 8) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -577,7 +578,7 @@ class Player {
       );
     } else {
       gfx.drawImage(
-        images[`running_R${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_R${parseInt(this.runningTime / 8) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -779,31 +780,57 @@ function init() {
     resourceLoaded++;
   };
   //19
-  images.running_R1 = new Image();
-  images.running_R1.src = "/images/running_R1.png";
-  images.running_R1.onload = function () {
+  images.running_1_R1 = new Image();
+  images.running_1_R1.src = "/images/1/running_R1.png";
+  images.running_1_R1.onload = function () {
     resourceLoaded++;
   };
   //20
-  images.running_R2 = new Image();
-  images.running_R2.src = "/images/running_R2.png";
-  images.running_R2.onload = function () {
+  images.running_1_R2 = new Image();
+  images.running_1_R2.src = "/images/1/running_R2.png";
+  images.running_1_R2.onload = function () {
     resourceLoaded++;
   };
   //21
-  images.running_L1 = new Image();
-  images.running_L1.src = "/images/running_L1.png";
-  images.running_L1.onload = function () {
+  images.running_1_L1 = new Image();
+  images.running_1_L1.src = "/images/1/running_L1.png";
+  images.running_1_L1.onload = function () {
     resourceLoaded++;
   };
   //22
-  images.running_L2 = new Image();
-  images.running_L2.src = "/images/running_L2.png";
-  images.running_L2.onload = function () {
+  images.running_1_L2 = new Image();
+  images.running_1_L2.src = "/images/1/running_L2.png";
+  images.running_1_L2.onload = function () {
+    resourceLoaded++;
+    
+  };
+  //23
+  images.running_2_R1 = new Image();
+  images.running_2_R1.src = "/images/2/running_R1.png";
+  images.running_2_R1.onload = function () {
+    resourceLoaded++;
+  };
+  //24
+  images.running_2_R2 = new Image();
+  images.running_2_R2.src = "/images/2/running_R2.png";
+  images.running_2_R2.onload = function () {
+    resourceLoaded++;
+  };
+  //25
+  images.running_2_L1 = new Image();
+  images.running_2_L1.src = "/images/2/running_L1.png";
+  images.running_2_L1.onload = function () {
+    resourceLoaded++;
+  };
+  //26
+  images.running_2_L2 = new Image();
+  images.running_2_L2.src = "/images/2/running_L2.png";
+  images.running_2_L2.onload = function () {
     resourceLoaded++;
     console.log("loadFinish")
   };
-  //23
+  //27
+
 
   //Audios
   audios.landing = new Audio();
@@ -941,7 +968,7 @@ function update(delta) {
 
 function rendering() {
   
-  if ( numResource>resourceLoaded) return;
+  if ( numResource>resourceLoaded && resourceLoaded%numResource!=0) return;
   
   gfx.clearRect(0, 0, WIDTH, HEIGHT);
   
@@ -1022,8 +1049,7 @@ function drawBlock(x, y, w, h) {
 }
 function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
-  player.x=evt.clientX-rect.left;
-  player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
+    
   // player.x=927;
   // player.y =695+7*HEIGHT;
   return {
@@ -1060,6 +1086,7 @@ class Engine extends Component {
       currentTime:null,
     }
     this.confetti=false;
+    
   }
   
   componentDidMount() {

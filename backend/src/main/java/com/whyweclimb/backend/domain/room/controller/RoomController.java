@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 
 import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
@@ -20,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/chat")
 public class RoomController {
     private final RoomService roomService;
+	private final SimpMessageSendingOperations messagingTemplate;
 
 	@ApiOperation(value = "createRoom", notes = "채팅방 생성, 성공 시 roomCode를 반환합니다.")
     @PostMapping("/room")
@@ -79,6 +81,10 @@ public class RoomController {
     	}else { 
     		status = HttpStatus.OK;
     	}
+    	
+    	Map<String, String> message = new HashMap<String, String>();
+    	message.put("message", "start");
+    	messagingTemplate.convertAndSend("/sub/chat/room/" + roomCode, message);
     	return new ResponseEntity<RoomInfoResponse>(response, status);
     }
 }
