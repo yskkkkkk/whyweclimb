@@ -25,6 +25,7 @@
   justify-self: center;
 }
 
+
 /* ---------------------------------------------------------------------------------- */
 /* join 버튼 애니메이션 */
 
@@ -126,6 +127,7 @@
   100% { transform: scale(.0, .0) }
 }
 
+
 /* ---------------------------------------------------------------------------------- */
 /* find 버튼 애니메이션 */
 
@@ -158,7 +160,7 @@
   animation: search;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-iteration-count: infinite;
-  animation-duration: 1.5s;
+  animation-duration: 1.2s;
   filter: none;
 }
 @keyframes search {
@@ -216,12 +218,15 @@
 .findBtn:hover .blingS {
   animation-name: bling2;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
-  animation-duration: 1.5s;
+  animation-duration: 1.2s;
 }
 .findBtn:hover .blingM {
   animation-name: bling3;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
   animation-duration: 1.5s;
+}
+.findBtn:hover h2 {
+  color: rgb(82, 82, 204);
 }
 
 @keyframes bling1 {
@@ -253,4 +258,40 @@
   75%  { transform: scale(.0, .0) skew(0.12turn, -45deg) translateX(125%) translateY(90%) }
   90%  { transform: scale(.1, .1) skew(0.12turn, -45deg) translateX(125%) translateY(90%) }
   100% { transform: scale(.0, .0) skew(0.12turn, -45deg) translateX(125%) translateY(90%) }
+}
+
+
+/* ---------------------------------------------------------------------------------- */
+/* create 버튼 애니메이션 */
+
+.createBtn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+.createBtn > div {
+  width: 200px;
+  height: 203px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 3px solid #444;
+}
+
+.createImg1 {
+  position: absolute;
+  width: 350px;
+  height: 300px;
+  background-image: url("/images/furnace.png");
+  background-repeat: no-repeat;
+  transform: scale(.4, .4) scaleX(-1) translateX(0%)  translateY(-8%);
+  filter: grayscale(100%);
+}
+
+.createBtn:hover .createImg1 {
+  filter: none;
+}
+.createBtn:hover h2 {
+  color: rgb(82, 82, 204);
 }
