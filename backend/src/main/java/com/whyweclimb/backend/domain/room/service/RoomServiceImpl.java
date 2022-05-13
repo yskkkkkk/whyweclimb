@@ -37,16 +37,16 @@ public class RoomServiceImpl implements RoomService {
 		if(RoomInfo.isPresent()) {
 			int now = accessRedisRepository.findByRoomCode(roomCode).size();
 			int max = RoomInfo.get().getRoomMaxNum();
-			if (now < max && !RoomInfo.get().getRoomStart()) {
-				response = new RoomInfoResponse(RoomInfo.get());
-				response.setRoomFindResult("ok");
-			}else if (now >= max) {
-				response = RoomInfoResponse.builder()
-						.roomFindResult("full").build();
-			}else if (RoomInfo.get().getRoomStart()) {
+			if (RoomInfo.get().getRoomStart()) {	// 시작 했으면 
 				response = RoomInfoResponse.builder()
 						.roomFindResult("start").build();
-			}
+			}else if (now >= max) {	// 가득차 있으면 
+				response = RoomInfoResponse.builder()
+						.roomFindResult("full").build();
+			}else if (now < max) { // 여유공간이 있으면
+				response = new RoomInfoResponse(RoomInfo.get());
+				response.setRoomFindResult("ok");
+			} 
 		}
 		return response;
 	}
