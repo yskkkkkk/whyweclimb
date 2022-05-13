@@ -2,6 +2,23 @@ import { Component } from "react";
 import style from "./engine.module.css";
 import Link from 'next/link';
 import Modal from "./ui/modal/modal";
+
+import Confetti from 'react-dom-confetti';
+
+const config = {
+  angle: 90,
+  spread: 360,
+  startVelocity: 40,
+  elementCount: 70,
+  dragFriction: 0.12,
+  duration: 3000,
+  stagger: 3,
+  width: "10px",
+  height: "10px",
+  perspective: "500px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+};
+
 let cvs;
 let gfx;
 let mute;
@@ -1005,10 +1022,10 @@ function drawBlock(x, y, w, h) {
 }
 function getMousePos(canvas, evt) {
   let rect = canvas.getBoundingClientRect();
-  // player.x=evt.clientX-rect.left;
-  // player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
-  player.x=927;
-  player.y =695+7*HEIGHT;
+  player.x=evt.clientX-rect.left;
+  player.y =HEIGHT-evt.clientY+rect.top + level*HEIGHT;
+  // player.x=927;
+  // player.y =695+7*HEIGHT;
   return {
     x: Math.trunc(evt.clientX - rect.left),
     y: HEIGHT - Math.trunc(evt.clientY - rect.top),
@@ -1042,8 +1059,9 @@ class Engine extends Component {
       Modalshow:false,
       currentTime:null,
     }
+    this.confetti=false;
   }
-
+  
   componentDidMount() {
     console.log("onload");
     init();
@@ -1054,15 +1072,20 @@ class Engine extends Component {
   openModal = () => {
     // console.log("abcd")
     this.setState({Modalshow:true})
+    this.confetti=true;
+    
     
   }
   closeModal = () => {
     this.setState({ Modalshow:false})
   }
   refresh () {
-    console.log("awfawf")
+    
     location.reload();
   }
+  
+  
+  
   run(time) {
   
     this.currentTime = new Date().getTime();
@@ -1097,6 +1120,7 @@ class Engine extends Component {
       <div>
         <canvas id="cvs" width="1000" height="800" />
         <Modal visible={this.state.Modalshow}> 
+        <Confetti active={ this.confetti } config={ config }/>
           <h1 className={style.resultText}>축하합니다!!!</h1>
           <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}분{parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
           <Link href={''} passHref>
