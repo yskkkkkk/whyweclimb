@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import style from './findModal.module.css';
-import axios from 'axios'
+import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
+import {motion} from "framer-motion";
 
 
-export default function FindModal() {
+export default function FindModal({handleClose}) {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
   // const basicURL = `http://localhost:8081/api`
   const [roomID, setRoomID] = useState('');
@@ -23,37 +24,66 @@ export default function FindModal() {
               location.href=`/multi/${data.roomCode}`;
               break;
             case 'full':
-              alert('방의 인원이 다 찼습니다.');
+              toast.error("the room is full..");
               break;
             case 'start':
-              alert('해당 방의 게임이 시작되었습니다.');
+              toast("here we go!", {icon: "🎮"});
               break;
             default:
-              alert("해당하는 방이 존재하지 않습니다. 다시 한번 확인해 주세요.");
+              toast.error("the room doesn't exist. Please check your room ID.");
           }
         } else {
-          alert("해당하는 방이 존재하지 않습니다. 다시 한번 확인해 주세요.");
+          toast.error("the room doesn't exist. Please check your room ID.");
         }
         console.log(data);
       })
       .catch(err=>console.error(err))
   }
 
-  const closeModal = () => {
-    toast.dismiss();
+  const popUp = {
+    initial: {
+      y: "-30vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0",
+      opacity: 1,
+      transition: {
+        duration: 0.1,
+        type: "spring",
+        damping: 25,
+        stiffness: 500,
+      }
+    },
+    exit: {
+      y: "-30vh",
+      opacity: 0,
+      transition: {
+        duration: 0.2,
+      }
+    }
   }
 
   return (
-    <section className={style.modal}>
-      <h2>Find room</h2>
-      <div className={style.card}>
-        <label>search room 
-          <input type="text" required onChange={writeRoomID} /></label>
-      </div>
-      <div className={style.btns}>
-        <button onClick={findRoom} >join</button>
-        <button onClick={closeModal} >close</button>
-      </div>
-    </section>
+    <motion.div
+      onClick={(e) => e.stopPropagation()}
+      variants={popUp}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+    >
+      <section className={style.modal}>
+        <h2>Find room</h2>
+        <div className={style.card}>
+          <label>search room 
+            <input type="text" required onChange={writeRoomID} /></label>
+        </div>
+
+        <div className={style.btns}>
+          <button className={style.okBtn} onClick={findRoom} >join</button>
+          <button className={style.backBtn} onClick={handleClose} >close</button>
+        </div>
+      </section>
+    </motion.div>
   )
 }

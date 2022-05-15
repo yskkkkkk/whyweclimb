@@ -16,6 +16,19 @@ a {
 }
 
 
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background:rgba(0, 0, 0, .5);
+  /* Backdrop 컴포넌트의 자식 컴포넌트인 ProductModal을 화면 중앙에 배치하기 위함 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* -------------------------------------------------------------------------------------- */
 
 .intro {

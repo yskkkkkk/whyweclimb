@@ -20,7 +20,6 @@ export default function ModeSelect({toMain, toConfigure}) {
   // };
 
 
-
   return (
     <main className={style.container}>
       <section className={style.container2}>
