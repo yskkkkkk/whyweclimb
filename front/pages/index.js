@@ -78,8 +78,8 @@ export default function Home() {
           />
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2, zIndex: 0, }}>
-            <img className='animate-flicker2' src='/images/cloud.svg' style={{ width: '10%', marginLeft: '55%' }} />
-            <img src='/images/cloud.svg' style={{ width: '5%', marginLeft: '15%' }} />
+            <img className='animate-flicker2' src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '55%' }} alt="cloud image" />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '5%', marginLeft: '15%' }} />
           </ParallaxLayer>
 
           <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.1, zIndex: 0, }}>
@@ -87,13 +87,13 @@ export default function Home() {
           </ParallaxLayer>
 
           <ParallaxLayer offset={0.75} speed={0.5} style={{ opacity: 0.2, zIndex: 0, }}>
-            <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '70%' }} />
-            <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '30%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '70%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '30%' }} />
           </ParallaxLayer>
 
           <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.4, zIndex: 0, }}>
-            <img src='/images/cloud.svg' style={{ width: '5%', marginLeft: '10%' }} />
-            <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '75%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '5%', marginLeft: '10%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '75%' }} />
           </ParallaxLayer>
 
           {/*모드선택 컴포넌트*/}
@@ -110,14 +110,14 @@ export default function Home() {
           </ParallaxLayer>
 
           <ParallaxLayer offset={0.6} speed={-0.1} style={{ opacity: 0.8, zIndex: 0, }}>
-            <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '15%' }} />
-            <img className='animate-flicker1' src='/images/cloud.svg' style={{ width: '15%', marginLeft: '5%', marginBottom: '10%' }} />
-            <img className='animate-flicker2' src='/images/cloud.svg' style={{ width: '5%', marginLeft: '80%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '15%' }} />
+            <img className='animate-flicker1' src='/images/cloud.svg' alt="cloud image" style={{ width: '15%', marginLeft: '5%', marginBottom: '10%' }} />
+            <img className='animate-flicker2' src='/images/cloud.svg' alt="cloud image" style={{ width: '5%', marginLeft: '80%' }} />
           </ParallaxLayer>
 
           <ParallaxLayer offset={1.6} speed={0.4} style={{ opacity: 1, zIndex: 0, }}>
-            <img src='/images/cloud.svg' style={{ width: '10%', marginLeft: '5%' }} />
-            <img src='/images/cloud.svg' style={{ width: '7%', marginLeft: '75%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '5%' }} />
+            <img src='/images/cloud.svg' alt="cloud image" style={{ width: '7%', marginLeft: '75%' }} />
           </ParallaxLayer>
 
 
