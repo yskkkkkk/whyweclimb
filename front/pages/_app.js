@@ -5,11 +5,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <Toaster 
-        containerStyle={{
-          position: 'absolute',
-          top: '50%',
-        }}
+      <Toaster
+        position="top-center" 
+        // containerStyle={{
+        //   position: 'absolute',
+        //   top: '50%',
+        // }}
         toastOptions={{
           blank: {
             duration: Infinity,

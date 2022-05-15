@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import BasicButton from '../ui/basicButton';
 import style from './login.module.css';
+import toast from 'react-hot-toast';
 
 export default function Login({toSignup, toModeSelect}) {
   
@@ -46,11 +47,11 @@ export default function Login({toSignup, toModeSelect}) {
         toModeSelect();
       }
       else {
-        alert('유요하지 않은 아이디 혹은 비밀번호 입니다.');
+        toast.error("ID or password is not valid..");
       }
     })
     .catch((error) => {
-      alert(`로그인 실패 : ${error}`);
+      toast.error(`failed to login due to : ${error}`);
     });
   };
 
