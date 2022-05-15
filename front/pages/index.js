@@ -78,12 +78,12 @@ export default function Home() {
           />
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2, zIndex: 0, }}>
-            <img className='animate-flicker2' src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '55%' }} alt="cloud image" />
+            <img className='animate-flicker2' src='/images/cloud.svg' alt="cloud image" style={{ width: '10%', marginLeft: '55%' }} />
             <img src='/images/cloud.svg' alt="cloud image" style={{ width: '5%', marginLeft: '15%' }} />
           </ParallaxLayer>
 
           <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.1, zIndex: 0, }}>
-            <img src='/images/intro.svg' style={{ width: '100%'}} />
+            <img src='/images/intro.svg' style={{ width: '100%'}} alt="landingpage background image" />
           </ParallaxLayer>
 
           <ParallaxLayer offset={0.75} speed={0.5} style={{ opacity: 0.2, zIndex: 0, }}>
