@@ -23,8 +23,8 @@ public class MessageController {
 	private final SimpMessageSendingOperations messagingTemplate;
 	private final MessageService messageService;
 
-	@MessageMapping("/chat/message")
-	public void message(Message message) {
+	@MessageMapping("/play/message")
+	public void play(Message message) {
 //		log.info("[name: " + message.getSender() + ", key input: space-" + message.getSpace() + " left-" + message.getLeft()
 //				+ " right-" + message.getRight() + "]");
 
@@ -32,7 +32,7 @@ public class MessageController {
 	}
 
 	@MessageMapping("/room/entrance")
-	public void checkPeopleNumber(Access access) {
+	public void comeInPlayer(Access access) {
 		if (messageService.roomStatus(access.getRoomCode())) {
 			log.info("[user come: created session - " + access.getSessionId() + "]");
 			messageService.increaseNumberOfPeople(access);

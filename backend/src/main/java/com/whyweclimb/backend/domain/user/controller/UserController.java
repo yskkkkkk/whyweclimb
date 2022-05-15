@@ -7,6 +7,7 @@ import com.whyweclimb.backend.domain.user.service.JwtTokenProvider;
 import com.whyweclimb.backend.domain.user.service.SecurityService;
 import com.whyweclimb.backend.domain.user.service.UserService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +34,7 @@ public class UserController {
 	private final SecurityService securityService;
 	private final JwtTokenProvider jwtTokenProvider;
 	
-	// 계정 생성
+	@ApiOperation(value = "SignUp", notes = "계정을 생성합니다.")
 	@PostMapping("")
 	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
 		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
@@ -49,7 +50,7 @@ public class UserController {
 		return new ResponseEntity<Boolean>(result, status);
 	}
 	
-	//아이디 중복체크 
+	@ApiOperation(value = "CheckIdDuplicate", notes = "아이디를 중복체크 합니다.")
 	@GetMapping("/id")
 	public ResponseEntity<Boolean> checkId(@RequestParam String userId){
 		boolean result;
@@ -65,9 +66,9 @@ public class UserController {
 		return new ResponseEntity<Boolean>(result, status);
 	}
 
-	// 로그인 후 토큰 반환
+	@ApiOperation(value = "Login", notes = "아이디와 비밀번호를 입력받아 로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> getUserInfo(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
     	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
     	UserInfoResponse response = userService.login(request);
 		String token = "";
@@ -85,8 +86,8 @@ public class UserController {
 		return new ResponseEntity<Map<String, String>>(result, status);
     }
 
-    //회원정보 반환
-	@GetMapping("/information")
+	@ApiOperation(value = "UserInfo", notes = "헤더에 jwt를 담아 요청 시 회원정보를 반환합니다.")
+	@GetMapping("")
 	public ResponseEntity<UserInfoResponse> postLoginProcessing(HttpServletRequest request) {
 //		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -95,9 +96,9 @@ public class UserController {
 		
 	}
     
-    // 배경음, 효과음 변경 
-    @PutMapping("")
-    public ResponseEntity<UserInfoResponse> settingUserOption(@RequestBody UserUpdateRequest request){
+	@ApiOperation(value = "settingUserOption", notes = "유저정보를 수정합니다.")
+	@PutMapping("")
+    public ResponseEntity<UserInfoResponse> modifyUser(@RequestBody UserUpdateRequest request){
     	UserInfoResponse response = userService.updateUser(request);
 		HttpStatus status;
 		if(response == null) { 
