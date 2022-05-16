@@ -73,8 +73,6 @@ export default function Home() {
             offset={0}
             speed={0}
             factor={4}
-            style={{
-            }}
           />
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2, zIndex: 0, }}>
