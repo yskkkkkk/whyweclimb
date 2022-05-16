@@ -87,7 +87,7 @@ public class UserController {
     }
 
 	@ApiOperation(value = "UserInfo", notes = "헤더에 jwt를 담아 요청 시 회원정보를 반환합니다.")
-	@GetMapping("")
+	@GetMapping("/information")
 	public ResponseEntity<UserInfoResponse> postLoginProcessing(HttpServletRequest request) {
 //		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
