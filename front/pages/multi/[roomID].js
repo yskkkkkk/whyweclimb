@@ -75,7 +75,8 @@ export default function WaitRoom() {
             var recv = JSON.parse(message.body);
             receiveMessage(recv);
         });
-        stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomID, sessionId:sessionId, userSeq:data.userSeq, userId:data.userId}));
+        console.log(data.skinSeq,"skinSeq")
+        stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomID, sessionId:sessionId, userSeq:data.userSeq, userId:data.userId, skinSeq:data.skinSeq}));
       },
       function(error){
         console.log('error',error.headers.message);
@@ -151,7 +152,7 @@ export default function WaitRoom() {
             <p className={style.time} id="time"></p>
           
         </div>
-        <Engine stomp={stomp} roomId={roomID} userInfo={userInfo} groupInfo={groupInfo}/>
+        <Engine stomp={stomp} roomId={roomID} userInfo={userInfo} groupInfo={groupInfo} roomSeq={roomInfo.roomSeq}/>
         <div className={style.buttons}>
           <Link href={'/'} passHref>
             <a><h3>Back</h3></a>

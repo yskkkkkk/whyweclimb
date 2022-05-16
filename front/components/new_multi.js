@@ -21,7 +21,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 23;
+const numResource = 35;
 let resourceLoaded = 0;
 
 let images = {};
@@ -44,7 +44,7 @@ const players = [];
 let player;
 let myIdx;
 let level = 0;
-let goalLevel = 1;
+let goalLevel = 2;
 let levelMax = 0;
 // const stomp = this.props.stomp;
 // const roomId = this.props.roomId;
@@ -56,6 +56,8 @@ let userInfo;
 let groupInfo;
 let flag = false;
 let winner;
+let roomSeq;
+
 class Vector
 {
     constructor(x, y)
@@ -264,6 +266,7 @@ class Player
         this.jumpGauge = 0;
         this.keys = {" ":false, ArrowLeft:false, ArrowRight:false};
         this.index = 0;
+        this.skin = 1;
     }
 
     aabb()
@@ -470,7 +473,7 @@ class Player
         {
             for (let g of goals){
                 if(g.level != level) continue;
-                if(g.level != levelMax) continue;
+                if(g.level != goalLevel) continue;
                 let aabb = g.convert();
                 let r = aabb.checkCollideBox(box);
                 if(r.collide)
@@ -636,26 +639,60 @@ class Player
 
     render()
     {
-        if(this.running_L==false && this.running_R==false && this.direction_L && !this.crouching){
-            gfx.drawImage(images['running_L1'], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
-        }else if(this.running_L==false && this.running_R==false && this.direction_L && this.crouching){
-            gfx.drawImage(images['running_L1'], this.x, HEIGHT - this.size*(1-this.jumpGauge*0.2) - this.y + level * HEIGHT, this.size, this.size*(1-this.jumpGauge*0.2));
-        }else if(this.running_L==false && this.running_R==false && !this.direction_L && !this.crouching){
-            gfx.drawImage(images['running_R1'], this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
-        }else if(this.running_L==false && this.running_R==false && !this.direction_L && this.crouching){
-            gfx.drawImage(images['running_R1'], this.x, HEIGHT - this.size*(1-this.jumpGauge*0.2) - this.y + level * HEIGHT, this.size, this.size*(1-this.jumpGauge*0.2));
-        }else if(this.running_L){
-            
-            gfx.drawImage(images[`running_L${parseInt(this.runningTime/8)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
-        }else{
-            
-            gfx.drawImage(images[`running_R${parseInt(this.runningTime/8)+1}`],this.x, HEIGHT - this.size - this.y + level * HEIGHT, this.size, this.size);
-        }
-        gfx.beginPath();
-        gfx.rect(941, HEIGHT - 779, 52, -14);
-        gfx.stroke();
-        //gfx.fillStyle= 'rgb(0,0,0)'
-        drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
+        if (this.running_L == false && this.running_R == false && this.direction_L && !this.crouching) {
+            gfx.drawImage(
+              images[`running_${this.skin}_L1`],
+              this.x,
+              HEIGHT - this.size - this.y + level * HEIGHT,
+              this.size,
+              this.size
+            );
+          } else if (this.running_L == false && this.running_R == false && this.direction_L && this.crouching) {
+            gfx.drawImage(
+              images[`running_${this.skin}_L1`],
+              this.x,
+              HEIGHT - this.size * (1 - this.jumpGauge * 0.2) - this.y + level * HEIGHT,
+              this.size,
+              this.size * (1 - this.jumpGauge * 0.2)
+            );
+          } else if (this.running_L == false && this.running_R == false && !this.direction_L && !this.crouching) {
+            gfx.drawImage(
+              images[`running_${this.skin}_R1`],
+              this.x,
+              HEIGHT - this.size - this.y + level * HEIGHT,
+              this.size,
+              this.size
+            );
+          } else if (this.running_L == false && this.running_R == false && !this.direction_L && this.crouching) {
+            gfx.drawImage(
+              images[`running_${this.skin}_R1`],
+              this.x,
+              HEIGHT - this.size * (1 - this.jumpGauge * 0.2) - this.y + level * HEIGHT,
+              this.size,
+              this.size * (1 - this.jumpGauge * 0.2)
+            );
+          } else if (this.running_L) {
+            gfx.drawImage(
+              images[`running_${this.skin}_L${parseInt(this.runningTime / 8) + 1}`],
+              this.x,
+              HEIGHT - this.size - this.y + level * HEIGHT,
+              this.size,
+              this.size
+            );
+          } else {
+            gfx.drawImage(
+              images[`running_${this.skin}_R${parseInt(this.runningTime / 8) + 1}`],
+              this.x,
+              HEIGHT - this.size - this.y + level * HEIGHT,
+              this.size,
+              this.size
+            );
+          }
+          gfx.beginPath();
+          gfx.rect(941, HEIGHT - 779, 52, -14);
+          gfx.stroke();
+          //gfx.fillStyle= 'rgb(0,0,0)'
+          drawBlock(942, 780, Math.trunc(player.jumpGauge * 50), 12);
     }
 }
 // if(userInfo){
@@ -747,80 +784,222 @@ function init()
 
     previousTime = new Date().getTime();
 
-    //Images 
-    images.normal = new Image();
-    images.normal.src = "/images/normal.png";
-    images.normal.onload = function () { resourceLoaded++; };
-    images.crouch = new Image();
-    images.crouch.src = "/images/crouch.png";
-    images.crouch.onload = function () { resourceLoaded++; };
-    images.stage1 = new Image();
-    images.stage1.src = "/images/STAGE1.png"
-    images.stage1.onload = function() { resourceLoaded++; };
-    images.stage2 = new Image();
-    images.stage2.src = "/images/STAGE2.png"
-    images.stage2.onload = function() { resourceLoaded++; };
-    images.stage3 = new Image();
-    images.stage3.src = "/images/STAGE3.png"
-    images.stage3.onload = function() { resourceLoaded++; };
-    images.stage4 = new Image();
-    images.stage4.src = "/images/STAGE4.png"
-    images.stage4.onload = function() { resourceLoaded++; };
-    images.stage5 = new Image();
-    images.stage5.src = "/images/STAGE5.png"
-    images.stage5.onload = function() { resourceLoaded++; };
-    images.stage6 = new Image();
-    images.stage6.src = "/images/STAGE6.png"
-    images.stage6.onload = function() { resourceLoaded++; };
-    images.stage7 = new Image();
-    images.stage7.src = "/images/STAGE7.png"
-    images.stage7.onload = function() { resourceLoaded++; };
-    images.stage8 = new Image();
-    images.stage8.src = "/images/STAGE8.png"
-    images.stage8.onload = function() { resourceLoaded++; };
-    images.stage1_bg = new Image();
-    images.stage1_bg.src = "/images/STAGE1_bg.png"
-    images.stage1_bg.onload = function() { resourceLoaded++; };
-    images.stage2_bg = new Image();
-    images.stage2_bg.src = "/images/STAGE2_bg.png"
-    images.stage2_bg.onload = function() { resourceLoaded++; };
-    images.stage3_bg = new Image();
-    images.stage3_bg.src = "/images/STAGE3_bg.png"
-    images.stage3_bg.onload = function() { resourceLoaded++; };
-    images.stage4_bg = new Image();
-    images.stage4_bg.src = "/images/STAGE4_bg.png"
-    images.stage4_bg.onload = function() { resourceLoaded++; };
-    images.stage5_bg = new Image();
-    images.stage5_bg.src = "/images/STAGE5_bg.png"
-    images.stage5_bg.onload = function() { resourceLoaded++; };
-    images.stage6_bg = new Image();
-    images.stage6_bg.src = "/images/STAGE6_bg.png"
-    images.stage6_bg.onload = function() { resourceLoaded++; };
-    images.stage7_bg = new Image();
-    images.stage7_bg.src = "/images/STAGE7_bg.png"
-    images.stage7_bg.onload = function() { resourceLoaded++; };
-    images.stage8_bg = new Image();
-    images.stage8_bg.src = "/images/STAGE8_bg.png"
-    images.stage8_bg.onload = function() { resourceLoaded++; };
-
-    images.running_R1 = new Image();
-    images.running_R1.src = "/images/running_R1.png"
-    images.running_R1.onload = function() { resourceLoaded++; };
-    images.running_R2 = new Image();
-    images.running_R2.src = "/images/running_R2.png"
-    images.running_R2.onload = function() { resourceLoaded++; };
-    images.running_L1 = new Image();
-    images.running_L1.src = "/images/running_L1.png"
-    images.running_L1.onload = function() { resourceLoaded++; };
-    images.running_L2 = new Image();
-    images.running_L2.src = "/images/running_L2.png"
-    images.running_L2.onload = function() { resourceLoaded++; };
-
+    //Images
     images.goal = new Image();
     images.goal.src = "/images/goal.png";
-    images.goal.onload = function() {
+    images.goal.onload = function () {
         resourceLoaded++;
-    }
+        
+    };
+    //1
+    images.normal = new Image();
+    images.normal.src = "/images/normal.png";
+    images.normal.onload = function () {
+        resourceLoaded++;
+    };
+    //2
+    images.crouch = new Image();
+    images.crouch.src = "/images/crouch.png";
+    images.crouch.onload = function () {
+        resourceLoaded++;
+    };
+    //3
+    images.stage1 = new Image();
+    images.stage1.src = "/images/STAGE1.png";
+    images.stage1.onload = function () {
+        resourceLoaded++;
+    };
+    //4
+    images.stage2 = new Image();
+    images.stage2.src = "/images/STAGE2.png";
+    images.stage2.onload = function () {
+        resourceLoaded++;
+    };
+    //5
+    images.stage3 = new Image();
+    images.stage3.src = "/images/STAGE3.png";
+    images.stage3.onload = function () {
+        resourceLoaded++;
+    };
+    //6
+    images.stage4 = new Image();
+    images.stage4.src = "/images/STAGE4.png";
+    images.stage4.onload = function () {
+        resourceLoaded++;
+    };
+    //7
+    images.stage5 = new Image();
+    images.stage5.src = "/images/STAGE5.png";
+    images.stage5.onload = function () {
+        resourceLoaded++;
+    };
+    //8
+    images.stage6 = new Image();
+    images.stage6.src = "/images/STAGE6.png";
+    images.stage6.onload = function () {
+        resourceLoaded++;
+    };
+    //9
+    images.stage7 = new Image();
+    images.stage7.src = "/images/STAGE7.png";
+    images.stage7.onload = function () {
+        resourceLoaded++;
+    };
+    //10
+    images.stage8 = new Image();
+    images.stage8.src = "/images/STAGE8.png";
+    images.stage8.onload = function () {
+        resourceLoaded++;
+    };
+    //11
+    images.stage1_bg = new Image();
+    images.stage1_bg.src = "/images/STAGE1_bg_multi.png";
+    images.stage1_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //12
+    images.stage2_bg = new Image();
+    images.stage2_bg.src = "/images/STAGE2_bg.png";
+    images.stage2_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //13
+    images.stage3_bg = new Image();
+    images.stage3_bg.src = "/images/STAGE3_bg.png";
+    images.stage3_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //14
+    images.stage4_bg = new Image();
+    images.stage4_bg.src = "/images/STAGE4_bg.png";
+    images.stage4_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //15
+    images.stage5_bg = new Image();
+    images.stage5_bg.src = "/images/STAGE5_bg.png";
+    images.stage5_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //16
+    images.stage6_bg = new Image();
+    images.stage6_bg.src = "/images/STAGE6_bg.png";
+    images.stage6_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //17
+    images.stage7_bg = new Image();
+    images.stage7_bg.src = "/images/STAGE7_bg.png";
+    images.stage7_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //18
+    images.stage8_bg = new Image();
+    images.stage8_bg.src = "/images/STAGE8_bg.png";
+    images.stage8_bg.onload = function () {
+        resourceLoaded++;
+    };
+    //19
+    images.running_1_R1 = new Image();
+    images.running_1_R1.src = "/images/1/running_R1.png";
+    images.running_1_R1.onload = function () {
+        resourceLoaded++;
+    };
+    //20
+    images.running_1_R2 = new Image();
+    images.running_1_R2.src = "/images/1/running_R2.png";
+    images.running_1_R2.onload = function () {
+        resourceLoaded++;
+    };
+    //21
+    images.running_1_L1 = new Image();
+    images.running_1_L1.src = "/images/1/running_L1.png";
+    images.running_1_L1.onload = function () {
+        resourceLoaded++;
+    };
+    //22
+    images.running_1_L2 = new Image();
+    images.running_1_L2.src = "/images/1/running_L2.png";
+    images.running_1_L2.onload = function () {
+        resourceLoaded++;
+        
+    };
+    //23
+    images.running_2_R1 = new Image();
+    images.running_2_R1.src = "/images/2/running_R1.png";
+    images.running_2_R1.onload = function () {
+        resourceLoaded++;
+    };
+    //24
+    images.running_2_R2 = new Image();
+    images.running_2_R2.src = "/images/2/running_R2.png";
+    images.running_2_R2.onload = function () {
+        resourceLoaded++;
+    };
+    //25
+    images.running_2_L1 = new Image();
+    images.running_2_L1.src = "/images/2/running_L1.png";
+    images.running_2_L1.onload = function () {
+        resourceLoaded++;
+    };
+    //26
+    images.running_2_L2 = new Image();
+    images.running_2_L2.src = "/images/2/running_L2.png";
+    images.running_2_L2.onload = function () {
+        resourceLoaded++;
+        console.log("loadFinish")
+    };
+    //27
+    images.running_3_R1 = new Image();
+    images.running_3_R1.src = "/images/3/running_R1.png";
+    images.running_3_R1.onload = function () {
+        resourceLoaded++;
+    };
+    //28
+    images.running_3_R2 = new Image();
+    images.running_3_R2.src = "/images/3/running_R2.png";
+    images.running_3_R2.onload = function () {
+        resourceLoaded++;
+    };
+    //29
+    images.running_3_L1 = new Image();
+    images.running_3_L1.src = "/images/3/running_L1.png";
+    images.running_3_L1.onload = function () {
+        resourceLoaded++;
+    };
+    //30
+    images.running_3_L2 = new Image();
+    images.running_3_L2.src = "/images/3/running_L2.png";
+    images.running_3_L2.onload = function () {
+        resourceLoaded++;
+        console.log("loadFinish")
+    };
+    //31
+    images.running_4_R1 = new Image();
+    images.running_4_R1.src = "/images/4/running_R1.png";
+    images.running_4_R1.onload = function () {
+        resourceLoaded++;
+    };
+    //32
+    images.running_4_R2 = new Image();
+    images.running_4_R2.src = "/images/4/running_R2.png";
+    images.running_4_R2.onload = function () {
+        resourceLoaded++;
+    };
+    //33
+    images.running_4_L1 = new Image();
+    images.running_4_L1.src = "/images/4/running_L1.png";
+    images.running_4_L1.onload = function () {
+        resourceLoaded++;
+    };
+    //34
+    images.running_4_L2 = new Image();
+    images.running_4_L2.src = "/images/4/running_L2.png";
+    images.running_4_L2.onload = function () {
+        resourceLoaded++;
+        console.log("loadFinish")
+    };
+    //35
 
     //Audios
     audios.landing = new Audio();
@@ -862,6 +1041,7 @@ function init()
     for (var i=0; i < groupInfo.length; i++){
       console.log('i!!',i);
         players.push(new Player(locations[i][0],locations[i][1]));
+        players[i].skin = groupInfo[i].skinSeq;
         if(userInfo.userSeq === groupInfo[i].userSeq){            
             myIdx = i;
         }
@@ -884,67 +1064,39 @@ function init()
 //Make game levels
 function initLevels()
 {
-    blocks.push(new Block(0, new AABB(0, 0, 1000, 156)));
-    blocks.push(new Block(0, new AABB(330, 230, 150, 34)));
-    blocks.push(new Block(0, new AABB(710, 410, 116, 34)));
-    blocks.push(new Block(0, new AABB(330, 660, 150, 34)));
-    blocks.push(new Block(0, new AABB(70, 620, 150, 34)));
+    let stagelist = [
+        [0,1,2],
+        [0,2,1],
+        [1,0,2],
+        [1,2,0],
+        [2,0,1],
+        [2,1,0],
+    ]
     
+    let stages = stagelist[roomSeq%6];
+    
+    blocks.push(new Block(stages[0], new AABB(0, 100, 400, 34)));
+    blocks.push(new Block(stages[0], new AABB(500, 230, 150, 34)));
+    blocks.push(new Block(stages[0], new AABB(710, 410, 300, 34)));
+    //blocks.push(new Block(stages[0], new AABB(530,530,150,34)))
+    blocks.push(new Block(stages[0], new AABB(330, 660, 150, 34)));
+    blocks.push(new Block(stages[0], new AABB(70, 620, 150, 34)));
+    goals.push(new Block(stages[0], new AABB(388,694,34,34)))
 
-    walls.push(new Wall(1, 200, 100, 0, 200));
-    blocks.push(new Block(1, new AABB(0, 200, 48, 34)));
-    blocks.push(new Block(1, new AABB(530, 200, 60, 34)));
-    blocks.push(new Block(1, new AABB(860, 200, 140, 34)));
-    blocks.push(new Block(1, new AABB(670, 570, 180, 90)));
-    goals.push(new Block(1, new AABB(530,234,60,34)));
+    //walls.push(new Wall(1, 200, 100, 0, 200));
+    blocks.push(new Block(stages[1], new AABB(270, 200, 300, 34)));
+    blocks.push(new Block(stages[1], new AABB(800, 200, 200, 34)));
+    blocks.push(new Block(stages[1], new AABB(700,400, 300,34)))
+    blocks.push(new Block(stages[1], new AABB(670, 600, 180, 90)));
+    blocks.push(new Block(stages[1], new AABB(200,500,300,34)))
+    goals.push(new Block(stages[1], new AABB(746,634,34,34)))
+    //blocks.push(new Block(stages[1], new AABB(0, 200, 48, 34)));
 
-    blocks.push(new Block(2, new AABB(130, 10, 100, 45)));
-    blocks.push(new Block(2, new AABB(130, 300, 100, 45)));
-    blocks.push(new Block(2, new AABB(540, 535, 120, 45)));
-    blocks.push(new Block(2, new AABB(800, 615, 120, 45)));
-
-    blocks.push(new Block(3, new AABB(460, 10, 110, 34)));
-    blocks.push(new Block(3, new AABB(46, 236, 100, 34)));
-    //walls.push(new Wall(3, 300, 280, 0, -34));
-    //walls.push(new Wall(3, 300, 400, 0, -34));
-    walls.push(new Wall(3, 300, 400, -50, 150));
-    walls.push(new Wall(3, 300, 246, -50, -150));
-    walls.push(new Wall(3, 480, 550, 350, -52.5));
-    //walls.push(new Wall(3, 680, 520, 100, -15));
-    blocks.push(new Block(3, new AABB(890, 450, 110, 34)));
-
-    blocks.push(new Block(4, new AABB(390, 10, 90, 34)));
-    blocks.push(new Block(4, new AABB(90, 20, 150, 200)));
-    blocks.push(new Block(4, new AABB(510, 380, 150, 200)));
-    blocks.push(new Block(4, new AABB(850, 715, 150, 85)));
-
-    blocks.push(new Block(5, new AABB(850, 0, 150, 65)));
-    blocks.push(new Block(5, new AABB(800, 200, 99, 34)));
-    walls.push(new Wall(5, 505, 450, 25, -50));
-    walls.push(new Wall(5, 365, 450, -25, -50));
-    walls.push(new Wall(5, 340, 400, 0, -100));
-    walls.push(new Wall(5, 530, 400, 0, -240));
-    blocks.push(new Block(5, new AABB(340, 160, 190, 34)));
-    blocks.push(new Block(5, new AABB(50, 160, 80, 34)));
-    blocks.push(new Block(5, new AABB(160, 600, 80, 34)));
-    blocks.push(new Block(5, new AABB(160, 600, 80, 34)));
-    walls.push(new Wall(5, 87, 680, 50, 50));
-
-    walls.push(new Wall(6, 200, 280, 50, -50));
-    blocks.push(new Block(6, new AABB(50, 130, 80, 34)));
-    walls.push(new Wall(6, 310, 380, 50, 50));
-    blocks.push(new Block(6, new AABB(330, 130, 80, 34)));
-    blocks.push(new Block(6, new AABB(410, 130, 100, 200)));
-    walls.push(new Wall(6, 650, 140, 150, 0));
-    blocks.push(new Block(6, new AABB(908, 265, 100, 34)));
-    blocks.push(new Block(6, new AABB(500, 444, 150, 200)));
-    blocks.push(new Block(6, new AABB(50, 650, 100, 34)));
-
-    blocks.push(new Block(7, new AABB(100, 300, 100, 34)));
-    blocks.push(new Block(7, new AABB(520, 430, 100, 34)));
-    blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
-    walls.push(new Wall(7, 715, 430, 0, 300));
-    goals.push(new Block(7, new AABB(877,634,100,34)))
+    //blocks.push(new Block(stages[2], new AABB(130, 10, 100, 45)));
+    blocks.push(new Block(stages[2], new AABB(130, 200, 400, 45)));
+    blocks.push(new Block(stages[2], new AABB(540, 535, 120, 45)));
+    blocks.push(new Block(stages[2], new AABB(800, 615, 120, 45)));
+    goals.push(new Block(stages[2], new AABB(838,660,34,34)))
 }
 //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
 //키입력 True False로 가능, while()
@@ -1175,6 +1327,7 @@ class Engine extends Component {
     roomId = this.props.roomId;
     userInfo = this.props.userInfo;
     groupInfo = this.props.groupInfo;
+    roomSeq = this.props.roomSeq;
     this.state = {
         modalShow: false
     }
