@@ -13,7 +13,12 @@ export default function JoinModal({handleClose}) {
   }
 
   const joinRoom = () => {
-    axios.get(`${basicURL}/room?roomInterference=${isInterference}`)
+    const token = localStorage.getItem("token");
+    const headers = {
+      'Authorization': token,
+      mode: 'no-cors'
+    };
+    axios.get(`${basicURL}/room?roomInterference=${isInterference}`,{headers:headers})
       .then(res=>res.data)
       .then(data=>{
         if(data.length === 0) {
