@@ -595,7 +595,7 @@ class Player {
 
 function init() {
   axios({
-    url:`https://k6a401.p.ssafy.io/api/user/information/`,
+    url:`https://k6a401.p.ssafy.io/api/user/`,
     method:'get',
     headers: {
       "Authorization": localStorage.getItem("token")
