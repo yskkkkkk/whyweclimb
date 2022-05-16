@@ -38,7 +38,7 @@ export default function WaitRoom() {
       if (player.ready === true) count++;
     }
     if (count === groupInfo.length){
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const headers = {
         'Authorization': token,
         mode: 'no-cors'
@@ -85,7 +85,7 @@ export default function WaitRoom() {
   }
 
   function getUserInfo(){
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const headers = {
       'Authorization': token,
       mode: 'no-cors'
@@ -95,7 +95,7 @@ export default function WaitRoom() {
       .then(data => {socketConnect(data);setUserInfo(data)})
       .catch(err => {
         alert("다시 로그인을 해주세요");
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         location.href="/";        
       })
   }
@@ -109,7 +109,7 @@ export default function WaitRoom() {
   
   useEffect(()=>{
     if(roomID){
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const headers = {
         'Authorization': token,
         mode: 'no-cors'

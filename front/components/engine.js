@@ -598,7 +598,7 @@ function init() {
     url:`https://k6a401.p.ssafy.io/api/user/information/`,
     method:'get',
     headers: {
-      "Authorization": localStorage.getItem("token")
+      "Authorization": sessionStorage.getItem("token")
     }
   }).then(res=>{
     console.log(res.data)
@@ -1165,7 +1165,7 @@ class Engine extends Component {
     console.log("onload");
     
     init();
-    //console.log(localStorage,"localStorage")
+    //console.log(sessionStorage,"sessionStorage")
     playingTime = document.getElementById("time");
     
     this.run();
@@ -1178,7 +1178,7 @@ class Engine extends Component {
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
       headers: {
-        "Authorization": localStorage.getItem("token")
+        "Authorization": sessionStorage.getItem("token")
       },
       data:{
         "backgroundSound": 50,
@@ -1208,7 +1208,7 @@ class Engine extends Component {
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
       headers: {
-        "Authorization": localStorage.getItem("token")
+        "Authorization": sessionStorage.getItem("token")
       },
       data:{
         "backgroundSound": 50,

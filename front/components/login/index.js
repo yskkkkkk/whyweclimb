@@ -41,7 +41,7 @@ export default function Login({toSignup, toModeSelect}) {
     .then((data) => {
       console.log(data);
       if (data.token) {
-        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
         initializeData();
         // alert(`로그인 성공 : ${data}`)
         toModeSelect();
