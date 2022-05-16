@@ -10,8 +10,8 @@ import { Suspense } from "react";
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/new_multi')}, {ssr:false});
 
-// const basicURL = 'https://k6a401.p.ssafy.io/api';
-const basicURL = `http://localhost:8081/api`
+const basicURL = 'https://k6a401.p.ssafy.io/api';
+// const basicURL = `http://localhost:8081/api`
 const Stomp = StompJS.Stomp;
 const stomp = Stomp.over(function(){
   return new SockJS(`${basicURL}/ws-stomp`);
