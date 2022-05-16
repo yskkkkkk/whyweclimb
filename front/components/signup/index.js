@@ -34,7 +34,7 @@ export default function Signup ({toMain}) {
     setAvailableUserId(false);
     setValidUserPassword(false);
     setValidMatchPassword(false);
-    setErrorMsg([]);
+    setErrorMsg("");
   };
 
   const userIdCheck = (e) => {         // 아이디 중복 확인
@@ -89,34 +89,29 @@ export default function Signup ({toMain}) {
   // 왜 setErrorMsg 코드가 적용 안될까.. 
   const finalCheck = () => {          // 회원가입 버튼 눌렀을때 로직
     setErrorMsg("please check the followings:");
-
+    let errMsg = ""
     if (availableUserId && validUserPassword && validMatchPassword) {
       submitRegistration();
     }
     else {
       if (!availableUserId) {
-        addErrorID();
+        errMsg+='ID\n'
+        
       }
       if (!validUserPassword) {
-        addErrorPW();
+        errMsg+='Password\n'
+        
       }
       if (!validMatchPassword) {
-        addErrorPwConf();
+        errMsg+='Password confirm'
+        
       }
-      console.log(availableUserId, validUserPassword, validMatchPassword);
-      toast.error(errorMsg);
+      
+      toast.error(errMsg);
     }
   }
 
-  const addErrorID = () => {
-    setErrorMsg(`${errorMsg}\n   - ID`);
-  }
-  const addErrorPW = () => {
-    setErrorMsg(`${errorMsg}\n   - Password`);
-  }
-  const addErrorPwConf = () => {
-    setErrorMsg(`${errorMsg}\n   - PW confirm`);
-  }
+  
 
   const goBack = () => {
     initializeData();
