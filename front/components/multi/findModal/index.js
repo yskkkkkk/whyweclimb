@@ -15,7 +15,7 @@ export default function FindModal({handleClose}) {
   };
 
   const findRoom = () => {
-    axios.get(`${basicURL}/chat/room/${roomID}`)
+    axios.get(`${basicURL}/room/${roomID}`)
       .then(res=>res.data)
       .then(data=>{
         if(data !== ""){
