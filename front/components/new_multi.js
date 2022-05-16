@@ -934,9 +934,9 @@ function keyDown(e)
         inputkeys[e.key] = true;
         // if(player.onGround)
         {
-            stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
+            stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
                 x:players[myIdx].x, y:players[myIdx].y, vx:players[myIdx].vx, vy:players[myIdx].vy}));
-            // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'}));       
+            // stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'}));       
         }
 
     }
@@ -949,9 +949,9 @@ function keyUp(e)
         // console.log(keys);
         // if(player.onGround)
         {
-            stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
+            stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
                 x:players[myIdx].x, y:players[myIdx].y, vx:players[myIdx].vx, vy:players[myIdx].vy}));        
-            // stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'})); 
+            // stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, message:'keys'})); 
         }
 
     }
@@ -1111,7 +1111,7 @@ function socketConnect(){
     //         console.log('stomp',stomp.webSocket._transport.url);
     //         const strings = stomp.webSocket._transport.url.split('/');
     //         const sessionId = strings[strings.length-2];
-    //         stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
+    //         stomp.subscribe(`/sub/room/`+roomId, function(message){
     //             console.log('message',message);
     //             var recv = JSON.parse(message.body);
     //             receiveMessage(recv);
@@ -1123,7 +1123,7 @@ function socketConnect(){
     //     }
     // )
     console.log(stomp);
-    stomp.subscribe('/sub/chat/room/' + roomId, function(message){
+    stomp.subscribe('/sub/room/' + roomId, function(message){
         console.log('game Start!!');
         var recv = JSON.parse(message.body);
         receiveMessage(recv);

@@ -50,7 +50,7 @@ export default function Home() {
       <Head>
         <title>why we climb</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="we challenge, we compete, and we struggle to find the true reason why we climb." />
         {/* <script type="text/javascript" src="../components/main.js"></script> */}
       </Head>

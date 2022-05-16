@@ -14,4 +14,5 @@ public class UserUpdateRequest {
     private Integer backgroundSound;
     private Integer effectSound;
     private Integer maxLevel;
+    private Integer skinSeq;
 }

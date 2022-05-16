@@ -13,7 +13,7 @@ export default function JoinModal({handleClose}) {
   }
 
   const joinRoom = () => {
-    axios.get(`${basicURL}/chat/room?roomInterference=${isInterference}`)
+    axios.get(`${basicURL}/room?roomInterference=${isInterference}`)
       .then(res=>res.data)
       .then(data=>{
         if(data.length === 0) {

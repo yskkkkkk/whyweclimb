@@ -38,7 +38,7 @@ export default function WaitRoom() {
       if (player.ready === true) count++;
     }
     if (count === groupInfo.length){
-      axios.put(`${basicURL}/chat/room/start/${roomID}`)
+      axios.put(`${basicURL}/room/start/${roomID}`)
       .then(res=>console.log('start!!!',res))
       .catch(err=>console.error(err))
     }
@@ -65,7 +65,7 @@ export default function WaitRoom() {
         console.log('stomp',stomp.webSocket._transport.url);
         const strings = stomp.webSocket._transport.url.split('/');
         const sessionId = strings[strings.length-2];
-        stomp.subscribe(`/sub/chat/room/`+roomID, function(message){
+        stomp.subscribe(`/sub/room/`+roomID, function(message){
             console.log('here !!!message',message);
             var recv = JSON.parse(message.body);
             receiveMessage(recv);
@@ -84,7 +84,7 @@ export default function WaitRoom() {
       'Authorization': token,
       mode: 'no-cors'
     }
-    fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
+    fetch(`https://k6a401.p.ssafy.io/api/user`, {headers:headers})
       .then(res => res.json())
       .then(data => {socketConnect(data);setUserInfo(data)})
       .catch(err => {
@@ -103,7 +103,7 @@ export default function WaitRoom() {
   
   useEffect(()=>{
     if(roomID){
-      axios.get(`${basicURL}/chat/room/${roomID}`)
+      axios.get(`${basicURL}/room/${roomID}`)
         .then(res=>res.data)
         .then(data=>{
           if(data!==''){
