@@ -57,7 +57,7 @@ class Engine extends Component {
     let player;
     let myIdx;
     let level = 0;
-    let goalLevel = 7
+    let goalLevel = 2;
     let levelMax = 0;
     const stomp = this.props.stomp;
     const roomId = this.props.roomId;
@@ -876,65 +876,7 @@ class Engine extends Component {
     //Make game levels
     function initLevels()
     {
-        blocks.push(new Block(0, new AABB(0, 0, 1000, 156)));
-        blocks.push(new Block(0, new AABB(330, 230, 150, 34)));
-        blocks.push(new Block(0, new AABB(710, 410, 116, 34)));
-        blocks.push(new Block(0, new AABB(330, 660, 150, 34)));
-        blocks.push(new Block(0, new AABB(70, 620, 150, 34)));
-
-        walls.push(new Wall(1, 200, 100, 0, 200));
-        blocks.push(new Block(1, new AABB(0, 200, 48, 34)));
-        blocks.push(new Block(1, new AABB(530, 200, 60, 34)));
-        blocks.push(new Block(1, new AABB(860, 200, 140, 34)));
-        blocks.push(new Block(1, new AABB(670, 570, 180, 90)));
-
-        blocks.push(new Block(2, new AABB(130, 10, 100, 45)));
-        blocks.push(new Block(2, new AABB(130, 300, 100, 45)));
-        blocks.push(new Block(2, new AABB(540, 535, 120, 45)));
-        blocks.push(new Block(2, new AABB(800, 615, 120, 45)));
-
-        blocks.push(new Block(3, new AABB(460, 10, 110, 34)));
-        blocks.push(new Block(3, new AABB(46, 236, 100, 34)));
-        //walls.push(new Wall(3, 300, 280, 0, -34));
-        //walls.push(new Wall(3, 300, 400, 0, -34));
-        walls.push(new Wall(3, 300, 400, -50, 150));
-        walls.push(new Wall(3, 300, 246, -50, -150));
-        walls.push(new Wall(3, 480, 550, 350, -52.5));
-        //walls.push(new Wall(3, 680, 520, 100, -15));
-        blocks.push(new Block(3, new AABB(890, 450, 110, 34)));
-
-        blocks.push(new Block(4, new AABB(390, 10, 90, 34)));
-        blocks.push(new Block(4, new AABB(90, 20, 150, 200)));
-        blocks.push(new Block(4, new AABB(510, 380, 150, 200)));
-        blocks.push(new Block(4, new AABB(850, 715, 150, 85)));
-
-        blocks.push(new Block(5, new AABB(850, 0, 150, 65)));
-        blocks.push(new Block(5, new AABB(800, 200, 99, 34)));
-        walls.push(new Wall(5, 505, 450, 25, -50));
-        walls.push(new Wall(5, 365, 450, -25, -50));
-        walls.push(new Wall(5, 340, 400, 0, -100));
-        walls.push(new Wall(5, 530, 400, 0, -240));
-        blocks.push(new Block(5, new AABB(340, 160, 190, 34)));
-        blocks.push(new Block(5, new AABB(50, 160, 80, 34)));
-        blocks.push(new Block(5, new AABB(160, 600, 80, 34)));
-        blocks.push(new Block(5, new AABB(160, 600, 80, 34)));
-        walls.push(new Wall(5, 87, 680, 50, 50));
-
-        walls.push(new Wall(6, 200, 280, 50, -50));
-        blocks.push(new Block(6, new AABB(50, 130, 80, 34)));
-        walls.push(new Wall(6, 310, 380, 50, 50));
-        blocks.push(new Block(6, new AABB(330, 130, 80, 34)));
-        blocks.push(new Block(6, new AABB(410, 130, 100, 200)));
-        walls.push(new Wall(6, 650, 140, 150, 0));
-        blocks.push(new Block(6, new AABB(908, 265, 100, 34)));
-        blocks.push(new Block(6, new AABB(500, 444, 150, 200)));
-        blocks.push(new Block(6, new AABB(50, 650, 100, 34)));
-
-        blocks.push(new Block(7, new AABB(100, 300, 100, 34)));
-        blocks.push(new Block(7, new AABB(520, 430, 100, 34)));
-        blocks.push(new Block(7, new AABB(877, 600, 100, 34)));
-        walls.push(new Wall(7, 715, 430, 0, 300));
-        goals.push(new Block(7, new AABB(877,634,100,34)))
+        
     }
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
