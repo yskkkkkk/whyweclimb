@@ -61,6 +61,12 @@ export default function Home() {
         pages={4}
         style={{
           overflow: "hidden",
+          backgroundImage: 'url("/images/stars.svg")',
+          backgroundColor: '#565656',
+          backgroundSize: 'cover',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 0,
         }}
         >
           <ParallaxLayer
@@ -68,12 +74,6 @@ export default function Home() {
             speed={0}
             factor={4}
             style={{
-              backgroundImage: 'url("/images/stars.svg")',
-              backgroundColor: '#565656',
-              backgroundSize: 'cover',
-              display: 'flex',
-              justifyContent: 'center',
-              zIndex: 0,
             }}
           />
 
