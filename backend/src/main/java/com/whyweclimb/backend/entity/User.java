@@ -37,6 +37,9 @@ public class User implements UserDetails{
 	@Column
 	@ColumnDefault("0")
 	private Integer maxLevel;
+	@Column
+	@ColumnDefault("1")
+	private Integer skinSeq;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
