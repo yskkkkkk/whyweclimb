@@ -18,13 +18,13 @@ import io.swagger.annotations.ApiOperation;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/chat")
+@RequestMapping("/room")
 public class RoomController {
     private final RoomService roomService;
 	private final SimpMessageSendingOperations messagingTemplate;
 
 	@ApiOperation(value = "createRoom", notes = "채팅방 생성, 성공 시 roomCode를 반환합니다.")
-    @PostMapping("/room")
+    @PostMapping("")
     public ResponseEntity<Map<String, String>> createRoom(@RequestBody RoomCreateRequest request){
     	RoomInfoResponse response = roomService.createRoom(request);
 		String roomCode = "";
@@ -42,7 +42,7 @@ public class RoomController {
 
 	@ApiOperation(value = "findRoom", notes = 
 		"roomCode를 받아 게임방 정보를 반환합니다. FindResult에 방이 없다면 [none], 인원제한은 [full], 시작이후라면 [start], 접속가능하다면 [ok]를 반환합니다.")
-    @GetMapping("/room/{roomCode}")
+    @GetMapping("/{roomCode}")
     public ResponseEntity<RoomInfoResponse> findRoomUseCode(@PathVariable String roomCode){
     	RoomInfoResponse response = roomService.findRoom(roomCode);
 		HttpStatus status;
@@ -58,7 +58,7 @@ public class RoomController {
 
 	@ApiOperation(value = "joinRoom", notes = 
 		"roomInterference를 받아 방을 반환합니다. 생성한지 오래된 방을 반환하며 없다면 null과 204, 있다면 방정보와 200을 반환합니다.")
-    @GetMapping("/room")
+    @GetMapping("")
     public ResponseEntity<RoomInfoResponse> joinRoomRandom(@RequestParam boolean roomInterference){
     	RoomInfoResponse response = roomService.joinRoom(roomInterference);
 		HttpStatus status;
@@ -72,7 +72,7 @@ public class RoomController {
 
 
 	@ApiOperation(value = "startGame", notes = "방을 게임시작 상태로 변환 후 반환합니다.")
-    @PutMapping("/room/start/{roomCode}")
+    @PutMapping("/start/{roomCode}")
     public ResponseEntity<RoomInfoResponse> startGame(@PathVariable String roomCode){
     	RoomInfoResponse response = roomService.startGame(roomCode);
     	HttpStatus status;
