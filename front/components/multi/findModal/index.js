@@ -15,7 +15,7 @@ export default function FindModal({handleClose}) {
   };
 
   const findRoom = () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const headers = {
       'Authorization': token,
       mode: 'no-cors'
