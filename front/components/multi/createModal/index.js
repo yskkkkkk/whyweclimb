@@ -51,7 +51,7 @@ export default function CreateModal({handleClose}) {
   }
 
   function createRoom(){
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const headers = {
       'Authorization': token,
       mode: 'no-cors'

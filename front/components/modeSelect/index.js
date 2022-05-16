@@ -8,7 +8,7 @@ export default function ModeSelect({toMain, toConfigure}) {
   // const test = (e) => {
   //   e.preventDefault();
 
-  //   const token = localStorage.getItem("token");
+  //   const token = sessionStorage.getItem("token");
   //   console.log(token);
   //   const headers = {
   //     'Authorization': token,
@@ -33,14 +33,14 @@ export default function ModeSelect({toMain, toConfigure}) {
       url:'https://k6a401.p.ssafy.io/api/user/information',
       method:'GET',
       headers: {
-        "Authorization":localStorage.getItem("token")
+        "Authorization":sessionStorage.getItem("token")
       }
     }).then(res=>{
       axios({
         url:`https://k6a401.p.ssafy.io/api/user`,
         method:'PUT',
         headers: {
-          "Authorization": localStorage.getItem("token")
+          "Authorization": sessionStorage.getItem("token")
         },
         data:{
           "userSeq": res.data.userSeq ,
