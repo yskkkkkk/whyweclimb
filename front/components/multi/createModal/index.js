@@ -51,7 +51,7 @@ export default function CreateModal({handleClose}) {
   }
 
   function createRoom(){
-    axios.post(`${basicURL}/chat/room`, roomInfo)
+    axios.post(`${basicURL}/room`, roomInfo)
       .then(response => response.data)
       .then(data=>location.href=`multi/${data.roomCode}`)
       .catch(err=>console.error(err));
