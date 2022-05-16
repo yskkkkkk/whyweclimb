@@ -38,7 +38,9 @@
   box-shadow: 0 2px 0px #6d4c41;
   transition: all .1s;
 }
-
+.btn_select {
+  text-align: center;
+}
 /* ------------------------------------------------------------------------------------ */
 /* 캐릭터 점프 애니매이션 */
 /* 싱글모드 */
@@ -105,8 +107,13 @@
   64%  { transform: scale(1,1)      translateY(0); }
   100% { transform: scale(1,1)      translateY(0); }
 }
-
-
+.inModal {
+  
+  justify-content: center;
+}
+.characters {
+  margin:50px;
+}
 /* ------------------------------------------------------------------------------------------- */
 /* 텍스트 glowing 애니메이션 */
 .container a:hover {
