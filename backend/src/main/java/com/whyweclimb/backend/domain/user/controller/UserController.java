@@ -110,4 +110,18 @@ public class UserController {
 		}
 		return new ResponseEntity<UserInfoResponse>(response, status);
     }
+
+	@ApiOperation(value = "checkSession", notes = "현재 멀티플레이 중인 유저인지 검사합니다.")
+	@GetMapping("/{userSeq}")
+	public ResponseEntity<HttpStatus> checkSession(@PathVariable int userSeq){
+ 		HttpStatus status;
+		if(userService.checkSession(userSeq)) { 
+			status = HttpStatus.OK;
+		}else { 
+			status = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<HttpStatus>(status);
+	}
+	
+	
 }
