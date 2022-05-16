@@ -38,7 +38,12 @@ export default function WaitRoom() {
       if (player.ready === true) count++;
     }
     if (count === groupInfo.length){
-      axios.put(`${basicURL}/room/start/${roomID}`)
+      const token = localStorage.getItem("token");
+      const headers = {
+        'Authorization': token,
+        mode: 'no-cors'
+      };
+      axios.put(`${basicURL}/room/start/${roomID}`,{headers:headers})
       .then(res=>console.log('start!!!',res))
       .catch(err=>console.error(err))
     }
@@ -84,7 +89,7 @@ export default function WaitRoom() {
       'Authorization': token,
       mode: 'no-cors'
     }
-    fetch(`https://k6a401.p.ssafy.io/api/user`, {headers:headers})
+    fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
       .then(res => res.json())
       .then(data => {socketConnect(data);setUserInfo(data)})
       .catch(err => {

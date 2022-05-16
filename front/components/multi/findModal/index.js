@@ -15,7 +15,12 @@ export default function FindModal({handleClose}) {
   };
 
   const findRoom = () => {
-    axios.get(`${basicURL}/room/${roomID}`)
+    const token = localStorage.getItem("token");
+    const headers = {
+      'Authorization': token,
+      mode: 'no-cors'
+    };
+    axios.get(`${basicURL}/room/${roomID}`,{headers:headers})
       .then(res=>res.data)
       .then(data=>{
         if(data !== ""){
