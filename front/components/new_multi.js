@@ -1,4 +1,7 @@
 import {Component} from "react";
+import Modal from "./ui/modal/modal";
+import style from "./engine.module.css";
+import Confetti from 'react-dom-confetti';
 
 let cvs;
 let gfx;
@@ -18,7 +21,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 22;
+const numResource = 23;
 let resourceLoaded = 0;
 
 let images = {};
@@ -41,7 +44,7 @@ const players = [];
 let player;
 let myIdx;
 let level = 0;
-let goalLevel = 7
+let goalLevel = 1;
 let levelMax = 0;
 // const stomp = this.props.stomp;
 // const roomId = this.props.roomId;
@@ -51,6 +54,8 @@ let stomp;
 let roomId;
 let userInfo;
 let groupInfo;
+let flag = false;
+let winner;
 class Vector
 {
     constructor(x, y)
@@ -258,6 +263,7 @@ class Player
         this.radius = this.size / 2.0 * 1.414;
         this.jumpGauge = 0;
         this.keys = {" ":false, ArrowLeft:false, ArrowRight:false};
+        this.index = 0;
     }
 
     aabb()
@@ -470,6 +476,8 @@ class Player
                 if(r.collide)
                 {
                     console.log("Goal!!!!")
+                    flag = true;
+                    winner = this.index;
                 }
             }
             for (let b of blocks)
@@ -661,11 +669,11 @@ class Player
 
 // }
 
-function start(){
-  socketConnect();
-  init();
-  run();
-}
+// function start(){
+//   socketConnect();
+//   init();
+//   run();
+// }
 
 function init()
 {
@@ -808,6 +816,12 @@ function init()
     images.running_L2.src = "/images/running_L2.png"
     images.running_L2.onload = function() { resourceLoaded++; };
 
+    images.goal = new Image();
+    images.goal.src = "/images/goal.png";
+    images.goal.onload = function() {
+        resourceLoaded++;
+    }
+
     //Audios
     audios.landing = new Audio();
     audios.landing.src = "/audios/landing.wav";
@@ -848,7 +862,7 @@ function init()
     for (var i=0; i < groupInfo.length; i++){
       console.log('i!!',i);
         players.push(new Player(locations[i][0],locations[i][1]));
-        if(userInfo.userSeq === groupInfo[i].userSeq){
+        if(userInfo.userSeq === groupInfo[i].userSeq){            
             myIdx = i;
         }
     }
@@ -859,6 +873,10 @@ function init()
     players.splice(myIdx,1);
     myIdx = players.length - 1;
     player = players[myIdx];
+    players[myIdx].index = myIdx;
+    for (var j=0; j < groupInfo.legnth-1; j++){
+        players[j].index = j;
+    }
 
     initLevels();
 }
@@ -871,12 +889,14 @@ function initLevels()
     blocks.push(new Block(0, new AABB(710, 410, 116, 34)));
     blocks.push(new Block(0, new AABB(330, 660, 150, 34)));
     blocks.push(new Block(0, new AABB(70, 620, 150, 34)));
+    
 
     walls.push(new Wall(1, 200, 100, 0, 200));
     blocks.push(new Block(1, new AABB(0, 200, 48, 34)));
     blocks.push(new Block(1, new AABB(530, 200, 60, 34)));
     blocks.push(new Block(1, new AABB(860, 200, 140, 34)));
     blocks.push(new Block(1, new AABB(670, 570, 180, 90)));
+    goals.push(new Block(1, new AABB(530,234,60,34)));
 
     blocks.push(new Block(2, new AABB(130, 10, 100, 45)));
     blocks.push(new Block(2, new AABB(130, 300, 100, 45)));
@@ -957,21 +977,7 @@ function keyUp(e)
     }
 }
 
-function run(time)
-{
-    let currentTime = new Date().getTime();
-    passedTime += currentTime - previousTime;
-    previousTime = currentTime;
 
-    while (passedTime >= msPerFrame)
-    {
-        update(msPerFrame);
-        render();
-        passedTime -= msPerFrame;
-    }
-
-    requestAnimationFrame(run);
-}
 
 function update(delta)
 {
@@ -996,7 +1002,7 @@ function render()
     goals.forEach(g =>{
         if(g.level != level) return;
         if(g.level != goalLevel) return;
-        drawAABB(g.aabb);
+        drawGoal(g.aabb);
     })
 
     blocks.forEach(b =>
@@ -1105,6 +1111,17 @@ function getIntersect(x1, y1, x2, y2, x3, y3, x4, y4)
     return new Vector(x, y);
 }
 
+function drawGoal(aabb){
+    let x = aabb.x;
+    let y = aabb.y;
+    let w = aabb.width;
+    let h = aabb.height;
+    gfx.beginPath();
+    gfx.rect(x, HEIGHT - y, w, -h);
+
+    gfx.drawImage(images["goal"], x, HEIGHT - y, w, -h);
+}
+
 function socketConnect(){
     // stomp.connect({},
     //     function(){
@@ -1158,16 +1175,49 @@ class Engine extends Component {
     roomId = this.props.roomId;
     userInfo = this.props.userInfo;
     groupInfo = this.props.groupInfo;
+    this.state = {
+        modalShow: false
+    }
     
   }
 
-  
+  openModal = () => {
+      this.setState({modalShow:true})
+  }
+
+  run(time){
+    let currentTime = new Date().getTime();
+    passedTime += currentTime - previousTime;
+    previousTime = currentTime;
+
+    while (passedTime >= msPerFrame)
+    {
+        update(msPerFrame);
+        render();
+        passedTime -= msPerFrame;
+
+        if(flag){
+          console.log('end!!');
+          this.openModal();
+
+          return;
+        }
+    }
+
+    if(flag){
+      
+      this.openModal()
+    }
+    if(!flag){
+      requestAnimationFrame(this.run.bind(this));
+    }
+  }
 
   componentDidMount() {    
     console.log('Mount',stomp, roomId, userInfo, groupInfo);
     socketConnect();
     init();
-    run();
+    this.run();
   }
   
   
@@ -1177,7 +1227,15 @@ class Engine extends Component {
     //Make game levels
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
-    return (<canvas id="cvs" width="1000" height="800" />)
+    return (
+    <>
+        <canvas id="cvs" width="1000" height="800" />
+        {this.state.modalShow && <Modal visible={this.state.modalShow}>
+            <h1 className={style.resultText}>축하합니다!!!</h1>
+            <h2 className={style.resultText}>winner: {groupInfo[winner].userId}</h2>
+        </Modal>}
+    </>
+    )
   }
 }
 export default Engine;
