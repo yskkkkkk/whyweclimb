@@ -28,7 +28,7 @@ public class MessageController {
 //		log.info("[name: " + message.getSender() + ", key input: space-" + message.getSpace() + " left-" + message.getLeft()
 //				+ " right-" + message.getRight() + "]");
 
-		messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
+		messagingTemplate.convertAndSend("/sub/room/" + message.getRoomCode(), message);
 	}
 
 	@MessageMapping("/room/entrance")
@@ -38,11 +38,11 @@ public class MessageController {
 			messageService.increaseNumberOfPeople(access);
 
 			AccessResponse response = new AccessResponse(messageService.playerList(access.getRoomCode()), "OK");
-			messagingTemplate.convertAndSend("/sub/chat/room/" + access.getRoomCode(), response);
+			messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), response);
 		} else {
 			Map<String, String> result = new HashMap<String, String>();
 			result.put("message", "full");
-			messagingTemplate.convertAndSend("/sub/chat/room/" + access.getRoomCode(), result);
+			messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), result);
 		}
 	}
 
@@ -51,6 +51,6 @@ public class MessageController {
 		String roomCode = messageService.getReady(userSeq);
 		AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
 
-		messagingTemplate.convertAndSend("/sub/chat/room/" + roomCode, response);
+		messagingTemplate.convertAndSend("/sub/room/" + roomCode, response);
 	}
 }
