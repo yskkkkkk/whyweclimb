@@ -13,7 +13,7 @@ export default function JoinModal({handleClose}) {
   }
 
   const joinRoom = () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const headers = {
       'Authorization': token,
       mode: 'no-cors'

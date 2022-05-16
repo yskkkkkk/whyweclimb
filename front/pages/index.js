@@ -14,7 +14,7 @@ export default function Home() {
 
   const toMain = () => {
     setLoggedIn(false);
-    window.localStorage.clear();
+    window.sessionStorage.clear();
     inRef.current.scrollTo(3);
     mainRef.current.scrollTo(0);
     setTimeout(() => {
@@ -36,8 +36,8 @@ export default function Home() {
   }
 
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
-    setLoggedIn(localStorage.getItem("token") ? true : false);
-    if (!localStorage.getItem("token")) {
+    setLoggedIn(sessionStorage.getItem("token") ? true : false);
+    if (!sessionStorage.getItem("token")) {
       setTimeout(() => {
         inRef.current.scrollTo(3);
         mainRef.current.scrollTo(0);
@@ -61,20 +61,18 @@ export default function Home() {
         pages={4}
         style={{
           overflow: "hidden",
+          backgroundImage: 'url("/images/stars.svg")',
+          backgroundColor: '#565656',
+          backgroundSize: 'cover',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 0,
         }}
         >
           <ParallaxLayer
             offset={0}
             speed={0}
             factor={4}
-            style={{
-              backgroundImage: 'url("/images/stars.svg")',
-              backgroundColor: '#565656',
-              backgroundSize: 'cover',
-              display: 'flex',
-              justifyContent: 'center',
-              zIndex: 0,
-            }}
           />
 
           <ParallaxLayer offset={0} speed={0.8} style={{ opacity: 0.2, zIndex: 0, }}>
