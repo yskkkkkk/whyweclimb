@@ -84,7 +84,7 @@ public class RoomController {
     	
     	Map<String, String> message = new HashMap<String, String>();
     	message.put("message", "start");
-    	messagingTemplate.convertAndSend("/sub/chat/room/" + roomCode, message);
+    	messagingTemplate.convertAndSend("/sub/room/" + roomCode, message);
     	return new ResponseEntity<RoomInfoResponse>(response, status);
     }
 }
