@@ -1,5 +1,6 @@
 import style from './signup.module.css';
 import { useState, useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 
 const ID_REGEX = /^[a-zA-Z0-9]{3,20}$/;
 const PW_REGEX = /^[a-zA-Z0-9]{8,24}$/;
@@ -9,6 +10,7 @@ export default function Signup ({toMain}) {
   const inputID = useRef();
   const pw = useRef();
   const pwConf = useRef();
+  
   const [userId, setUserId] = useState("");
   const [validUserId, setValidUserId] = useState(false);
   const [availableUserId, setAvailableUserId] = useState(false);
@@ -18,9 +20,9 @@ export default function Signup ({toMain}) {
 
   const [matchPassword, setMatchPassword] = useState("");
   const [validMatchPassword, setValidMatchPassword] = useState(false);
-
-  const [errorMsg, setErrorMsg] = useState([]);
   
+  const [errorMsg, setErrorMsg] = useState("");
+
   const initializeData = () => {      // 모든 상태정보 초기화
     inputID.current.value = '';
     pw.current.value = '';
@@ -42,16 +44,16 @@ export default function Signup ({toMain}) {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            alert('유효한 아이디입니다');
+            toast.success("your ID's good to go!");
             setAvailableUserId(data);
           }
           else {
-            alert('이미 사용중인 아이디입니다');
+            toast.error("we're sorry, the ID is already in use.. ");
           }
         });
     }
     else {
-      alert('유효한 아이디를 입력해주세요');
+      toast.error("please provide a valid ID!");
     }
   }
 
@@ -72,22 +74,24 @@ export default function Signup ({toMain}) {
       })
       .then((data) => {
         if (data) {
-          alert(`회원가입 성공! : ${data}`);
+          toast("welcome to the club!", {icon: "🎉"});
           initializeData();
           toMain();
         } else {
-          alert(`회원가입 실패 : ${data}`);
+          toast.error("unexpected error occured, please try again later.");
         }
       })
       .catch((error) => {
-        alert(`회원가입 실패 : ${error}`);
+        toast.error(`failed to signup due to : ${error}`);
       });
   };
 
+  // 왜 setErrorMsg 코드가 적용 안될까.. 
   const finalCheck = () => {          // 회원가입 버튼 눌렀을때 로직
+    setErrorMsg("please check the followings:");
+
     if (availableUserId && validUserPassword && validMatchPassword) {
       submitRegistration();
-      
     }
     else {
       if (!availableUserId) {
@@ -97,55 +101,21 @@ export default function Signup ({toMain}) {
         addErrorPW();
       }
       if (!validMatchPassword) {
-        addErrorConfirmPW();
+        addErrorPwConf();
       }
-      else if (errorMsg && !errorMsg.includes("잘못된 접근입니다")) {
-        setErrorMsg(errorMsg + ['잘못된 접근입니다']);
-      }
-
-      alert(errorMsg);
-      
+      console.log(availableUserId, validUserPassword, validMatchPassword);
+      toast.error(errorMsg);
     }
   }
 
   const addErrorID = () => {
-    if (errorMsg && !errorMsg.includes("confirm your ID")) {
-      setErrorMsg(errorMsg + ["confirm your ID"]);
-    }
-    else if (!errorMsg) {
-      setErrorMsg(["confirm your ID"]);
-    }
-  }
-  const removeErrorID = () => {
-    if (errorMsg && errorMsg.includes("confirm your ID")) {
-      errorMsg.filter(msg => msg != "confirm your ID");
-    }
+    setErrorMsg(`${errorMsg}\n   - ID`);
   }
   const addErrorPW = () => {
-    if (errorMsg && !errorMsg.includes("inconsistent password")) {
-      setErrorMsg(errorMsg + ["inconsistent password"]);
-    }
-    else if (!errorMsg) {
-      setErrorMsg(["inconsistent password"]);
-    }
+    setErrorMsg(`${errorMsg}\n   - Password`);
   }
-  const removeErrorPW = () => {
-    if (errorMsg && errorMsg.includes("confirm your password")) {
-      errorMsg.filter(msg => msg != "confirm your password");
-    }
-  }
-  const addErrorConfirmPW = () => {
-    if (errorMsg && !errorMsg.includes("confirm your password")) {
-      setErrorMsg(errorMsg + ["confirm your password"]);
-    }
-    else if (!errorMsg) {
-      setErrorMsg(["confirm your password"]);
-    }
-  }
-  const removeErrorConfirmPW = () => {
-    if (errorMsg && errorMsg.includes("inconsistent password")) {
-      Object.values(errorMsg).filter(msg => msg != "inconsistent password");
-    }
+  const addErrorPwConf = () => {
+    setErrorMsg(`${errorMsg}\n   - PW confirm`);
   }
 
   const goBack = () => {
@@ -157,27 +127,17 @@ export default function Signup ({toMain}) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
     const result = ID_REGEX.test(userId);
     setValidUserId(result);
-    console.log(validUserId);
     setAvailableUserId(false);
-    if (result) {
-      removeErrorID();
-    }
   }, [userId]);
 
   useEffect(() => {                   // 비밀번호 조건 충족 여부 확인
     const result = PW_REGEX.test(userPassword);
     setValidUserPassword(result);
-    if (result) {
-      removeErrorPW();
-    }
   }, [userPassword]);
 
   useEffect(() => {                   // 비밀번호학인 조건 충족 여부 확인
     const match = userPassword === matchPassword;
     setValidMatchPassword(match);
-    if (match) {
-      removeErrorConfirmPW();
-    }
   }, [matchPassword]);
 
   useEffect(() => {                   // 컴포넌트 렌더 시 ID입력값에 focus

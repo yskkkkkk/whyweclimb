@@ -1,23 +1,26 @@
-
-import FindModal from '../components/multi/findModal';
-import JoinModal from "../components/multi/joinModal";
-import CreateModal from '../components/multi/createModal';
 import style from '../styles/multi.module.css';
 import Link from 'next/link';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import toast from 'react-hot-toast';
+import {AnimatePresence} from 'framer-motion';
+import { useState } from 'react';
+import Backdrop from '../components/multi/backdrop';
+
 
 export default function Multi() {
   // const basicURL = 'https://k6a401.p.ssafy.io/api'
+  const [modal, setModal] = useState(false);
 
-  const toggleCreateModal = () => {
-    toast(<CreateModal />)
+  const openFindModal = () => {
+    setModal(1);
   }
-  const toggleFindModal = () => {
-    toast(<FindModal />)
+  const openJoinModal = () => {
+    setModal(2);
   }
-  const toggleJoinModal = () => {
-    toast(<JoinModal />)
+  const openCreateModal = () => {
+    setModal(3);
+  }
+  const closeModal = () => {
+    setModal(false);
   }
 
   // const joinRoom = () => {
@@ -52,10 +55,6 @@ export default function Multi() {
         }}
       />
 
-      {/* <ParallaxLayer offset={0} speed={0.2} style={{ opacity: 0.1 }}>
-        <img src='/images/intro.svg' style={{ width: '100%'}} />
-      </ParallaxLayer> */}
-
       <ParallaxLayer
         offset={0}
         factor={4}
@@ -72,38 +71,50 @@ export default function Multi() {
       />
 
       <ParallaxLayer offset={0} style={{zIndex: 6}} >
-      <main className={style.multi}>
-        <nav className={style.lobby}>
-          <div className={style.findBtn} onClick={toggleFindModal}>
-            <div>
-              <div className={style.findImg}>
-                <div className={style.blingSS} />
-                <div className={style.blingS} />
-                <div className={style.blingM} />
+        <main className={style.multi}>
+          <nav className={style.lobby}>
+            <div className={style.findBtn} onClick={openFindModal}>
+              <div>
+                <div className={style.findImg}>
+                  <div className={style.blingSS} />
+                  <div className={style.blingS} />
+                  <div className={style.blingM} />
+                </div>
               </div>
+              <h2>find</h2>
             </div>
-            <h2>find</h2>
-          </div>
-          <div className={style.joinBtn} onClick={toggleJoinModal}>
-            <div>
-              <div className={style.joinImg1} />
-              <div className={style.joinImg2} />
-              <div className={style.spark} />
+            <div className={style.joinBtn} onClick={openJoinModal}>
+              <div>
+                <div className={style.joinImg1} />
+                <div className={style.joinImg2} />
+                <div className={style.spark} />
+              </div>
+              <h2>join</h2>
             </div>
-            <h2>join</h2>
-          </div>
-          <div className={style.createBtn} onClick={toggleCreateModal}>
-            <div>
-              <div className={style.createImg1} />
-              <div className={style.createImg2} />
+            <div className={style.createBtn} onClick={openCreateModal}>
+              <div>
+                <div className={style.createImg1} />
+                <div className={style.createImg2} />
+              </div>
+              <h2>create</h2>
             </div>
-            <h2>create</h2>
-          </div>
-        </nav>
-        <Link href={'/'} passHref>
-          <button className={style.back} >back</button>
-        </Link>
-      </main>
+          </nav>
+          <Link href={'/'} passHref>
+            <button className={style.back} >back</button>
+          </Link>
+        </main>
+        
+        <AnimatePresence    // 모달창들
+          // initial animation (바로 사라져버리는것?) 비활성화시킴
+          initial={false}
+          // animation이 다 끝나야만 화면에서 컴포넌트가 사라지게함
+          exitBeforeEnter={true}
+          >
+          {modal === 1 && <Backdrop label="findModal" handleClose={closeModal} />}
+          {modal === 2 && <Backdrop label="joinModal" handleClose={closeModal} />}
+          {modal === 3 && <Backdrop label="createModal" handleClose={closeModal} />}
+        </AnimatePresence>
+
       </ParallaxLayer>
     </Parallax>
   )
