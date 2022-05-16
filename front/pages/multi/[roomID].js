@@ -84,7 +84,7 @@ export default function WaitRoom() {
       'Authorization': token,
       mode: 'no-cors'
     }
-    fetch(`https://k6a401.p.ssafy.io/api/user`, {headers:headers})
+    fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
       .then(res => res.json())
       .then(data => {socketConnect(data);setUserInfo(data)})
       .catch(err => {
