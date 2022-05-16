@@ -37,7 +37,7 @@ let currentTime = 0;
 let passedTime = 0;
 let msPerFrame = 1000.0 /70.0;
 
-const numResource = 27;
+const numResource = 35;
 let resourceLoaded = 0;
 let startTime;
 let playingTime;
@@ -237,7 +237,7 @@ class Player {
     this.size = 32;
     this.radius = (this.size / 2.0) * 1.414;
     this.jumpGauge = 0;
-    this.skin = 1;
+    this.skin = 3;
   }
 
   aabb() {
@@ -844,6 +844,57 @@ function init() {
     console.log("loadFinish")
   };
   //27
+  images.running_3_R1 = new Image();
+  images.running_3_R1.src = "/images/3/running_R1.png";
+  images.running_3_R1.onload = function () {
+    resourceLoaded++;
+  };
+  //28
+  images.running_3_R2 = new Image();
+  images.running_3_R2.src = "/images/3/running_R2.png";
+  images.running_3_R2.onload = function () {
+    resourceLoaded++;
+  };
+  //29
+  images.running_3_L1 = new Image();
+  images.running_3_L1.src = "/images/3/running_L1.png";
+  images.running_3_L1.onload = function () {
+    resourceLoaded++;
+  };
+  //30
+  images.running_3_L2 = new Image();
+  images.running_3_L2.src = "/images/3/running_L2.png";
+  images.running_3_L2.onload = function () {
+    resourceLoaded++;
+    console.log("loadFinish")
+  };
+  //31
+  images.running_4_R1 = new Image();
+  images.running_4_R1.src = "/images/4/running_R1.png";
+  images.running_4_R1.onload = function () {
+    resourceLoaded++;
+  };
+  //32
+  images.running_4_R2 = new Image();
+  images.running_4_R2.src = "/images/4/running_R2.png";
+  images.running_4_R2.onload = function () {
+    resourceLoaded++;
+  };
+  //33
+  images.running_4_L1 = new Image();
+  images.running_4_L1.src = "/images/4/running_L1.png";
+  images.running_4_L1.onload = function () {
+    resourceLoaded++;
+  };
+  //34
+  images.running_4_L2 = new Image();
+  images.running_4_L2.src = "/images/4/running_L2.png";
+  images.running_4_L2.onload = function () {
+    resourceLoaded++;
+    console.log("loadFinish")
+  };
+  //35
+  
 
 
   //Audios
