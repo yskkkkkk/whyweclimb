@@ -10,4 +10,5 @@ public interface UserService {
 	UserInfoResponse login(UserRequest request);
 	UserInfoResponse userInfo(String userId);
 	UserInfoResponse updateUser(UserUpdateRequest request);
+	boolean checkSession(int userSeq);
 }

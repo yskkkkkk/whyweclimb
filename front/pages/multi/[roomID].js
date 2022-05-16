@@ -10,8 +10,8 @@ import { Suspense } from "react";
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/new_multi')}, {ssr:false});
 
-const basicURL = 'https://k6a401.p.ssafy.io/api';
-// const basicURL = `http://localhost:8081/api`
+// const basicURL = 'https://k6a401.p.ssafy.io/api';
+const basicURL = `http://localhost:8081/api`
 const Stomp = StompJS.Stomp;
 const stomp = Stomp.over(function(){
   return new SockJS(`${basicURL}/ws-stomp`);
@@ -63,6 +63,21 @@ export default function WaitRoom() {
     stomp.send(`/pub/room/ready`,{},userInfo.userSeq);
   }
 
+  function userConfirm(data){
+    const token = sessionStorage.getItem("token");
+    const headers = {
+      'Authorization': token,
+      mode: 'no-cors'
+    }
+    axios.get(`${basicURL}/user/${data.userSeq}`,{headers:headers})
+      .then(res=>console.log('confirmed!!',res))
+      .catch(err=>{
+        alert("이미 로그인이 되어 있습니다.");
+        window.sessionStorage.clear();
+        location.href="/";
+      })
+  }
+
 
   function socketConnect(data){
     stomp.connect({},
@@ -92,7 +107,7 @@ export default function WaitRoom() {
     }
     fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
       .then(res => res.json())
-      .then(data => {socketConnect(data);setUserInfo(data)})
+      .then(data => {socketConnect(data);userConfirm(data);setUserInfo(data)})
       .catch(err => {
         alert("다시 로그인을 해주세요");
         sessionStorage.removeItem("token");
@@ -102,7 +117,7 @@ export default function WaitRoom() {
 
   function goBack(){
     stomp.disconnect(function(){
-      alert("go back");
+      alert("go back~");
       location.href="/multi";
     })
   }

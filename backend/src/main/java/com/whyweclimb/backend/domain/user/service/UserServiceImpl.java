@@ -67,5 +67,13 @@ public class UserServiceImpl implements UserService{
 		});
 		return new UserInfoResponse(user.orElse(null));
 	}
+
+	@Override
+	public boolean checkSession(int userSeq) {
+		if(accessRedisRepository.findByUserSeq(userSeq) == null)
+			return true;
+		else 
+			return false;
+	}
     
 }

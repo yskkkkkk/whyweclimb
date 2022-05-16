@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                            ,"/user/id"
 	                            ,"/user/login"
 	                            ,"/user"
+	                            ,"/user/{userSeq}"
 	                            ,"/ws-stomp"
 	                            ,"/ws-stomp/**"
 	                            ,"/sub"
