@@ -1,7 +1,8 @@
 import style from './modeSelect.module.css';
 import Link from 'next/link';
-
-
+import Modal from "../ui/modal/modal";
+import React, {useState} from 'react';
+import axios from'axios';
 export default function ModeSelect({toMain, toConfigure}) {
   
   // const test = (e) => {
@@ -18,10 +19,62 @@ export default function ModeSelect({toMain, toConfigure}) {
   //     console.log(response.json());
   //   });
   // };
-
-
+  const [Modalshow, setModalVisible] = useState(false);
+  const openModal = () => {
+    console.log("show")
+    setModalVisible(true)
+  }
+  const closeModal = () => {
+    setModalVisible(false)
+  }
+  const saveCharacter = (num) => {
+    console.log("clickCharacter")
+    axios({
+      url:'https://k6a401.p.ssafy.io/api/user/information',
+      method:'GET',
+      headers: {
+        "Authorization":localStorage.getItem("token")
+      }
+    }).then(res=>{
+      axios({
+        url:`https://k6a401.p.ssafy.io/api/user`,
+        method:'PUT',
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        },
+        data:{
+          "userSeq": res.data.userSeq ,
+          "skinSeq": num ,
+        }
+        
+      }).then(res=>{
+        
+        console.log(res)
+        setModalVisible(false)
+      }).catch(err=>console.error(err))
+    }).catch(err=>console.error(err))
+    
+  }
+  // const characters = () => {
+  //   const result = [];
+  //   for (let i = 1; i<=4;i++){
+      
+  //     result.push(<a onClick={saveCharacter(i)}><img className={style.characters} src = {`/images/${i}/running_R1.png`} /></a>)
+  //   }
+  //   return result
+  // }
   return (
     <main className={style.container}>
+      <a onClick={openModal} className={style.btn_select}><h4>Character Select</h4></a>
+      <Modal visible={Modalshow} closable={true} maskClosable={true}> 
+        <div className={style.inModal}>
+          <a onClick={(e)=>{saveCharacter(1, e)}}><img className={style.characters} src = {`/images/${1}/running_R1.png`} /></a>
+          <a onClick={(e)=>{saveCharacter(2, e)}}><img className={style.characters} src = {`/images/${2}/running_R1.png`} /></a>
+          <a onClick={(e)=>{saveCharacter(3, e)}}><img className={style.characters} src = {`/images/${3}/running_R1.png`} /></a>
+          <a onClick={(e)=>{saveCharacter(4, e)}}><img className={style.characters} src = {`/images/${4}/running_R1.png`} /></a>
+        </div>
+        <a className={style.btn_select} onClick={closeModal}><h4>Close</h4></a>
+      </Modal>
       <section className={style.container2}>
         <a className={style.btn} href={'/single/singleGame'}>
           <div className={style.stage}>

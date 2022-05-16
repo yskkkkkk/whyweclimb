@@ -1172,6 +1172,8 @@ class Engine extends Component {
   }
   openModal = () => {
     // console.log("abcd")
+    console.log(userSeq)
+    console.log(levelMax)
     axios({
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
@@ -1183,7 +1185,7 @@ class Engine extends Component {
         "effectSound": 50,
         "maxLevel":levelMax,
         "userSeq": userSeq,
-        
+        "skinSeq":player.skin
       }
     }).then(res=>{
       
