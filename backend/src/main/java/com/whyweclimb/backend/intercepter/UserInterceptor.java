@@ -11,7 +11,9 @@ import com.whyweclimb.backend.domain.room.service.MessageService;
 import com.whyweclimb.backend.domain.room.service.RoomService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
  
+@Log4j2
 @RequiredArgsConstructor
 public class UserInterceptor implements ChannelInterceptor {
 
@@ -49,12 +51,17 @@ public class UserInterceptor implements ChannelInterceptor {
 ////            customChannel.send(MessageBuilder.createMessage(new byte[0], headerAccessor.getMessageHeaders()));
 //        }else 
         if(StompCommand.DISCONNECT.equals(accessor.getCommand())) {
-        	String roomCode = messageService.getAccess(accessor.getSessionId()).getRoomCode();
-        	messageService.decreaseNumberOfPeople(accessor.getSessionId());
-        	
-        	if (messageService.playerList(roomCode).size() == 0) {
-        		roomService.deleteRoom(roomCode);
-        	}
+        	String roomCode = "";
+        	try {
+        		roomCode = messageService.getAccess(accessor.getSessionId()).getRoomCode();
+        		messageService.decreaseNumberOfPeople(accessor.getSessionId());
+        		
+        		if (messageService.playerList(roomCode).size() == 0) {
+        			roomService.deleteRoom(roomCode);
+        		}
+			} catch (NullPointerException e) {
+				log.warn("access already out processed");
+			}
         }
         return message;
     }
