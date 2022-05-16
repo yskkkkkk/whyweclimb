@@ -1,5 +1,6 @@
 package com.whyweclimb.backend.domain.user.service;
 
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
@@ -13,7 +14,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 	private final UserRepository userRepository;
-
+	private final AccessRedisRepository accessRedisRepository;
+	
     @Override
 	public UserInfoResponse createUser(UserRequest request) {
     	UserInfoResponse user = userRepository.existsByUserId(request.getUserId()) 
@@ -36,7 +38,12 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserInfoResponse login(UserRequest request) {
-		return userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
+		UserInfoResponse user = userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
+		
+		if(accessRedisRepository.findByUserSeq(user.getUserSeq()) == null)
+			return user;
+		else 
+			return new UserInfoResponse();
 	}
 	
 	@Override

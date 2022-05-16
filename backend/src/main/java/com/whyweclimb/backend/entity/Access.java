@@ -22,7 +22,8 @@ public class Access {
     private Integer userSeq;
     private String userId;
 	private Boolean ready;
-
+	private Integer skinSeq;
+	
 	public void setReady(Boolean ready) {
 		this.ready = ready;
 	}

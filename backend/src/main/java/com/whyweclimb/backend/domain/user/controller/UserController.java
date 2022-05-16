@@ -75,6 +75,8 @@ public class UserController {
     	HttpStatus status;
 		if(response == null) { 
 			status = HttpStatus.NOT_FOUND;
+		}else if (response.getUserSeq() == null){
+			status = HttpStatus.CONFLICT;
 		}else { 
 			token = jwtTokenProvider.createToken(response.getUserId(), Collections.singletonList("ROLE_USER"));
 			status = HttpStatus.OK;
