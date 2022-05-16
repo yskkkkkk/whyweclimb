@@ -604,8 +604,9 @@ function init() {
     console.log(res.data)
     levelMax = res.data.maxLevel
     userSeq = res.data.userSeq
+    console.log(userSeq)
     console.log(levelMax)
-    
+    player.skin = res.data.skinSeq
   }).catch(err=>console.error(err))
   
   cvs = document.getElementById("cvs");
