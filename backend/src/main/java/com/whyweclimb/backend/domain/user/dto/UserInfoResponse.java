@@ -17,6 +17,7 @@ public class UserInfoResponse {
 	private Integer backgroundSound;
 	private Integer effectSound;
 	private Integer maxLevel;
+	private Integer skinSeq;
 
 	public UserInfoResponse(User user) {
 		this.userSeq = user.getUserSeq();
@@ -24,6 +25,7 @@ public class UserInfoResponse {
 		this.backgroundSound = user.getBackgroundSound();
 		this.effectSound = user.getEffectSound();
 		this.maxLevel = user.getMaxLevel();
+		this.skinSeq = user.getSkinSeq();
 	}
 
 }
