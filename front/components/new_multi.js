@@ -1055,7 +1055,11 @@ function init()
     for (var i=0; i < groupInfo.length; i++){
     //   console.log('i!!',i);
         players.push(new Player(locations[i][0],locations[i][1]));
-        players[i].skin = groupInfo[i].skinSeq;
+        if(groupInfo[i].skinSeq){
+            players[i].skin = groupInfo[i].skinSeq;
+        }else{
+            players[i].skin = 1
+        }
         if(userInfo.userSeq === groupInfo[i].userSeq){            
             myIdx = i;
         }

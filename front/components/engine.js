@@ -59,6 +59,7 @@ const chargingConst = 600.0;
 let player;
 let userSeq;
 let flag = false;
+let flag2 = false;
 let level = 0;
 let levelMax = -1;
 let goalLevel = 7;
@@ -606,7 +607,11 @@ function init() {
     userSeq = res.data.userSeq
     // console.log(userSeq)
     // console.log(levelMax)
-    player.skin = res.data.skinSeq
+    if(res.data.skinSeq){
+      player.skin = res.data.skinSeq
+    }else{
+      player.skin = 1
+    }
   }).catch(err=>console.error(err))
   
   cvs = document.getElementById("cvs");
@@ -1203,6 +1208,7 @@ class Engine extends Component {
   }
   
   componentWillUnmount() {
+    flag2 = true
     axios({
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
@@ -1234,7 +1240,9 @@ class Engine extends Component {
       update(msPerFrame);
       rendering();
       passedTime -= msPerFrame;
-      
+      if(flag2){
+        return;
+      }
       if(flag){
         // console.log(startTime)
         levelMax = 8
@@ -1247,7 +1255,7 @@ class Engine extends Component {
       
       this.openModal()
     }
-    if(!flag){
+    if(!flag&&!flag2){
       requestAnimationFrame(this.run.bind(this));
     }
   }
