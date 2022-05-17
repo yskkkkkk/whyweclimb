@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export default function JoinModal({handleClose}) {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
-  const [isInterference, setIsInterference] = useState("");
+  const [isInterference, setIsInterference] = useState("false");
 
   const handleChange = (e) => {
     setIsInterference(e.target.value);
@@ -67,21 +67,7 @@ export default function JoinModal({handleClose}) {
       exit="exit"
     >
       <section className={style.modal}>
-        <h2>join room</h2>
-        <div className={style.card}>
-          <span>set interference</span>
-          <div>
-            <label>
-              <input onClick={handleChange} type="radio" name="roomInterference" value="true" required />
-              on
-            </label>
-            <label>
-              <input onClick={handleChange} type="radio" name="roomInterference" value="false" required />
-              off
-            </label>
-          </div>
-
-        </div>
+        <h2>join room</h2>        
         <div className={style.btns}>
           <button className={style.okBtn} onClick={joinRoom} >join</button>
           <button className={style.backBtn} onClick={handleClose} >close</button>

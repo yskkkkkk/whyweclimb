@@ -7,10 +7,10 @@ import { motion } from 'framer-motion';
 export default function CreateModal({handleClose}) {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [roomCode, setroomCode] = useState("");
-  const [roomInterference, setroomInterference] = useState("");
+  const [roomInterference, setroomInterference] = useState(false);
   const [roomPrivate, setroomPrivate] = useState("");
   const [roomMaxNum, setroomMaxNum] = useState("");
-  const [roomInfo, setRoomInfo] = useState({roomCode:"", roomroomInterference:"", roomPrivate:"", roomMaxNum:""});
+  const [roomInfo, setRoomInfo] = useState({roomCode:"", roomroomInterference:false, roomPrivate:"", roomMaxNum:""});
   
   const nameChange = (e) => {
     setroomCode(e.target.value);
@@ -96,20 +96,7 @@ export default function CreateModal({handleClose}) {
     >
       <main className={style.container}>
         <h2>Create room</h2>
-        <div className={style.container2}>
-          <section className={style.choice}>
-            <span>Room Interference</span>
-            <div className={style.buttons}>
-              <label className={style.button}>
-                <input onClick={handleChange} type="radio" name="roomInterference" value="true" required />
-                on
-              </label>
-              <label className={style.button}>
-                <input onClick={handleChange} type="radio" name="roomInterference" value="false" required />
-                off
-              </label>
-            </div>
-          </section>
+        <div className={style.container2}>          
           <section className={style.choice}>
             <span>Private Room</span>
             <div className={style.buttons}>
@@ -142,8 +129,8 @@ export default function CreateModal({handleClose}) {
           </section>
         </div>
         <div className={style.links}>
-          <button className={style.okBtn} onClick={createRoom}>create room</button>
-          <button className={style.backBtn} onClick={handleClose}>back</button>
+          <button className={style.okBtn} onClick={createRoom}>create</button>
+          <button className={style.backBtn} onClick={handleClose}>close</button>
         </div>
       </main>
     </motion.div>
