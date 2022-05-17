@@ -495,6 +495,7 @@ class Player
                     // console.log("Goal!!!!")
                     flag = true;
                     winner = this.index;
+                    // console.log('goal!!!', this.index, groupInfo);
                 }
             }
             for (let b of blocks)
@@ -1072,7 +1073,7 @@ function init()
     myIdx = players.length - 1;
     player = players[myIdx];
     players[myIdx].index = myIdx;
-    for (var j=0; j < groupInfo.legnth-1; j++){
+    for (var j=0; j < groupInfo.length-1; j++){
         players[j].index = j;
     }
 
@@ -1124,6 +1125,7 @@ function initLevels()
 function keyDown(e)
 {   if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
         inputkeys[e.key] = true;
+        // console.log(players);
         // if(player.onGround)
         {
             stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],

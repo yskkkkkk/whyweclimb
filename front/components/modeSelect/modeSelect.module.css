@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  z-index: 6;
+  z-index: 4;
   margin-bottom: 6vh;
 }
 .container2 {
@@ -84,10 +84,7 @@
   transform-origin: bottom;
   width: 150px;
 }
-.modalHalf {
-  display:flex;
-  justify-content:space-around;
-}
+
 .btn1:hover .bounce1 {
   animation-name: bounce7;
   animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
@@ -111,12 +108,7 @@
   64%  { transform: scale(1,1)      translateY(0); }
   100% { transform: scale(1,1)      translateY(0); }
 }
-.inModal {
-  justify-content: space-around;
-}
-.characters {
-  margin:25px;
-}
+
 
 /* ------------------------------------------------------------------------------------------- */
 /* 텍스트 glowing 애니메이션 */
@@ -144,10 +136,3 @@
   }
 }
 
-.closeButton {
-  text-align: center;
-  font-size:20px;
-}
-.imageA {
-  font-size:20px;
-}
