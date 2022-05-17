@@ -10,7 +10,7 @@ export default function CreateModal({handleClose}) {
   const [roomInterference, setroomInterference] = useState(false);
   const [roomPrivate, setroomPrivate] = useState("");
   const [roomMaxNum, setroomMaxNum] = useState("");
-  const [roomInfo, setRoomInfo] = useState({roomCode:"", roomroomInterference:false, roomPrivate:"", roomMaxNum:""});
+  const [roomInfo, setRoomInfo] = useState({roomCode:"", roomInterference:false, roomPrivate:"", roomMaxNum:""});
   
   const nameChange = (e) => {
     setroomCode(e.target.value);
