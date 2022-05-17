@@ -481,7 +481,7 @@ class Engine extends Component {
                     let r = aabb.checkCollideBox(box);
                     if(r.collide)
                     {
-                        console.log("Goal!!!!")
+                        // console.log("Goal!!!!")
                     }
                 }
                 for (let b of blocks)
@@ -665,7 +665,7 @@ class Engine extends Component {
     // if(userInfo){
     //   window.onload = function ()
     //   {
-    //       console.log('load!!!!')
+    //       // console.log('load!!!!')
     //       socketConnect();
     //       init();
     //       run();
@@ -700,7 +700,7 @@ class Engine extends Component {
         {
             let mousePos = getMousePos(cvs, e);
             let message = mousePos.x + ', ' + mousePos.y;
-            console.log(message);
+            // console.log(message);
         }, false);
 
         // cvs.addEventListener('touchstart', function (e)
@@ -898,7 +898,7 @@ class Engine extends Component {
     {
         if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
             inputkeys[e.key] = false;
-            // console.log(keys);
+            // // console.log(keys);
             // if(player.onGround)
             {
                 stomp.send('/pub/chat/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
@@ -1010,7 +1010,7 @@ class Engine extends Component {
         
         if(level < levelMax){
             let stage = `stage${level+1}`
-            //console.log(stage)
+            //// console.log(stage)
             if(level==0 && x==0 && y==0){
                 
             }
@@ -1060,31 +1060,31 @@ class Engine extends Component {
     function socketConnect(){
         // stomp.connect({},
         //     function(){
-        //         console.log('stomp',stomp.webSocket._transport.url);
+        //         // console.log('stomp',stomp.webSocket._transport.url);
         //         const strings = stomp.webSocket._transport.url.split('/');
         //         const sessionId = strings[strings.length-2];
         //         stomp.subscribe(`/sub/chat/room/`+roomId, function(message){
-        //             console.log('message',message);
+        //             // console.log('message',message);
         //             var recv = JSON.parse(message.body);
         //             receiveMessage(recv);
         //         });
         //         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
         //     },
         //     function(error){
-        //         console.log('error', error.headers.message);
+        //         // console.log('error', error.headers.message);
         //     }
         // )
-        console.log(stomp);
+        // console.log(stomp);
         stomp.subscribe('/sub/chat/room/' + roomId, function(message){
-            console.log('game Start!!');
+            // console.log('game Start!!');
             var recv = JSON.parse(message.body);
             receiveMessage(recv);
         })
     }
 
     function receiveMessage(msg){
-        console.log('msg',msg);
-        console.log('level!!!',level, levelMax);
+        // console.log('msg',msg);
+        // console.log('level!!!',level, levelMax);
         for (var i=0; i<groupInfo.length; i++){
             if(groupInfo[i].userSeq === msg.id){
                 if(players[i].x !== msg.x) {
@@ -1095,8 +1095,8 @@ class Engine extends Component {
                 }
                 const tempKeys = {" ":msg.space, ArrowLeft:msg.left, ArrowRight:msg.right};
                 players[i].keys = tempKeys;
-                console.log('x,y!!',players[i].x,players[i].y);
-                console.log('x,y!!!',msg.x, msg.y);
+                // console.log('x,y!!',players[i].x,players[i].y);
+                // console.log('x,y!!!',msg.x, msg.y);
                 break;
             }
         }

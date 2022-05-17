@@ -601,11 +601,11 @@ function init() {
       "Authorization": sessionStorage.getItem("token")
     }
   }).then(res=>{
-    console.log(res.data)
+    // console.log(res.data)
     levelMax = res.data.maxLevel
     userSeq = res.data.userSeq
-    console.log(userSeq)
-    console.log(levelMax)
+    // console.log(userSeq)
+    // console.log(levelMax)
     player.skin = res.data.skinSeq
   }).catch(err=>console.error(err))
   
@@ -629,7 +629,7 @@ function init() {
     function (e) {
       let mousePos = getMousePos(cvs, e);
       let message = mousePos.x + ", " + mousePos.y;
-      console.log(message);
+      // console.log(message);
     },
     false
   );
@@ -842,7 +842,7 @@ function init() {
   images.running_2_L2.src = "/images/2/running_L2.png";
   images.running_2_L2.onload = function () {
     resourceLoaded++;
-    console.log("loadFinish")
+    // console.log("loadFinish")
   };
   //27
   images.running_3_R1 = new Image();
@@ -867,7 +867,7 @@ function init() {
   images.running_3_L2.src = "/images/3/running_L2.png";
   images.running_3_L2.onload = function () {
     resourceLoaded++;
-    console.log("loadFinish")
+    // console.log("loadFinish")
   };
   //31
   images.running_4_R1 = new Image();
@@ -892,7 +892,7 @@ function init() {
   images.running_4_L2.src = "/images/4/running_L2.png";
   images.running_4_L2.onload = function () {
     resourceLoaded++;
-    console.log("loadFinish")
+    // console.log("loadFinish")
   };
   //35
   
@@ -1156,24 +1156,24 @@ class Engine extends Component {
   }
   
   reset() {
-    console.log("reset??")
+    // console.log("reset??")
     player.x = (WIDTH - 32) / 2.0
     player.y = 156
   }
   
   componentDidMount() {
-    console.log("onload");
+    // console.log("onload");
     
     init();
-    //console.log(sessionStorage,"sessionStorage")
+    //// console.log(sessionStorage,"sessionStorage")
     playingTime = document.getElementById("time");
     
     this.run();
   }
   openModal = () => {
-    // console.log("abcd")
-    console.log(userSeq)
-    console.log(levelMax)
+    // // console.log("abcd")
+    // console.log(userSeq)
+    // console.log(levelMax)
     axios({
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
@@ -1188,8 +1188,7 @@ class Engine extends Component {
         "skinSeq":player.skin
       }
     }).then(res=>{
-      
-      console.log(res)
+      // console.log(res)
       
     }).catch(err=>console.error(err))
     this.setState({Modalshow:true})
@@ -1218,7 +1217,7 @@ class Engine extends Component {
         
       }
     }).then(res=>{
-      console.log(res)
+      // console.log(res)
       
     }).catch(err=>console.error(err))
   }
@@ -1237,7 +1236,7 @@ class Engine extends Component {
       passedTime -= msPerFrame;
       
       if(flag){
-        console.log(startTime)
+        // console.log(startTime)
         levelMax = 8
         this.openModal()
         
@@ -1262,7 +1261,7 @@ class Engine extends Component {
         <canvas id="cvs" width="1000" height="800" />
         <div className={style.buttons}>
           <a className={style.h3button} onClick={()=>{
-            console.log("reset?")
+            // console.log("reset?")
             this.reset()
           }}><h3>Reset</h3></a>
           <Link href={'/'} passHref>
