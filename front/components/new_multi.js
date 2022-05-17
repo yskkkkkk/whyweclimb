@@ -495,6 +495,7 @@ class Player
                     // console.log("Goal!!!!")
                     flag = true;
                     winner = this.index;
+                    // console.log('goal!!!', this.index, groupInfo);
                 }
             }
             for (let b of blocks)
@@ -1072,7 +1073,7 @@ function init()
     myIdx = players.length - 1;
     player = players[myIdx];
     players[myIdx].index = myIdx;
-    for (var j=0; j < groupInfo.legnth-1; j++){
+    for (var j=0; j < groupInfo.legnth; j++){
         players[j].index = j;
     }
 
