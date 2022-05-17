@@ -67,13 +67,22 @@ export default function ModeSelect({toMain, toConfigure}) {
     <main className={style.container}>
       <a onClick={openModal} className={style.btn_select}><h4>Character Select</h4></a>
       <Modal visible={Modalshow} closable={true} maskClosable={true}> 
+      <h2>Character Select</h2>
         <div className={style.inModal}>
-          <a onClick={(e)=>{saveCharacter(1, e)}}><img className={style.characters} src = {`/images/${1}/running_R1.png`} /></a>
-          <a onClick={(e)=>{saveCharacter(2, e)}}><img className={style.characters} src = {`/images/${2}/running_R1.png`} /></a>
-          <a onClick={(e)=>{saveCharacter(3, e)}}><img className={style.characters} src = {`/images/${3}/running_R1.png`} /></a>
-          <a onClick={(e)=>{saveCharacter(4, e)}}><img className={style.characters} src = {`/images/${4}/running_R1.png`} /></a>
+          <div className={style.modalHalf}>
+            <a className={style.imageA}onClick={(e)=>{saveCharacter(1, e)}}><img className={style.characters} src = {`/images/${1}/running_R1.png`} /></a>
+            
+            <a className={style.imageA}onClick={(e)=>{saveCharacter(2, e)}}><img className={style.characters} src = {`/images/${2}/running_R1.png`} /></a>
+            
+          </div>
+          <div className={style.modalHalf}>
+            <a className={style.imageA}onClick={(e)=>{saveCharacter(3, e)}}><img className={style.characters} src = {`/images/${3}/running_R1.png`} /></a>
+            
+            <a className={style.imageA}onClick={(e)=>{saveCharacter(4, e)}}><img className={style.characters} src = {`/images/${4}/running_R1.png`} /></a>
+            
+          </div>
         </div>
-        <a className={style.btn_select} onClick={closeModal}><h4>Close</h4></a>
+        <a className={style.closeButton} onClick={closeModal}><h4>Close</h4></a>
       </Modal>
       <section className={style.container2}>
         <a className={style.btn} href={'/single/singleGame'}>
