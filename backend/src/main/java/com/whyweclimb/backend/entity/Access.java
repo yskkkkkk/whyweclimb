@@ -23,8 +23,14 @@ public class Access {
     private String userId;
 	private Boolean ready;
 	private Integer skinSeq;
+	private Integer order;
 	
 	public void setReady(Boolean ready) {
 		this.ready = ready;
 	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+	
 }
