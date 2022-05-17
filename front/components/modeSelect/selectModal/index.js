@@ -1,14 +1,9 @@
 import style from './selectModal.module.css';
-import { useState } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
-export default function CreateModal({handleClose}) {  
 
-  const closeModal = () => {
-    toast.dismiss();
-  }
+export default function CreateModal({handleClose}) {  
 
   const saveCharacter = (num) => {
     // console.log("clickCharacter")

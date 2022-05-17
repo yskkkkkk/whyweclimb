@@ -1,10 +1,12 @@
 import style from './modeSelect.module.css';
 import Link from 'next/link';
 import Modal from "../ui/modal/modal";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from'axios';
-import {AnimatePresence} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import Backdrop from '../multi/backdrop';
+
+
 export default function ModeSelect({toMain, toConfigure}) {
   
   // const test = (e) => {
@@ -39,18 +41,11 @@ export default function ModeSelect({toMain, toConfigure}) {
   // }
   return (
     <main className={style.container}>
-      <a onClick={openSelectModal} className={style.btn_select}><h4>Character Select</h4></a>
-      <AnimatePresence    // 모달창들
-        // initial animation (바로 사라져버리는것?) 비활성화시킴
-        initial={false}
-        // animation이 다 끝나야만 화면에서 컴포넌트가 사라지게함
-        exitBeforeEnter={true}
-        >
-        {modal === 4 && <Backdrop label="selectModal" handleClose={closeModal} />}
-      </AnimatePresence>
-      
-        
-      
+
+      <a onClick={openSelectModal} className={style.btn_select}>
+        <h4>Character Select</h4>
+      </a>
+
       <section className={style.container2}>
         <a className={style.btn} href={'/single/singleGame'}>
           <div className={style.stage}>
@@ -70,6 +65,15 @@ export default function ModeSelect({toMain, toConfigure}) {
       </section>
       {/* <button onClick={toConfigure}>configure</button> */}
       <button className={style.btnBack} onClick={toMain}>logout</button>
+
+      <AnimatePresence    // 모달창들
+        // initial animation (바로 사라져버리는것?) 비활성화시킴
+        initial={false}
+        // animation이 다 끝나야만 화면에서 컴포넌트가 사라지게함
+        exitBeforeEnter={true}
+        >
+        {modal === 4 && <Backdrop label="selectModal" handleClose={closeModal} />}
+      </AnimatePresence>
     </main>
   )
 }
