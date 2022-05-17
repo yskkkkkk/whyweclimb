@@ -1088,7 +1088,7 @@ function initLevels()
     ]
     
     let stages = stagelist[roomSeq%6];
-    
+    stages = stagelist[1];
     blocks.push(new Block(stages[0], new AABB(0, 100, 400, 34)));
     blocks.push(new Block(stages[0], new AABB(500, 230, 150, 34)));
     blocks.push(new Block(stages[0], new AABB(710, 410, 300, 34)));
@@ -1103,7 +1103,8 @@ function initLevels()
     blocks.push(new Block(stages[1], new AABB(700,400, 300,34)))
     blocks.push(new Block(stages[1], new AABB(670, 600, 180, 90)));
     blocks.push(new Block(stages[1], new AABB(200,500,300,34)))
-    goals.push(new Block(stages[1], new AABB(746,634,34,34)))
+    goals.push(new Block(stages[1], new AABB(746,690,34,34)))
+    
     //blocks.push(new Block(stages[1], new AABB(0, 200, 48, 34)));
 
     //blocks.push(new Block(stages[2], new AABB(130, 10, 100, 45)));
@@ -1111,6 +1112,7 @@ function initLevels()
     blocks.push(new Block(stages[2], new AABB(540, 535, 120, 45)));
     blocks.push(new Block(stages[2], new AABB(800, 615, 120, 45)));
     goals.push(new Block(stages[2], new AABB(838,660,34,34)))
+    
 }
 //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
 //키입력 True False로 가능, while()
@@ -1166,8 +1168,13 @@ function render()
     }
 
     goals.forEach(g =>{
+        
         if(g.level != level) return;
-        if(g.level != goalLevel) return;
+        if(g.level != goalLevel) {
+            
+            return;
+        }
+        // console.log(g.level)
         drawGoal(g.aabb);
     })
 
