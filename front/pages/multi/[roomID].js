@@ -52,7 +52,21 @@ export default function WaitRoom() {
   function receiveMessage(msg){
     // console.log('msg',msg)
     if(msg.data){
-      setGroupInfo(msg.data);
+      let temp = groupInfo
+      for(let i = 0; i<msg.data.length();i++){
+        let check = false
+        for(let j = 0;j< groupInfo.length();j++){
+          if(msg.data[i]==groupInfo[j]){
+            check = true;
+            break
+          }
+        }
+        if(!check){
+          temp.push(msg.data[i])
+        }
+      }
+    
+      setGroupInfo(temp);
     }    
     if(msg.message && msg.message==="start"){
       setIsStart(prev => !prev);
