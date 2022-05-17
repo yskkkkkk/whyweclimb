@@ -51,7 +51,7 @@ export default function ModeSelect({toMain, toConfigure}) {
           <div className={style.stage}>
             <img className={`${style.box} ${style.bounce7}`} src="/images/running_R1.png" alt="a character jumping image" />
           </div>
-          <h2>single mode</h2>
+          <h2>Single Mode</h2>
         </a>
         <a className={style.btn1} href={'/multi'}>
           <div className={style.stage1}>
@@ -60,7 +60,7 @@ export default function ModeSelect({toMain, toConfigure}) {
             <img className={`${style.box1} ${style.bounce2}`} src="/images/dwarf.png" alt="a character jumping image" />
             <img className={`${style.box1} ${style.bounce3}`} src="/images/woodElf.png" alt="a character jumping image" />
           </div>
-          <h2 className={style.glow}>multi mode</h2>
+          <h2 className={style.glow}>Multi Mode</h2>
         </a>
       </section>
       {/* <button onClick={toConfigure}>configure</button> */}

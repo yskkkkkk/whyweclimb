@@ -1,11 +1,36 @@
-import style from '../styles/test.module.css';
+import style from './waitingRoom.module.css';
 
-export default function Test() {
+
+export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGame, goBack}) {
 
   return (
     <>
       <main className={style.container}>
-        <h2>wow!</h2>
+        <section className={style.headerContainer}>
+          <header>welcome to room: {roomID}</header>
+          <section className={style.status}>
+            {groupInfo && groupInfo.length} / {roomInfo && roomInfo.roomMaxNum}
+          </section>
+        </section>
+
+        <section>
+          {groupInfo && groupInfo.map((player, index) => 
+            <div key={player.userSeq}>
+              {console.log(player)}
+              <img className={`player${index+1}`} src={`/images/waitRoomImg/${player.skinSeq}.png`} alt="character image" />
+              <div className={`playerInfo${index+1}`}>
+                {player.userId} - {player.ready? "ready!" : "not ready"}
+              </div>
+            </div>
+          )}
+        </section>
+
+        <section className={style.btns}>
+          <button className={style.readyBtn} onClick={ready}>ready</button>
+          <button className={style.startBtn} onClick={startGame}>start</button>
+          <button className={style.backBtn} onClick={goBack}>back</button>
+        </section>
+        
         <section>
           <img className={style.closestCloud1} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closestCloud2} src="/images/cloud.svg" alt="cloud image" />
@@ -22,12 +47,7 @@ export default function Test() {
           <img className={style.farCloud3} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.farCloud4} src="/images/cloud.svg" alt="cloud image" />
         </section>
-        <section className={style.players}>
-          <img className={style.player1} src="/images/dwarf.png" alt="character image" />
-          <img className={style.player2} src="/images/running_R2.png" alt="character image" />
-          <img className={style.player3} src="/images/sourceror.png" alt="character image" />
-          <img id={style.player4} className={style.player4} src="/images/woodelf.png" alt="character image" />
-        </section>
+
         <section>
           <div className={style.wind1} />
           <div className={style.wind2} />
@@ -40,8 +60,8 @@ export default function Test() {
           <div className={style.wind9} />
           <div className={style.wind10} />
         </section>
+
       </main>
     </>
   )
-
-};
+}

@@ -6,7 +6,10 @@ import Link from 'next/link';
 import SockJS from 'sockjs-client';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-// import Engine from '../../components/multiEngine'
+import WaitingRoom from "../../components/multi/waitingRoom";
+
+
+
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/new_multi')}, {ssr:false});
 
@@ -147,18 +150,16 @@ export default function WaitRoom() {
 
   return (
     <>
-      {!isStart && <main className={style.container}>
-          <header>welcome to room: {roomID}</header>
-          <section>
-            {groupInfo && groupInfo.length} / {roomInfo && roomInfo.roomMaxNum}
-          </section>
-          <section>
-            {groupInfo && groupInfo.map(player => <div key={player.userSeq}>{player.userId} - {player.ready? "ready" : "not ready"}</div>)}
-          </section>
-          <button onClick={ready}>ready Button</button>
-          <button onClick={startGame}>Start Game</button>
-          <button onClick={goBack}>back to Lobby</button>
-      </main> }      
+      {!isStart &&
+        <WaitingRoom
+          roomID={roomID} 
+          groupInfo={groupInfo} 
+          roomInfo={roomInfo}
+          ready={ready}
+          startGame={startGame}
+          goBack={goBack}
+        /> 
+      }      
       {isStart && <main className={style.container}>
         <div className={style.head}>
           <p className={style.title}>Why We Climb</p>

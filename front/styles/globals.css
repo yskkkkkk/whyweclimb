@@ -118,3 +118,136 @@ a {
   -o-animation: flickerAnimation 4s ease-in-out infinite;
    animation: flickerAnimation 4s ease-in-out infinite;
 }
+
+
+/* --------------------------------------------------------------------------- */
+/* waitRoom css */
+
+.playerInfo1 {
+  position: absolute;
+  left: 18vw;
+  top: 30vh;
+}
+.playerInfo2 {
+  position: absolute;
+  left: 37vw;
+  top: 45vh;
+}
+.playerInfo3 {
+  position: absolute;
+  left: 58vw;
+  top: 55vh;
+}
+.playerInfo4 {
+  position: absolute;
+  left: 70vw;
+  top: 38vh;
+}
+@keyframes appear {
+  0% { opacity: 0; }
+  90% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.player1 {
+  position: absolute;
+  z-index: 2;
+  left: 18vw;
+  top: -15vh;
+  opacity: .85;
+  transform: scale(.8) rotate(-115deg);
+  animation-name: entrance1, hovering1;
+  animation-fill-mode: forwards;
+  animation-delay: .5s, 8.5s;
+  animation-duration: 8s, 6s;
+  animation-iteration-count: 1, infinite;
+}
+.player2 {
+  position: absolute;
+  transform: scale(1.2) rotate(75deg);
+  z-index: 4;
+  left: 38vw;
+  top: -15vh;
+  animation-name: entrance2, hovering2;
+  animation-fill-mode: forwards;
+  animation-delay: 1s, 4s;
+  animation-duration: 3s, 4s;
+  animation-iteration-count: 1, infinite;
+  animation-timing-function: ease-in-out;
+}
+.player3 {
+  position: absolute;
+  transform: scale(.5) scaleX(-1) rotate(-130deg);
+  z-index: 2;
+  left: 58vw;
+  top: -15vh;
+  opacity: .7;
+  animation-name: entrance3, hovering3;
+  animation-fill-mode: forwards;
+  animation-delay: 0s, 10s;
+  animation-duration: 10s, 7s;
+  animation-iteration-count: 1, infinite;
+  animation-timing-function: ease-in-out;
+}
+.player4 {
+  position: absolute;
+  transform: rotate(87deg);
+  z-index: 4;
+  left: 70vw;
+  top: -15vh;
+  animation-name: entrance4, hovering4;
+  animation-fill-mode: forwards;
+  animation-delay: 2s, 6s;
+  animation-duration: 4s, 5s;
+  animation-iteration-count: 1, infinite;
+}
+
+@keyframes entrance1 {
+  0%   { transform: translateY(-15vh) scale3d(.73, .73, .8)  rotate(-115deg); }
+  100% { transform: translateY(50vh)  scale3d(.73, 0.73, .8) rotate(-115deg); }
+}
+@keyframes entrance2 {
+  0%   { transform: translateY(-15vh) scale3d(1.16, 1.16, -1) rotate(75deg); }
+  100% { transform: translateY(68vh)  scale3d(1.16, 1.16, 1)  rotate(75deg); }
+}
+@keyframes entrance3 {
+  0%   { transform: translateY(-15vh) scale3d(.46, .46, -1) scaleX(-1) rotate(-130deg); }
+  100% { transform: translateY(75vh)  scale3d(.46, .46, 1)  scaleX(-1) rotate(-130deg); }
+}
+@keyframes entrance4 {
+  0%   { transform: translateY(-15vh) scale3d(1, 1, -1) scaleX(-1) rotate(87deg); }
+  100% { transform: translateY(60vh)  scale3d(1, 1, 1)  scaleX(-1) rotate(87deg); }
+}
+
+@keyframes hovering1 {
+  0%   { transform: translateY(50vh) scale3d(.73, .73, .8) rotate(-115deg); }
+  20%  { transform: translateY(51vh) scale3d(.78, .78, .8) rotate(-117deg); }
+  40%  { transform: translateY(50vh) scale3d(.75, .75, .8) rotate(-115deg); }
+  60%  { transform: translateY(50vh) scale3d(.80, .80, .8) rotate(-113deg); }
+  80%  { transform: translateY(49vh) scale3d(.78, .78, .8) rotate(-115deg); }
+  100% { transform: translateY(50vh) scale3d(.73, .73, .8) rotate(-115deg); }
+}
+@keyframes hovering2 {
+  0%   { transform: translateY(68vh) scale3d(1.16, 1.16, -1) rotate(75deg); }
+  20%  { transform: translateY(69vh) scale3d(1.1, 1.1, -1)   rotate(77deg); }
+  40%  { transform: translateY(68vh) scale3d(1.08, 1.08, -1) rotate(75deg); }
+  60%  { transform: translateY(68vh) scale3d(1.15, 1.15, 1)  rotate(73deg); }
+  80%  { transform: translateY(67vh) scale3d(1.11, 1.11, 1)  rotate(75deg); }
+  100% { transform: translateY(68vh) scale3d(1.16, 1.16, 1)  rotate(75deg); }
+}
+@keyframes hovering3 {
+  0%   { transform: translateY(75vh) scale3d(0.46, 0.46, 1) scaleX(-1) rotate(-130deg); }
+  20%  { transform: translateY(74vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-132deg); }
+  40%  { transform: translateY(75vh) scale3d(0.54, 0.54, 1) scaleX(-1) rotate(-130deg); }
+  60%  { transform: translateY(76vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-128deg); }
+  80%  { transform: translateY(74vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-130deg); }
+  100% { transform: translateY(75vh) scale3d(0.46, 0.46, 1) scaleX(-1) rotate(-130deg); }
+}
+@keyframes hovering4 {
+  0%   { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
+  20%  { transform: translateY(59vh) scale3d(.96, .96, 1)   scaleX(-1) rotate(89deg); }
+  40%  { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
+  60%  { transform: translateY(61vh) scale3d(1.03, 1.03, 1) scaleX(-1) rotate(85deg); }
+  80%  { transform: translateY(59vh) scale3d(.97, .97, 1)   scaleX(-1) rotate(87deg); }
+  100% { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
+}
