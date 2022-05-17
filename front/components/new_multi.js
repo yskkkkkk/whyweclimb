@@ -1400,7 +1400,7 @@ class Engine extends Component {
   }
 
   componentDidMount() {    
-    console.log(groupInfo);
+    // console.log(groupInfo);
     socketConnect();
     init();
     this.run();
