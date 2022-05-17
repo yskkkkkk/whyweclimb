@@ -2,6 +2,20 @@ import {Component} from "react";
 import Modal from "./ui/modal/modal";
 import style from "./engine.module.css";
 import Confetti from 'react-dom-confetti';
+import Link from 'next/link';
+const config = {
+    angle: 90,
+    spread: 360,
+    startVelocity: 40,
+    elementCount: 70,
+    dragFriction: 0.12,
+    duration: 3000,
+    stagger: 3,
+    width: "10px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+  };
 
 let cvs;
 let gfx;
@@ -698,7 +712,7 @@ class Player
 // if(userInfo){
 //   window.onload = function ()
 //   {
-//       // console.log('load!!!!')
+//       console.log('load!!!!')
 //       socketConnect();
 //       init();
 //       run();
@@ -1039,7 +1053,7 @@ function init()
     // players.push(player);
     // players.push(player2);
     for (var i=0; i < groupInfo.length; i++){
-      // console.log('i!!',i);
+    //   console.log('i!!',i);
         players.push(new Player(locations[i][0],locations[i][1]));
         players[i].skin = groupInfo[i].skinSeq;
         if(userInfo.userSeq === groupInfo[i].userSeq){            
@@ -1118,7 +1132,7 @@ function keyUp(e)
 {
     if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
         inputkeys[e.key] = false;
-        // // console.log(keys);
+        // console.log(keys);
         // if(player.onGround)
         {
             stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
@@ -1216,7 +1230,7 @@ function drawBlock(x, y, w, h)
     
     if(level < levelMax){
         let stage = `stage${level+1}`
-        //// console.log(stage)
+        //console.log(stage)
         if(level==0 && x==0 && y==0){
             
         }
@@ -1277,18 +1291,18 @@ function drawGoal(aabb){
 function socketConnect(){
     // stomp.connect({},
     //     function(){
-    //         // console.log('stomp',stomp.webSocket._transport.url);
+    //         console.log('stomp',stomp.webSocket._transport.url);
     //         const strings = stomp.webSocket._transport.url.split('/');
     //         const sessionId = strings[strings.length-2];
     //         stomp.subscribe(`/sub/room/`+roomId, function(message){
-    //             // console.log('message',message);
+    //             console.log('message',message);
     //             var recv = JSON.parse(message.body);
     //             receiveMessage(recv);
     //         });
     //         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
     //     },
     //     function(error){
-    //         // console.log('error', error.headers.message);
+    //         console.log('error', error.headers.message);
     //     }
     // )
     // console.log(stomp);
@@ -1331,11 +1345,15 @@ class Engine extends Component {
     this.state = {
         modalShow: false
     }
+    this.confetti = false;
     
   }
 
   openModal = () => {
       this.setState({modalShow:true})
+      if(myIdx === winner){
+          this.confetti = true;
+      }
   }
 
   run(time){
@@ -1350,7 +1368,7 @@ class Engine extends Component {
         passedTime -= msPerFrame;
 
         if(flag){
-          // console.log('end!!');
+        //   console.log('end!!');
           this.openModal();
 
           return;
@@ -1383,9 +1401,13 @@ class Engine extends Component {
     return (
     <>
         <canvas id="cvs" width="1000" height="800" />
+        <Confetti active={ this.confetti } config={ config }/>
         {this.state.modalShow && <Modal visible={this.state.modalShow}>
-            <h1 className={style.resultText}>축하합니다!!!</h1>
+            {(myIdx === winner)?<h1 className={style.resultText}>축하합니다!!!</h1>:<h1 className={style.resultText}>아쉽네요ㅠㅠ</h1>}            
             <h2 className={style.resultText}>winner: {groupInfo[winner].userId}</h2>
+            <Link href={'/'} passHref>
+            <a><h3 className={style.resultText}>Back</h3></a>
+            </Link>
         </Modal>}
     </>
     )
