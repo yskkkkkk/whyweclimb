@@ -18,8 +18,17 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public void increaseNumberOfPeople(Access access) {
+		accessRedisRepository.save(pretreatment(access));
+	}
+
+	public Access pretreatment(Access access) {
+		int max = 0;
+		for (Access a : accessRedisRepository.findByRoomCode(access.getRoomCode())) {
+			max = Math.max(max, a.getOrder());
+		}
+		access.setOrder(max+1);
 		access.setReady(false);
-		accessRedisRepository.save(access);
+		return access;
 	}
 
 	@Override
