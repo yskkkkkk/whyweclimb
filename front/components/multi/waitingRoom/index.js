@@ -14,10 +14,14 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
         </section>
 
         <section>
-          {groupInfo && groupInfo.map((player, index) => 
+          {groupInfo && groupInfo.slice(0).reverse().map((player, index) => 
             <div key={player.userSeq}>
               {console.log(player)}
-              <img className={`player${index+1}`} src={`/images/waitRoomImg/${player.skinSeq}.png`} alt="character image" />
+              <img 
+                className={`player${index+1}`} 
+                src={`/images/waitRoomImg/${player.skinSeq}.png`} 
+                alt="character image" 
+              />
               <div className={`playerInfo${index+1}`}>
                 {player.userId} - {player.ready? "ready!" : "not ready"}
               </div>
