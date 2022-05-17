@@ -66,7 +66,11 @@ export default function Login({toSignup, toModeSelect}) {
   useEffect(() => {
     inputID.current.focus();
   }, [])
-
+  const onKeyPress=(e) => {
+    if(e.key=='Enter'){
+      handleLoginSubmit();
+    }
+  }
   return (
     <main className={style.container}>
       <h1>why we climb</h1>
@@ -80,7 +84,7 @@ export default function Login({toSignup, toModeSelect}) {
           </div>
           <div className={style.card}>
             <label>Password 
-              <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required />
+              <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required onKeyDown={onKeyPress}/>
             </label>
           </div>
           <div className={style.btnGroup}>
