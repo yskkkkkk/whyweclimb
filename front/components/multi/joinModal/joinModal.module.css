@@ -110,6 +110,15 @@
   transition: all .1s;
 }
 
+.fonts{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.smallfonts{
+  font-size: 20px;
+  font-weight: bold;
+}
 
 /* ------------------------------------ responsive design ↓ --------------------------------------- */
 

@@ -53,6 +53,7 @@
 
 .button {
   margin: 0.7em;
+  font-weight: 600;
 }
 .button input {
   transform: scale(1.8, 1.8);
@@ -65,7 +66,15 @@
   margin: 1.5em 0;
 }
 
+.fonts{
+  font-size: 25px;
+  font-weight: bold;
+}
 
+.smallfonts{
+  font-size: 20px;
+  font-weight: bold;
+}
 
 /* ------------------------------------------------------------------------------------ */
 /* 버튼들 */

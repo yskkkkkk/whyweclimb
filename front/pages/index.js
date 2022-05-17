@@ -53,6 +53,9 @@ export default function Home() {
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="description" content="we challenge, we compete, and we struggle to find the true reason why we climb." />
         {/* <script type="text/javascript" src="../components/main.js"></script> */}
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@1,500&family=Hahmlet:wght@300&family=Koulen&display=swap" rel="stylesheet"/>
       </Head>
 
       <main>

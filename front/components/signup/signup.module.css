@@ -59,6 +59,18 @@
   border: 4px solid #d0afd4;
 }
 
+.fonts {
+  display: flex;
+  font-family: 'Koulen', cursive;
+  font-size: 35px;
+  justify-content: center;
+}
+
+.smallfonts {
+  font-family: 'Koulen', cursive;
+  font-size: 25px;
+}
+
 
 /* ----------------------------------------------------------------------------------------------- */
 /* buttons */

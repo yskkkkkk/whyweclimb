@@ -95,23 +95,23 @@ export default function CreateModal({handleClose}) {
       exit="exit"
     >
       <main className={style.container}>
-        <h2>Create room</h2>
+        <text className={style.fonts}>Create room</text>
         <div className={style.container2}>          
           <section className={style.choice}>
-            <span>Private Room</span>
+            <span className={style.smallfonts}>Private Room</span>
             <div className={style.buttons}>
               <label className={style.button}>
                 <input onClick={handleChange} type="radio" name="roomPrivate" value="true" required />
-                yes
+                Yes
               </label>
               <label className={style.button}>
                 <input onClick={handleChange} type="radio" name="roomPrivate" value="false" required />
-                no
+                No
               </label>
             </div>
           </section>
           <section className={style.choice}>
-            <span>Max player number</span>
+            <span className={style.smallfonts}>Max player number</span>
             <div className={style.buttons}>
               <label className={style.button}>
                 <input onClick={handleChange} type="radio" name="roomMaxNum" value="2" required />
