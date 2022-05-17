@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService{
 					.userPassword(request.getUserPassword())
 					.backgroundSound(50)
 					.effectSound(50)
+					.maxLevel(0)
+					.skinSeq(1)
 					.build()
 					));
 		return user;
