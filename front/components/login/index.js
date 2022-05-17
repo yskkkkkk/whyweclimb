@@ -73,25 +73,25 @@ export default function Login({toSignup, toModeSelect}) {
   }
   return (
     <main className={style.container}>
-      <h1>why we climb</h1>
+      <text className={style.title}>why we climb</text>
       <div className={style.loginContainer}> 
         <section className={style.login}>
-          <h2 className={style.title}>Login</h2>
+          <text className={style.fonts}>Login</text>
           <div className={style.card}>
-            <label>Id 
+            <label  className={style.smallfonts}>Id 
               <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
             </label>
           </div>
           <div className={style.card}>
-            <label>Password 
+            <label className={style.smallfonts}>Password 
               <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required onKeyDown={onKeyPress}/>
             </label>
           </div>
           <div className={style.btnGroup}>
             <button className={style.loginBtn} onClick={handleLoginSubmit} >Login</button>
             <div className={style.signBtnGroup}>
-              <div className={style.btns}>no account?</div>
-              <button className={style.signupBtn} onClick={toSignUp} >signup</button>
+              <div className={style.btns}>No account?</div>
+              <button className={style.signupBtn} onClick={toSignUp} >Sign up</button>
             </div>
           </div>
         </section>

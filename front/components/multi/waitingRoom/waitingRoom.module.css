@@ -12,111 +12,94 @@
   background-repeat: no-repeat;
 }
 
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  margin-top: -8vh;
+}
 
-/* ----------------------------------------------------------------------- */
-/* characters */
-.players img {
+.status {
+  font-size: xxx-large;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* ----------------------------------------------------------------- */
+/* buttons */
+
+.btns {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  top: 83vh;
+  border: 4px solid #eaeaea;
+  background-color: #afb2b781;
+  border-radius: 10px;
 }
 
-.player1 {
-  z-index: 2;
-  left: 18vw;
-  top: -15vh;
-  opacity: .85;
-  transform: scale(.8) rotate(-115deg);
-  animation-name: entrance1, hovering1;
-  animation-fill-mode: forwards;
-  animation-delay: .5s, 8.5s;
-  animation-duration: 8s, 6s;
-  animation-iteration-count: 1, infinite;
+.readyBtn {
+  background: #5EA5DD;
+  font-size: 20px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px #3672a0;
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 10px 20px;
+  margin:1.5vh 1vw;
+  margin-top: 2vh;
+  top: 0px;
+  cursor: pointer;
 }
-.player2 {
-  transform: scale(1.2) rotate(75deg);
-  z-index: 3;
-  left: 40vw;
-  top: -15vh;
-  animation-name: entrance2, hovering2;
-  animation-fill-mode: forwards;
-  animation-delay: 1s, 4s;
-  animation-duration: 3s, 4s;
-  animation-iteration-count: 1, infinite;
-  animation-timing-function: ease-in-out;
-}
-.player3 {
-  transform: scale(.5) scaleX(-1) rotate(-130deg);
-  z-index: 2;
-  left: 60vw;
-  top: -15vh;
-  opacity: .7;
-  animation-name: entrance3, hovering3;
-  animation-fill-mode: forwards;
-  animation-delay: 0s, 10s;
-  animation-duration: 10s, 7s;
-  animation-iteration-count: 1, infinite;
-  animation-timing-function: ease-in-out;
-}
-.player4 {
-  transform: rotate(87deg);
-  z-index: 2;
-  left: 70vw;
-  top: -15vh;
-
-  animation-name: entrance4, hovering4;
-  animation-fill-mode: forwards;
-  animation-delay: 2s, 6s;
-  animation-duration: 4s, 5s;
-  animation-iteration-count: 1, infinite;
+.readyBtn:active {
+  top: 0.2vh;
+  box-shadow: 0 2px 0px #3672a0;
+  transition: all .1s;
 }
 
-@keyframes entrance1 {
-  0%   { transform: translateY(-15vh) scale3d(.73, .73, .8)  rotate(-115deg); }
-  100% { transform: translateY(50vh)  scale3d(.73, 0.73, .8) rotate(-115deg); }
+.startBtn {
+  background: #6ad399;
+  font-size: 25px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px rgb(62, 116, 86); 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 5px 25px;
+  margin:1.5vh 1vw;
+  margin-top: 2vh;
+  top: 0px;
+  cursor: pointer;
 }
-@keyframes entrance2 {
-  0%   { transform: translateY(-15vh) scale3d(1.16, 1.16, -1) rotate(75deg); }
-  100% { transform: translateY(68vh)  scale3d(1.16, 1.16, 1)  rotate(75deg); }
-}
-@keyframes entrance3 {
-  0%   { transform: translateY(-15vh) scale3d(.46, .46, -1) scaleX(-1) rotate(-130deg); }
-  100% { transform: translateY(75vh)  scale3d(.46, .46, 1)  scaleX(-1) rotate(-130deg); }
-}
-@keyframes entrance4 {
-  0%   { transform: translateY(-15vh) scale3d(1, 1, -1) scaleX(-1) rotate(87deg); }
-  100% { transform: translateY(60vh)  scale3d(1, 1, 1)  scaleX(-1) rotate(87deg); }
+.startBtn:active {
+  top: 0.2vh;
+  box-shadow: 0 2px 0px rgb(62, 116, 86); 
+  transition: all .1s;
 }
 
-@keyframes hovering1 {
-  0%   { transform: translateY(50vh) scale3d(.73, .73, .8) rotate(-115deg); }
-  20%  { transform: translateY(51vh) scale3d(.78, .78, .8) rotate(-117deg); }
-  40%  { transform: translateY(50vh) scale3d(.75, .75, .8) rotate(-115deg); }
-  60%  { transform: translateY(50vh) scale3d(.80, .80, .8) rotate(-113deg); }
-  80%  { transform: translateY(49vh) scale3d(.78, .78, .8) rotate(-115deg); }
-  100% { transform: translateY(50vh) scale3d(.73, .73, .8) rotate(-115deg); }
+.backBtn {
+  background: #8d6e63;
+  font-size: 20px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px #6d4c41; 
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 5px 20px;
+  margin:1.5vh 1vw;
+  margin-top: 2vh;
+  top: 0px;
+  cursor: pointer;
 }
-@keyframes hovering2 {
-  0%   { transform: translateY(68vh) scale3d(1.16, 1.16, -1) rotate(75deg); }
-  20%  { transform: translateY(69vh) scale3d(1.1, 1.1, -1)   rotate(77deg); }
-  40%  { transform: translateY(68vh) scale3d(1.08, 1.08, -1) rotate(75deg); }
-  60%  { transform: translateY(68vh) scale3d(1.15, 1.15, 1)  rotate(73deg); }
-  80%  { transform: translateY(67vh) scale3d(1.11, 1.11, 1)  rotate(75deg); }
-  100% { transform: translateY(68vh) scale3d(1.16, 1.16, 1)  rotate(75deg); }
-}
-@keyframes hovering3 {
-  0%   { transform: translateY(75vh) scale3d(0.46, 0.46, 1) scaleX(-1) rotate(-130deg); }
-  20%  { transform: translateY(74vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-132deg); }
-  40%  { transform: translateY(75vh) scale3d(0.54, 0.54, 1) scaleX(-1) rotate(-130deg); }
-  60%  { transform: translateY(76vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-128deg); }
-  80%  { transform: translateY(74vh) scale3d(.5, .5, 1)     scaleX(-1) rotate(-130deg); }
-  100% { transform: translateY(75vh) scale3d(0.46, 0.46, 1) scaleX(-1) rotate(-130deg); }
-}
-@keyframes hovering4 {
-  0%   { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
-  20%  { transform: translateY(59vh) scale3d(.96, .96, 1)   scaleX(-1) rotate(89deg); }
-  40%  { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
-  60%  { transform: translateY(61vh) scale3d(1.03, 1.03, 1) scaleX(-1) rotate(85deg); }
-  80%  { transform: translateY(59vh) scale3d(.97, .97, 1)   scaleX(-1) rotate(87deg); }
-  100% { transform: translateY(60vh) scale3d(1, 1, 1)       scaleX(-1) rotate(87deg); }
+.backBtn:active {
+  top: 0.2vh;
+  box-shadow: 0 2px 0px #6d4c41;
+  transition: all .1s;
 }
 
 
@@ -127,125 +110,125 @@
   position: absolute;
   left: 10vw;
   top: 105vh;
-  width: 3vw;
+  width: 4vw;
   height: 30vh;
   z-index: 6;
   background-color: white;
   filter: blur(30px);
   opacity: .2;
-  animation: fallWindAnimation 3.5s infinite ;
+  animation: fallWindAnimation 2.5s infinite ;
 }
 .wind2 {
   position: absolute;
   left: 20vw;
   top: 105vh;
-  width: 5vw;
+  width: 6vw;
   height: 55vh;
   z-index: 2;
   background-color: white;
   filter: blur(50px);
   opacity: .2;
-  animation: fallWindAnimation 3.7s infinite ;
+  animation: fallWindAnimation 2.7s infinite ;
   animation-delay: .5s;
 }
 .wind3 {
   position: absolute;
   left: 32vw;
   top: 105vh;
-  width: 3vw;
+  width: 4vw;
   height: 28vh;
   z-index: 6;
   background-color: white;
   filter: blur(30px);
   opacity: .2;
-  animation: fallWindAnimation 3.7s infinite ;
+  animation: fallWindAnimation 2.7s infinite ;
 }
 .wind4 {
   position: absolute;
   left: 34vw;
   top: 105vh;
-  width: 3.7vw;
+  width: 4.7vw;
   height: 45vh;
   z-index: 2;
   background-color: white;
   filter: blur(40px);
   opacity: .2;
-  animation: fallWindAnimation 3.4s infinite ;
+  animation: fallWindAnimation 2.4s infinite ;
   animation-delay: .5s;
 }
 .wind5 {
   position: absolute;
   left: 43vw;
   top: 105vh;
-  width: 3.5vw;
+  width: 4.5vw;
   height: 50vh;
   z-index: 6;
   background-color: white;
   filter: blur(40px);
   opacity: .2;
-  animation: fallWindAnimation 3.5s infinite ;
+  animation: fallWindAnimation 2.5s infinite ;
 }
 .wind6 {
   position: absolute;
   left: 53vw;
   top: 105vh;
-  width: 4vw;
+  width: 5vw;
   height: 32vh;
   z-index: 2;
   background-color: white;
   filter: blur(30px);
   opacity: .2;
-  animation: fallWindAnimation 3.3s infinite ;
+  animation: fallWindAnimation 2.3s infinite ;
   animation-delay: .5s;
 }
 .wind7 {
   position: absolute;
   left: 63vw;
   top: 105vh;
-  width: 5vw;
+  width: 6vw;
   height: 60vh;
   z-index: 6;
   background-color: white;
   filter: blur(50px);
   opacity: .2;
-  animation: fallWindAnimation 3.7s infinite ;
+  animation: fallWindAnimation 2.7s infinite ;
 }
 .wind8 {
   position: absolute;
   left: 75vw;
   top: 105vh;
-  width: 4vw;
+  width: 5vw;
   height: 25vh;
   z-index: 2;
   background-color: white;
   filter: blur(30px);
   opacity: .2;
-  animation: fallWindAnimation 3.5s infinite ;
+  animation: fallWindAnimation 2.5s infinite ;
   animation-delay: .5s;
 }
 .wind9 {
   position: absolute;
   left: 77vw;
   top: 105vh;
-  width: 3.7vw;
+  width: 4.7vw;
   height: 45vh;
   z-index: 6;
   background-color: white;
   filter: blur(40px);
   opacity: .2;
-  animation: fallWindAnimation 3.3s infinite ;
+  animation: fallWindAnimation 2.3s infinite ;
 }
 .wind10 {
   position: absolute;
   left: 86vw;
   top: 105vh;
-  width: 4vw;
+  width: 5vw;
   height: 55vh;
   z-index: 2;
   background-color: white;
   filter: blur(50px);
   opacity: .2;
-  animation: fallWindAnimation 3.6s infinite ;
+  animation: fallWindAnimation 2.6s infinite ;
   animation-delay: .5s;
 }
 
@@ -393,7 +376,7 @@
    -o-animation: fastFallAnimation 3s infinite;
     animation: fastFallAnimation 3s infinite;
     animation-delay: 0s;
-  z-index: 1;
+  z-index: 3;
   filter: blur(1px);
 }
 .closeCloud2 {
@@ -407,7 +390,7 @@
    -o-animation: fastFallAnimation 4s infinite;
     animation: fastFallAnimation 4s infinite;
     animation-delay: 1.2s;
-  z-index: 1;
+  z-index: 3;
   filter: blur(1px);
 }
 .closeCloud3 {
@@ -421,7 +404,7 @@
    -o-animation: fastFallAnimation 3.5s infinite;
     animation: fastFallAnimation 3.5s infinite;
     animation-delay: 1s;
-  z-index: 1;
+  z-index: 3;
   filter: blur(1px);
 }
 
@@ -495,10 +478,5 @@
    -o-animation: slowFallAnimation 65s infinite;
     animation: slowFallAnimation 65s infinite;
     animation-delay: -33s;
-  z-index: 0;
-}
-
-.container h2 {
-  position: absolute;
   z-index: 0;
 }

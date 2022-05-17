@@ -80,7 +80,7 @@ export default function FindModal({handleClose}) {
       <section className={style.modal}>
         <h2>Find room</h2>
         <div className={style.card}>
-          <label>search room 
+          <label className={style.smallfonts}>Search Room 
             <input type="text" required onChange={writeRoomID} /></label>
         </div>
 
