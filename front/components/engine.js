@@ -365,7 +365,9 @@ class Player {
         this.runningTime = 0;
       }
     }
-
+    if(this.y <156){
+      this.y = 156
+    } 
     //Apply gravity
     c = this.testCollide(0, -gravity);
     if (c.side == undefined) {
@@ -945,7 +947,7 @@ function initLevels() {
   blocks.push(new Block(0, new AABB(330, 660, 150, 34)));
   blocks.push(new Block(0, new AABB(70, 620, 150, 34)));
 
-  walls.push(new Wall(1, 200, 100, 0, 200));
+  walls.push(new Wall(1, 200, 100, 0, 100));
   blocks.push(new Block(1, new AABB(0, 200, 48, 34)));
   blocks.push(new Block(1, new AABB(530, 200, 60, 34)));
   blocks.push(new Block(1, new AABB(860, 200, 140, 34)));
