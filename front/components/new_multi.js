@@ -1367,7 +1367,7 @@ class Engine extends Component {
       if(myIdx === winner){
           this.confetti = true;
       }
-      stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:false, left:false, right:false,
+      stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:groupInfo[winner].userSeq, roomCode:roomId,sender:groupInfo[winner].userId, space:false, left:false, right:false,
       x:players[winner].x, y:players[winner].y, vx:players[winner].vx, vy:players[winner].vy}));
   }
 
@@ -1400,7 +1400,7 @@ class Engine extends Component {
   }
 
   componentDidMount() {    
-    // console.log('Mount',stomp, roomId, userInfo, groupInfo);
+    console.log(groupInfo);
     socketConnect();
     init();
     this.run();
