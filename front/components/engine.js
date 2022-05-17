@@ -260,7 +260,9 @@ class Player {
   }
 
   collideToLeft(w) {
-    this.x = w;
+    if(this.y+this.vy >=156){
+      this.x = w;
+    }
     this.vx *= -1 * boundFriction;
     audios.bounce.start();
   }
