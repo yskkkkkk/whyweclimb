@@ -1,5 +1,6 @@
 package com.whyweclimb.backend.domain.room.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -50,7 +51,9 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public List<Access> playerList(String roomCode) {
-		return accessRedisRepository.findByRoomCode(roomCode);
+		List<Access> list = accessRedisRepository.findByRoomCode(roomCode);
+		Collections.sort(list);
+		return list;
 	}
 
 	@Override
