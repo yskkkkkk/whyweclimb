@@ -1092,7 +1092,7 @@ function initLevels()
     ]
     
     let stages = stagelist[roomSeq%6];
-    stages = stagelist[1];
+    
     blocks.push(new Block(stages[0], new AABB(0, 100, 400, 34)));
     blocks.push(new Block(stages[0], new AABB(500, 230, 150, 34)));
     blocks.push(new Block(stages[0], new AABB(710, 410, 300, 34)));

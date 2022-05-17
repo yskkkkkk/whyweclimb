@@ -365,9 +365,8 @@ class Player {
         this.runningTime = 0;
       }
     }
-    if(this.y <156){
-      this.y = 156
-    } 
+    
+    // console.log(this.onGround)
     //Apply gravity
     c = this.testCollide(0, -gravity);
     if (c.side == undefined) {
@@ -383,6 +382,11 @@ class Player {
     if (c.side != undefined) {
       if (c.side != "error") this.reponseCollide(c);
     }
+    if(this.y <156){
+      this.collideToBottom(156);
+      
+    } 
+    
   }
 
   testCollide(nvx, nvy) {
