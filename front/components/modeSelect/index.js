@@ -21,14 +21,14 @@ export default function ModeSelect({toMain, toConfigure}) {
   // };
   const [Modalshow, setModalVisible] = useState(false);
   const openModal = () => {
-    console.log("show")
+    // console.log("show")
     setModalVisible(true)
   }
   const closeModal = () => {
     setModalVisible(false)
   }
   const saveCharacter = (num) => {
-    console.log("clickCharacter")
+    // console.log("clickCharacter")
     axios({
       url:'https://k6a401.p.ssafy.io/api/user/information',
       method:'GET',
@@ -49,7 +49,7 @@ export default function ModeSelect({toMain, toConfigure}) {
         
       }).then(res=>{
         
-        console.log(res)
+        // console.log(res)
         setModalVisible(false)
       }).catch(err=>console.error(err))
     }).catch(err=>console.error(err))

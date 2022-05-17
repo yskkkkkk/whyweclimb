@@ -37,7 +37,7 @@ export default function Login({toSignup, toModeSelect}) {
       },
     })
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       if(response.status==409){
         toast.error("현재 접속중인 ID 입니다.")
         flag_conf=true
@@ -45,7 +45,7 @@ export default function Login({toSignup, toModeSelect}) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.token) {
         sessionStorage.setItem("token", data.token);
         initializeData();

@@ -28,7 +28,7 @@ export default function WaitRoom() {
   const [isReady, setIsReady] = useState();
 
   // function sendMessage(msg){
-  //   console.log('hii');
+  //   // console.log('hii');
   //   stomp.send(`/pub/chat/message`, {}, JSON.stringify({type:'MOVE', roomId:roomID, sender:'noman1', message:msg}));
   // }
 
@@ -44,13 +44,13 @@ export default function WaitRoom() {
         mode: 'no-cors'
       };
       axios.put(`${basicURL}/room/start/${roomID}`,{headers:headers})
-      .then(res=>console.log('start!!!',res))
+      .then(res=> console.log('start!!!',res))
       .catch(err=>console.error(err))
     }
   }
 
   function receiveMessage(msg){
-    console.log('msg',msg)
+    // console.log('msg',msg)
     if(msg.data){
       setGroupInfo(msg.data);
     }    
@@ -70,7 +70,7 @@ export default function WaitRoom() {
       mode: 'no-cors'
     }
     axios.get(`${basicURL}/user/${data.userSeq}`,{headers:headers})
-      .then(res=>console.log('confirmed!!',res))
+      .then(res=> console.log('confirmed!!',res))
       .catch(err=>{
         alert("이미 로그인이 되어 있습니다.");
         window.sessionStorage.clear();
@@ -82,19 +82,19 @@ export default function WaitRoom() {
   function socketConnect(data){
     stomp.connect({},
       function(){
-        console.log('stomp',stomp.webSocket._transport.url);
+        // console.log('stomp',stomp.webSocket._transport.url);
         const strings = stomp.webSocket._transport.url.split('/');
         const sessionId = strings[strings.length-2];
         stomp.subscribe(`/sub/room/`+roomID, function(message){
-            console.log('here !!!message',message);
+            // console.log('here !!!message',message);
             var recv = JSON.parse(message.body);
             receiveMessage(recv);
         });
-        console.log(data.skinSeq,"skinSeq")
+        // console.log(data.skinSeq,"skinSeq")
         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomID, sessionId:sessionId, userSeq:data.userSeq, userId:data.userId, skinSeq:data.skinSeq}));
       },
       function(error){
-        console.log('error',error.headers.message);
+        // console.log('error',error.headers.message);
       }
     )
   }
@@ -133,7 +133,7 @@ export default function WaitRoom() {
         .then(res=>res.data)
         .then(data=>{
           if(data!==''){
-            console.log(data);
+            // console.log(data);
             setRoomInfo(data);
             getUserInfo();
           } else {

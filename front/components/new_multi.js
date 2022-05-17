@@ -478,7 +478,7 @@ class Player
                 let r = aabb.checkCollideBox(box);
                 if(r.collide)
                 {
-                    console.log("Goal!!!!")
+                    // console.log("Goal!!!!")
                     flag = true;
                     winner = this.index;
                 }
@@ -698,7 +698,7 @@ class Player
 // if(userInfo){
 //   window.onload = function ()
 //   {
-//       console.log('load!!!!')
+//       // console.log('load!!!!')
 //       socketConnect();
 //       init();
 //       run();
@@ -733,7 +733,7 @@ function init()
     {
         let mousePos = getMousePos(cvs, e);
         let message = mousePos.x + ', ' + mousePos.y;
-        console.log(message);
+        // console.log(message);
     }, false);
 
     // cvs.addEventListener('touchstart', function (e)
@@ -947,7 +947,7 @@ function init()
     images.running_2_L2.src = "/images/2/running_L2.png";
     images.running_2_L2.onload = function () {
         resourceLoaded++;
-        console.log("loadFinish")
+        // console.log("loadFinish")
     };
     //27
     images.running_3_R1 = new Image();
@@ -972,7 +972,7 @@ function init()
     images.running_3_L2.src = "/images/3/running_L2.png";
     images.running_3_L2.onload = function () {
         resourceLoaded++;
-        console.log("loadFinish")
+        // console.log("loadFinish")
     };
     //31
     images.running_4_R1 = new Image();
@@ -997,7 +997,7 @@ function init()
     images.running_4_L2.src = "/images/4/running_L2.png";
     images.running_4_L2.onload = function () {
         resourceLoaded++;
-        console.log("loadFinish")
+        // console.log("loadFinish")
     };
     //35
 
@@ -1039,14 +1039,14 @@ function init()
     // players.push(player);
     // players.push(player2);
     for (var i=0; i < groupInfo.length; i++){
-      console.log('i!!',i);
+      // console.log('i!!',i);
         players.push(new Player(locations[i][0],locations[i][1]));
         players[i].skin = groupInfo[i].skinSeq;
         if(userInfo.userSeq === groupInfo[i].userSeq){            
             myIdx = i;
         }
     }
-    console.log('players',players, 'groupInfo',groupInfo);
+    // console.log('players',players, 'groupInfo',groupInfo);
     players.push(players[myIdx]);
     groupInfo.push(groupInfo[myIdx]);
     groupInfo.splice(myIdx,1);
@@ -1118,7 +1118,7 @@ function keyUp(e)
 {
     if (e.key === ' ' || e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
         inputkeys[e.key] = false;
-        // console.log(keys);
+        // // console.log(keys);
         // if(player.onGround)
         {
             stomp.send('/pub/play/message',{},JSON.stringify({type:'MOVE',id:userInfo.userSeq, roomCode:roomId,sender:userInfo.userId, space:inputkeys[" "], left:inputkeys['ArrowLeft'], right:inputkeys['ArrowRight'],
@@ -1216,7 +1216,7 @@ function drawBlock(x, y, w, h)
     
     if(level < levelMax){
         let stage = `stage${level+1}`
-        //console.log(stage)
+        //// console.log(stage)
         if(level==0 && x==0 && y==0){
             
         }
@@ -1277,32 +1277,32 @@ function drawGoal(aabb){
 function socketConnect(){
     // stomp.connect({},
     //     function(){
-    //         console.log('stomp',stomp.webSocket._transport.url);
+    //         // console.log('stomp',stomp.webSocket._transport.url);
     //         const strings = stomp.webSocket._transport.url.split('/');
     //         const sessionId = strings[strings.length-2];
     //         stomp.subscribe(`/sub/room/`+roomId, function(message){
-    //             console.log('message',message);
+    //             // console.log('message',message);
     //             var recv = JSON.parse(message.body);
     //             receiveMessage(recv);
     //         });
     //         stomp.send(`/pub/room/entrance`,{},JSON.stringify({roomCode:roomId, sessionId:sessionId, userSeq:userInfo.userSeq, userId:userInfo.userId}));
     //     },
     //     function(error){
-    //         console.log('error', error.headers.message);
+    //         // console.log('error', error.headers.message);
     //     }
     // )
-    console.log(stomp);
+    // console.log(stomp);
     stomp.subscribe('/sub/room/' + roomId, function(message){
-        console.log('game Start!!');
+        // console.log('game Start!!');
         var recv = JSON.parse(message.body);
         receiveMessage(recv);
     })
 }
 
 function receiveMessage(msg){
-    console.log('msg',msg);
-    console.log('level!!!',level, levelMax);
-    console.log(players);
+    // console.log('msg',msg);
+    // console.log('level!!!',level, levelMax);
+    // console.log(players);
     for (var i=0; i<groupInfo.length; i++){
         if(groupInfo[i].userSeq === msg.id){
             if(players[i].x !== msg.x) {
@@ -1313,8 +1313,8 @@ function receiveMessage(msg){
             }
             const tempKeys = {" ":msg.space, ArrowLeft:msg.left, ArrowRight:msg.right};
             players[i].keys = tempKeys;
-            console.log('x,y!!',players[i].x,players[i].y);
-            console.log('x,y!!!',msg.x, msg.y);
+            // console.log('x,y!!',players[i].x,players[i].y);
+            // console.log('x,y!!!',msg.x, msg.y);
             break;
         }
     }
@@ -1350,7 +1350,7 @@ class Engine extends Component {
         passedTime -= msPerFrame;
 
         if(flag){
-          console.log('end!!');
+          // console.log('end!!');
           this.openModal();
 
           return;
@@ -1367,7 +1367,7 @@ class Engine extends Component {
   }
 
   componentDidMount() {    
-    console.log('Mount',stomp, roomId, userInfo, groupInfo);
+    // console.log('Mount',stomp, roomId, userInfo, groupInfo);
     socketConnect();
     init();
     this.run();

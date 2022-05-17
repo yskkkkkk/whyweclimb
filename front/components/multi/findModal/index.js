@@ -40,7 +40,7 @@ export default function FindModal({handleClose}) {
         } else {
           toast.error("the room doesn't exist. Please check your room ID.");
         }
-        console.log(data);
+        // console.log(data);
       })
       .catch(err=>console.error(err))
   }
