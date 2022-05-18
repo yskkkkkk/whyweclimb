@@ -143,9 +143,9 @@ export default function Signup ({toMain}) {
     <main className={style.signupContainer}>
       <div className={style.semiContainer}>
 
-        <text className={style.fonts}>
+        <div className={style.fonts}>
           Sign up
-        </text>
+        </div>
         <section className={style.signup}>
           <div className={style.card}>
             <label className={style.smallfonts}>ID 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router"
-import style from '../../styles/waitRoom.module.css';
+import style from './multiGame.module.css';
 import axios from 'axios'
 import Link from 'next/link';
 import SockJS from 'sockjs-client';
@@ -184,7 +184,7 @@ export default function WaitRoom() {
         <Engine stomp={stomp} roomId={roomID} userInfo={userInfo} groupInfo={groupInfo} roomSeq={roomInfo.roomSeq}/>
         <div className={style.buttons}>
           <Link href={'/'} passHref>
-            <a><h3>Back</h3></a>
+            <a><h3 className={style.resultText}>Back</h3></a>
           </Link>
         </div>
       </main>}
