@@ -2,7 +2,6 @@
   display:flex;
 } */
 .resultText {
-  
   text-align: center;
 }
 
@@ -15,4 +14,8 @@
 
 .h3button {
   margin: 0px 400px;
+}
+
+.replayBtn {
+  cursor: pointer;
 }

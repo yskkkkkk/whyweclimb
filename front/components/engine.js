@@ -1386,7 +1386,7 @@ class Engine extends Component {
           <a className={style.h3button} onClick={()=>{
             // console.log("reset?")
             this.reset()
-          }}><h3>Reset</h3></a>
+          }}><h3 className={style.replayBtn}>Reset</h3></a>
           <Link href={'/'} passHref>
             <a className={style.h3button}><h3>Back</h3></a>
           </Link>
