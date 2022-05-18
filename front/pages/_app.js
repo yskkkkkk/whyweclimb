@@ -26,11 +26,11 @@ function MyApp({ Component, pageProps, router }) {
         //   position: 'absolute',
         //   top: '50%',
         // }}
-        toastOptions={{
-          blank: {
-            duration: Infinity,
-          },
-        }}
+        // toastOptions={{
+        //   blank: {
+        //     duration: Infinity,
+        //   },
+        // }}
       />
       
     </>
