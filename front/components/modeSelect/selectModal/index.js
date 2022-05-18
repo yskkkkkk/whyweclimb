@@ -1,6 +1,7 @@
 import style from './selectModal.module.css';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 
 export default function CreateModal({handleClose}) {  
@@ -26,9 +27,10 @@ export default function CreateModal({handleClose}) {
         }
         
       }).then(res=>{
-        
         // console.log(res)
-        setModalVisible(false)
+        toast.success("Character saved!");
+        handleClose();
+        
       }).catch(err=>console.error(err))
     }).catch(err=>console.error(err))
     
