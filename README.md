@@ -31,7 +31,7 @@
 ## 실제 서비스 화면
 
 ##### 로그인
-<img src="README.assets/login.gif" alt="image"  width="600" height="400"/>
+<img src="README.assets/login.gif" alt="image"  width="800" height="600"/>
 
 ##### 회원가입
 
