@@ -26,13 +26,14 @@ export default function FindModal({handleClose}) {
         if(data !== ""){
           switch(data.roomFindResult) {
             case 'ok':
+              toast("here we go!", {icon: "🎮"});
               location.href=`/multi/${data.roomCode}`;
               break;
             case 'full':
               toast.error("the room is full..");
               break;
             case 'start':
-              toast("here we go!", {icon: "🎮"});
+              toast("The room already left to climb..", {icon: "😢"});
               break;
             default:
               toast.error("the room doesn't exist. Please check your room ID.");
@@ -85,7 +86,7 @@ export default function FindModal({handleClose}) {
         </div>
 
         <div className={style.btns}>
-          <button className={style.okBtn} onClick={findRoom} >join</button>
+          <button className={style.okBtn} onClick={findRoom} >find</button>
           <button className={style.backBtn} onClick={handleClose} >close</button>
         </div>
       </section>
