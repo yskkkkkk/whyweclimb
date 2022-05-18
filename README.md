@@ -70,27 +70,25 @@
 
 ### Front-End
 
-- <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> - 
-
-- Node.js - `v14.15.1`
-- Next.js - `12.1.5`
-- npm - `v6.14.8`
+- <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> - `v14.15.1`
+- <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"> - `12.1.5`
+- <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"> - `v6.14.8`
 
 ### Back-End
 
-- Java - `openjdk v1.8.0_301`
-- Spring Boot - `2.6.6`
-- JPA 
-- Mysql - `8.0.27`
-- Swagger - `v3`
+- <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> - `openjdk v1.8.0_301`
+- <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> - `2.6.6`
+- <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> - `8.0.27`
+- <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"> - `v3`
+- Jpa
 
 ### Infra
 
-- AWS EC2
-- Jenkins - `jenkins:lts 2.332.2`
-- Nginx - `1.18.0 (ubuntu)`
+- AWS EC2 - <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white">
+- <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> - `jenkins:lts 2.332.2`
+- <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> - `1.18.0 (ubuntu)`
+- <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> - `20.10.14`
 - Cerbot - `1.27.0`
-- Docker - `20.10.14`
 
 ### Port
 
