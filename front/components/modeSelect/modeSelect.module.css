@@ -38,9 +38,15 @@
   box-shadow: 0 2px 0px #6d4c41;
   transition: all .1s;
 }
-.btn_select {
+.selectBtn {
   font-size:20px;
+  width: fit-content;
   text-align: center;
+  align-self: center;
+  -webkit-animation: glowDark 1s ease-in-out infinite alternate;
+  -moz-animation: glowDark 1s ease-in-out infinite alternate;
+  animation: glowDark 1s ease-in-out infinite alternate;
+  cursor: pointer;
 }
 /* ------------------------------------------------------------------------------------ */
 /* 캐릭터 점프 애니매이션 */
@@ -132,7 +138,16 @@
     text-shadow: 0 0 1px #fff, 0 0 5px #fff, 0 0 7px #e60073, 0 0 10px #e60073, 0 0 17px #e60073, 0 0 15px #e60073, 0 0 17px #e60073;
   }
   to {
-    text-shadow: 0 0 2px #fff, 0 0 7px rgb(82, 82, 204), 0 0 10px rgb(82, 82, 204), 0 0 12px rgb(82, 82, 204), 0 0 15px rgb(82, 82, 204), 0 0 17px rgb(82, 82, 204), 0 0 20px rgb(82, 82, 204);
+    text-shadow: 0 0 2px #fff, 0 0 7px rgb(47, 219, 133), 0 0 10px rgb(82, 82, 204), 0 0 12px rgb(213, 246, 84), 0 0 15px rgb(82, 82, 204), 0 0 17px rgb(82, 82, 204), 0 0 20px rgb(82, 82, 204);
+  }
+}
+
+@-webkit-keyframes glowDark {
+  from {
+    text-shadow: 0 0 1px #fff, 0 0 5px #fff, 0 0 7px #ff4f4f, 0 0 10px #ff67b3, 0 0 17px #fb6cf9, 0 0 15px #8974fd, 0 0 17px #84ffa4;
+  }
+  to {
+    text-shadow: 0 0 2px #fff, 0 0 7px rgb(47, 219, 133), 0 0 10px rgb(82, 82, 204), 0 0 12px rgb(213, 246, 84), 0 0 15px rgb(110, 248, 255), 0 0 17px rgb(255, 128, 156), 0 0 20px rgb(100, 247, 255);
   }
 }
 

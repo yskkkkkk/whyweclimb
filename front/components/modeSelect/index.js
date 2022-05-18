@@ -42,7 +42,7 @@ export default function ModeSelect({toMain, toConfigure}) {
   return (
     <main className={style.container}>
 
-      <a onClick={openSelectModal} className={style.btn_select}>
+      <a onClick={openSelectModal} className={style.selectBtn}>
         <h4>Character Select</h4>
       </a>
 
