@@ -5,10 +5,7 @@ import com.whyweclimb.backend.domain.user.service.SingleGameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SingleGameController {
 
     private final SingleGameService singleGameService;
+
+    @GetMapping("/{userSeq}")
+    public ResponseEntity<Boolean> enterSingleGame(@PathVariable(value = "userSeq") int userSeq){
+        return new ResponseEntity<Boolean>(singleGameService.enterUser(userSeq), HttpStatus.OK);
+    }
 
     @PostMapping("/record")
     public ResponseEntity<Boolean> settingUserRecord(@RequestBody UserRecordUpdateRequest request){
