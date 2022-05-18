@@ -1187,30 +1187,17 @@ class Engine extends Component {
     // // console.log("abcd")
     // console.log(userSeq)
     // console.log(levelMax)
+    
     axios({
-      url:"",
-      method:'POST',
-      headers:{
-        "Authorization":sessionStorage.getItem("token")
-      },
-      data:{
-        "time":this.currentTime-startTime
-      }
-    }).then(res=>{
-      
-    }).catch(err=>console.error(err))
-    axios({
-      url:`https://k6a401.p.ssafy.io/api/single/level/`,
+      url:`https://k6a401.p.ssafy.io/api/single/record/`,
       method:'POST',
       headers: {
         "Authorization": sessionStorage.getItem("token")
       },
       data:{
-        "backgroundSound": 50,
-        "effectSound": 50,
         "maxLevel":levelMax,
         "userSeq": userSeq,
-        "skinSeq":player.skin
+        "record":this.currentTime-startTime,
       }
     }).then(res=>{
       // console.log(res)
@@ -1230,16 +1217,15 @@ class Engine extends Component {
   componentWillUnmount() {
     flag2 = true
     axios({
-      url:`https://k6a401.p.ssafy.io/api/single/level/`,
+      url:`https://k6a401.p.ssafy.io/api/single/record/`,
       method:'POST',
       headers: {
         "Authorization": sessionStorage.getItem("token")
       },
       data:{
-        "backgroundSound": 50,
-        "effectSound": 50,
         "maxLevel":levelMax,
         "userSeq": userSeq,
+        "record": Number.MAX_SAFE_INTEGER,
         
       }
     }).then(res=>{
