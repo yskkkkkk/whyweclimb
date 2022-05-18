@@ -35,7 +35,7 @@ let d = new Date();
 let previousTime = 0;
 let currentTime = 0;
 let passedTime = 0;
-let msPerFrame = 1000.0 /70.0;
+let msPerFrame = 1000.0 /140.0;
 
 const numResource = 51;
 let resourceLoaded = 0;
@@ -48,11 +48,11 @@ let keys = {};
 let blocks = [];
 let walls = [];
 let goals = [];
-const speed = 2.7*2;
-const gravity = 0.19*2*2;
-const globalFriction = 0.992;
-const groundFriction = 0.76;
-const sideJump = 5.1*2;
+const speed = 2.7;
+const gravity = 0.19;
+const globalFriction = 0.996;
+const groundFriction = 0.88;
+const sideJump = 5.1;
 const boundFriction = 0.66;
 const JumpConst = 15.0;
 const chargingConst = 600.0;
@@ -340,14 +340,14 @@ class Player {
         this.running_R = false;
         this.running_L = true;
         this.runningTime += 1;
-        this.runningTime = this.runningTime % 16;
+        this.runningTime = this.runningTime % 32;
         if (c.side == undefined) this.vx = -speed;
         else this.vx = 0;
       } else if (keys.ArrowRight && !this.crouching) {
         this.running_R = true;
         this.running_L = false;
         this.runningTime += 1;
-        this.runningTime = this.runningTime % 16;
+        this.runningTime = this.runningTime % 32;
         c = this.testCollide(speed, 0);
 
         if (c.side == undefined) this.vx = speed;
@@ -357,7 +357,7 @@ class Player {
         else if (keys.ArrowRight) this.vx = sideJump;
         audios.jump.start();
 
-        this.vy = this.jumpGauge * JumpConst * 2;
+        this.vy = this.jumpGauge * JumpConst;
         this.jumpGauge = 0;
         this.onGround = false;
         this.crouching = false;
@@ -372,9 +372,9 @@ class Player {
     //Apply gravity
     c = this.testCollide(0, -gravity);
     if (c.side == undefined) {
-      if (this.vy > -100) {
-        this.vy -= gravity;
-      }
+      
+      this.vy -= gravity;
+      
 
       this.onGround = false;
     }
@@ -579,7 +579,7 @@ class Player {
       );
     } else if (this.running_L) {
       gfx.drawImage(
-        images[`running_${this.skin}_L${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_L${parseInt(this.runningTime / 16) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -587,7 +587,7 @@ class Player {
       );
     } else {
       gfx.drawImage(
-        images[`running_${this.skin}_R${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_R${parseInt(this.runningTime / 16) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
