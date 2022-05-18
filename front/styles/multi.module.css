@@ -271,13 +271,29 @@
   position: absolute;
   width: 350px;
   height: 300px;
-  background-image: url("/images/furnace.png");
+  background-image: url("/images/createBtnImg/furnace_0.png");
   background-repeat: no-repeat;
   transform: scale(.4, .4) scaleX(-1) translateX(0%)  translateY(-8%);
 }
 
+.createBtn:hover .createImg1 {
+  animation-name: fire;
+  animation-iteration-count: infinite;
+  /* animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1); */
+  animation-duration: 1s;
+}
 .createBtn:hover h2 {
   color: rgb(82, 82, 204);
+}
+
+@keyframes fire {
+  14.3% { background-image: url("/images/createBtnImg/furnace_1.png") ; }
+  28.6% { background-image: url("/images/createBtnImg/furnace_2.png") ; }
+  42.9% { background-image: url("/images/createBtnImg/furnace_3.png") ; }
+  57.2% { background-image: url("/images/createBtnImg/furnace_4.png") ; }
+  71.5% { background-image: url("/images/createBtnImg/furnace_5.png") ; }
+  85.8% { background-image: url("/images/createBtnImg/furnace_6.png") ; }
+  100%  { background-image: url("/images/createBtnImg/furnace_7.png") ; }
 }
 
 
