@@ -1287,7 +1287,7 @@ class Engine extends Component {
         <Modal visible={this.state.Modalshow}> 
         <Confetti active={ this.confetti } config={ config }/>
           <h1 className={style.resultText}>축하합니다!!!</h1>
-          <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}분{parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
+          <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}분 {parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
           <Link href={''} passHref>
             <a onClick={this.refresh}><h3 className={style.resultText}>Replay</h3></a>
           </Link>
