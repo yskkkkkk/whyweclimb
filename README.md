@@ -61,7 +61,7 @@
 
 ##### 대기실에서 start 버튼을 눌러 멀티 게임 시작
 
-
+<img src="README.assets/multiplaying.gif" alt="image"  width="900" height="507"/>
 
 
 ## 개발 환경
@@ -80,7 +80,7 @@
 - <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> - `2.6.6`
 - <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> - `8.0.27`
 - <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"> - `v3`
-- <img src="https://img.shields.io/badge/Jpa-lightgrey?style=for-the-badge&logo=appveyor"/>
+- <img src="https://img.shields.io/badge/Jpa-lightgrey?style=for-the-badge&logo=appveyor&logoColor=white""/>
 
 ### Infra
 
@@ -88,7 +88,7 @@
 - <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> - `jenkins:lts 2.332.2`
 - <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> - `1.18.0 (ubuntu)`
 - <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> - `20.10.14`
-- <img src="https://img.shields.io/badge/certbot-green?style=for-the-badge&logo=appveyor"/> - `1.27.0`
+- <img src="https://img.shields.io/badge/certbot-green?style=for-the-badge&logo=appveyor&logoColor=white"/> - `1.27.0`
 
 ### Port
 
