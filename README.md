@@ -8,24 +8,26 @@
 > >
 > > 멀티플레이에서는 루즈함을 해소하기 위해 맵 순서를 섞이도록 만들어 매번 다른 경험을 할 수 있게 구현
 
-##### 팀원
+##### ✨팀구성✨
 
-우 윤 석   ⇒   팀장, frontend & game modeling
+ - 우 윤 석   ⇒   팀장, frontend & game modeling
 
-김 태 훈   ⇒   팀원, frontend & front design
+ - 김 태 훈   ⇒   팀원, frontend & front design
 
-정      찬   ⇒   팀원, frontend  & webSocket front
+ - 정      찬   ⇒   팀원, frontend  & webSocket front
 
-김 민 준   ⇒   팀원, backend & devOps
+ - 김 민 준   ⇒   팀원, backend & devOps
 
-류 대 성   ⇒   팀원, backend & webSocket
+ - 류 대 성   ⇒   팀원, backend & webSocket
 
 
 
 ##### 개발 일정
 
-2022.04.11~2022.05.27(총 7주)
-
+2022.04.11~2022.05.27 (총 7주)
+    - 04/11 ~ 04/17 - 기획 (1주) 
+    - 04/18 ~ 05/19 - 개발 (약 5주)
+    - 05/20 ~ 05/27 - 발표 자료 작성, 회고
 
 
 ## 실제 서비스 화면
