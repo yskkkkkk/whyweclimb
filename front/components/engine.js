@@ -1225,7 +1225,7 @@ class Engine extends Component {
       data:{
         "maxLevel":levelMax,
         "userSeq": userSeq,
-        "record": Number.MAX_SAFE_INTEGER,
+        "record": 0,
         
       }
     }).then(res=>{
