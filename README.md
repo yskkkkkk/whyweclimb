@@ -12,7 +12,7 @@
 
 우 윤 석   ⇒   팀장, frontend & game modeling
 
-김 태 훈   ⇒   팀원, frontend & webSocket front
+김 태 훈   ⇒   팀원, frontend & front design
 
 정      찬   ⇒   팀원, frontend  & webSocket front
 
@@ -31,8 +31,7 @@
 ## 실제 서비스 화면
 
 ##### 로그인
-
-<img src="README.assets/168965627-8d2479db-9e9d-46a3-a32a-abf6b8930803.png" alt="image" style="zoom: 67%;" />
+![login](/uploads/a2536a22c7f75a893e409baa170d94cc/login.gif)
 
 ##### 회원가입
 
