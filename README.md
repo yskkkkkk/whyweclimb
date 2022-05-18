@@ -70,6 +70,8 @@
 
 ### Front-End
 
+- <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> - 
+
 - Node.js - `v14.15.1`
 - Next.js - `12.1.5`
 - npm - `v6.14.8`
