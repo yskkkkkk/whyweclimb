@@ -73,10 +73,10 @@ export default function Login({toSignup, toModeSelect}) {
   }
   return (
     <main className={style.container}>
-      <text className={style.title}>why we climb</text>
+      <div className={style.title}>why we climb</div>
       <div className={style.loginContainer}> 
         <section className={style.login}>
-          <text className={style.fonts}>Login</text>
+          <div className={style.fonts}>Login</div>
           <div className={style.card}>
             <label  className={style.smallfonts}>Id 
               <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
