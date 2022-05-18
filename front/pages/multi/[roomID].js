@@ -29,6 +29,7 @@ export default function WaitRoom() {
   const [roomInfo, setRoomInfo] = useState();
   const [groupInfo, setGroupInfo] = useState();
   const [isReady, setIsReady] = useState();
+  const [sessionId, setSessionId] = useState();
 
   // function sendMessage(msg){
   //   // console.log('hii');
@@ -88,6 +89,7 @@ export default function WaitRoom() {
         // console.log('stomp',stomp.webSocket._transport.url);
         const strings = stomp.webSocket._transport.url.split('/');
         const sessionId = strings[strings.length-2];
+        setSessionId(sessionId)
         stomp.subscribe(`/sub/room/`+roomID, function(message){
             // console.log('here !!!message',message);
             var recv = JSON.parse(message.body);
@@ -119,10 +121,12 @@ export default function WaitRoom() {
   }
 
   function goBack(){
+    axios.post(`${basicURL}/exit/${sessionId}`)
     stomp.disconnect(function(){
       alert("go back~");
       location.href="/multi";
     })
+    
   }
   
   useEffect(()=>{
@@ -145,6 +149,15 @@ export default function WaitRoom() {
           }
         })
         .catch(err => console.error(err))
+      
+    }
+    return () => {
+      console.log(sessionId)
+      axios.post(`${basicURL}}/exit/${sessionId}`)
+      stomp.disconnect(function(){
+        location.href="/multi";
+      })
+      
     }
   },roomID)
 

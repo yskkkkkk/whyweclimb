@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @RedisHash(value = "access")
-public class Access {
+public class Access implements Comparable<Access>{
 	@Id
 	@Indexed
 	private String sessionId;
@@ -23,8 +23,18 @@ public class Access {
     private String userId;
 	private Boolean ready;
 	private Integer skinSeq;
+	private Integer order;
 	
 	public void setReady(Boolean ready) {
 		this.ready = ready;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+	
+	@Override
+	public int compareTo(Access access) {
+		return this.order - access.order;
 	}
 }
