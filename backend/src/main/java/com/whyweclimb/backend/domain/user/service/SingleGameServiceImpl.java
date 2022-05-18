@@ -23,6 +23,9 @@ public class SingleGameServiceImpl implements SingleGameService{
     @Transactional
     @Override
     public boolean setUserRecord(UserRecordUpdateRequest request) {
+        if(request.getRecord() == 0){
+            return false;
+        }
         LocalDate date = LocalDate.now();
         Optional<User> userOptional = userRepository.findById(request.getUserSeq());
         if(userOptional.isPresent()){
