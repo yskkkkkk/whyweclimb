@@ -14,13 +14,13 @@ public class SingleGameController {
 
     private final SingleGameService singleGameService;
 
-    @GetMapping("/{userSeq}")
-    public ResponseEntity<Boolean> enterSingleGame(@PathVariable(value = "userSeq") int userSeq){
-        return new ResponseEntity<Boolean>(singleGameService.enterUser(userSeq), HttpStatus.OK);
-    }
-
     @PostMapping("/record")
     public ResponseEntity<Boolean> settingUserRecord(@RequestBody UserRecordUpdateRequest request){
         return new ResponseEntity<Boolean>(singleGameService.setUserRecord(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/entrance")
+    public void countSingleModeEntrance() {
+    	singleGameService.countSingleModeEntrance();
     }
 }

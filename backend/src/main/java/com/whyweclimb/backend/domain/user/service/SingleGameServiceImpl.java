@@ -1,11 +1,10 @@
 package com.whyweclimb.backend.domain.user.service;
 
 import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
-import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.SingleConnectionRepository;
 import com.whyweclimb.backend.domain.user.repo.SingleRecordRepository;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
-import com.whyweclimb.backend.entity.SimultaneousConnection;
+import com.whyweclimb.backend.entity.SingleConnection;
 import com.whyweclimb.backend.entity.SingleRecord;
 import com.whyweclimb.backend.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -22,24 +21,6 @@ public class SingleGameServiceImpl implements SingleGameService{
     private final UserRepository userRepository;
     private final SingleRecordRepository singleRecordRepository;
     private final SingleConnectionRepository singleConnectionRepository;
-
-    @Transactional
-    @Override
-    public boolean enterUser(int userSeq) {
-        LocalDate date = LocalDate.now();
-        Optional<SimultaneousConnection> simultaneousConnectionOptional = singleConnectionRepository.findByConnectionDate(date);
-        if(simultaneousConnectionOptional.isPresent()){
-            SimultaneousConnection simultaneousConnection = simultaneousConnectionOptional.get();
-            simultaneousConnection.setConnectionCount(simultaneousConnection.getConnectionCount() + 1);
-            singleConnectionRepository.save(simultaneousConnection);
-        }else{
-            singleConnectionRepository.save(SimultaneousConnection.builder()
-                    .connectionCount(1)
-                    .connectionDate(date)
-                    .build());
-        }
-        return true;
-    }
 
     @Transactional
     @Override
@@ -74,4 +55,24 @@ public class SingleGameServiceImpl implements SingleGameService{
         }
         return true;
     }
+
+	@Override
+	public void countSingleModeEntrance() {
+		LocalDate today = LocalDate.now();
+		Optional<SingleConnection> connection = singleConnectionRepository.findByConnectionDate(today);
+		if (connection.isPresent()) {
+			singleConnectionRepository.save(SingleConnection.builder()
+					.singleConnectionSeq(connection.get().getSingleConnectionSeq())
+					.connectionCount(connection.get().getConnectionCount()+1)
+					.connectionDate(connection.get().getConnectionDate())
+					.build());
+		}else {
+			singleConnectionRepository.save(SingleConnection.builder()
+					.connectionCount(1)
+					.connectionDate(today)
+					.build());
+		}
+	}
+    
+    
 }

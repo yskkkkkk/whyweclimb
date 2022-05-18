@@ -69,6 +69,8 @@
 
 
 ## 개발 환경
+### 아키텍처
+![Image Pasted at 2022-5-18 15-23 (1)](https://user-images.githubusercontent.com/74582442/168971500-9cc6669c-3fc5-4341-845d-8b39bb2d1f13.png)
 
 ### Front-End
 
