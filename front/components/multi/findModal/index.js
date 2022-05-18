@@ -26,19 +26,20 @@ export default function FindModal({handleClose}) {
         if(data !== ""){
           switch(data.roomFindResult) {
             case 'ok':
+              toast("Prepare for the drop..", {icon: "🎮"});
               location.href=`/multi/${data.roomCode}`;
               break;
             case 'full':
-              toast.error("the room is full..");
+              toast.error("The room is full..");
               break;
             case 'start':
-              toast("here we go!", {icon: "🎮"});
+              toast("The room already left to climb..", {icon: "😢"});
               break;
             default:
               toast.error("the room doesn't exist. Please check your room ID.");
           }
         } else {
-          toast.error("the room doesn't exist. Please check your room ID.");
+          toast.error("The room doesn't exist. Please check your room ID.");
         }
         // console.log(data);
       })
@@ -85,7 +86,7 @@ export default function FindModal({handleClose}) {
         </div>
 
         <div className={style.btns}>
-          <button className={style.okBtn} onClick={findRoom} >join</button>
+          <button className={style.okBtn} onClick={findRoom} >find</button>
           <button className={style.backBtn} onClick={handleClose} >close</button>
         </div>
       </section>

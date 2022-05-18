@@ -1188,6 +1188,18 @@ class Engine extends Component {
     // console.log(userSeq)
     // console.log(levelMax)
     axios({
+      url:"",
+      method:'POST',
+      headers:{
+        "Authorization":sessionStorage.getItem("token")
+      },
+      data:{
+        "time":this.currentTime-startTime
+      }
+    }).then(res=>{
+      
+    }).catch(err=>console.error(err))
+    axios({
       url:`https://k6a401.p.ssafy.io/api/single/level/`,
       method:'POST',
       headers: {
