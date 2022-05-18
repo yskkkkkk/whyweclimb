@@ -1182,6 +1182,12 @@ class Engine extends Component {
     playingTime = document.getElementById("time");
     
     this.run();
+
+    axios({
+      url:`https://k6a401.p.ssafy.io/api/single/entrance`,
+      method:'POST'
+    }).then(res=>console.log(res))
+    .catch(err=>console.error(err))
   }
   openModal = () => {
     // // console.log("abcd")
