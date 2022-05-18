@@ -35,35 +35,30 @@
 
 ##### 회원가입
 
-<img src="README.assets/168965897-dd3f79ff-e2a6-4c3a-8ca8-63f3ca976862.png" alt="image" style="zoom:67%;" />
+<img src="README.assets/signup.gif" alt="image"  width="900" height="507"/>
 
-##### 모드 선택 (로그인 이후)
+##### 캐릭터 선택
 
-<img src="README.assets/image-20220518144622192.png" alt="image-20220518144622192" style="zoom:67%;" />
+<img src="README.assets/characterselect.gif" alt="image"  width="900" height="507"/>
 
-##### 플레이 화면
+##### 싱글 플레이 화면
 
-![image-20220518144719424](README.assets/image-20220518144719424.png)
+<img src="README.assets/singleplay.gif" alt="image"  width="900" height="507"/>
 
-##### 멀티모드 진입 시
+##### 멀티모드 진입 후 방 생성
 
-<img src="README.assets/image-20220518144829240.png" alt="image-20220518144829240" style="zoom:67%;" />
+<img src="README.assets/multicreate.gif" alt="image"  width="900" height="507"/>
 
-##### 방 검색 모달
+##### 랜덤 방 진입
 
-![image-20220518144904437](README.assets/image-20220518144904437.png)
+<img src="README.assets/multijoin.gif" alt="image"  width="900" height="507"/>
 
-##### 랜덤 방 진입 모달
+##### 코드를 입력하여 방 진입
 
-![image-20220518144922784](README.assets/image-20220518144922784.png)
+<img src="README.assets/multifind.gif" alt="image"  width="900" height="507"/>
 
-##### 방 생성 모달
+##### 대기실에서 start 버튼을 눌러 멀티 게임 시작
 
-![image-20220518144940082](README.assets/image-20220518144940082.png)
-
-##### 대기실
-
-![image-20220518145005924](README.assets/image-20220518145005924.png)
 
 
 
