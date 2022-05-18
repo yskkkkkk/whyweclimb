@@ -7,7 +7,7 @@ import SockJS from 'sockjs-client';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import WaitingRoom from "../../components/multi/waitingRoom";
-
+import toast from "react-hot-toast";
 
 
 const StompJS = require('@stomp/stompjs');
@@ -76,7 +76,7 @@ export default function WaitRoom() {
     axios.get(`${basicURL}/user/${data.userSeq}`,{headers:headers})
       .then(res=> console.log('confirmed!!',res))
       .catch(err=>{
-        alert("이미 로그인이 되어 있습니다.");
+        toast.error("your account is currently in use.");
         window.sessionStorage.clear();
         location.href="/";
       })
@@ -114,7 +114,7 @@ export default function WaitRoom() {
       .then(res => res.json())
       .then(data => {socketConnect(data);userConfirm(data);setUserInfo(data)})
       .catch(err => {
-        alert("다시 로그인을 해주세요");
+        toast.error("Please login again.");
         sessionStorage.removeItem("token");
         location.href="/";        
       })
@@ -123,7 +123,7 @@ export default function WaitRoom() {
   function goBack(){
     axios.post(`${basicURL}/exit/${sessionId}`)
     stomp.disconnect(function(){
-      alert("go back~");
+      toast("You left the room.", {icon: "🚪"});
       location.href="/multi";
     })
     
@@ -144,7 +144,7 @@ export default function WaitRoom() {
             setRoomInfo(data);
             getUserInfo();
           } else {
-            alert("존재하지 않는 방입니다.");
+            toast("The room doesn't exist!", {icon: "✨"});
             location.href="/multi";
           }
         })
