@@ -21,4 +21,9 @@ public class SingleGameController {
     public ResponseEntity<Boolean> settingUserRecord(@RequestBody UserRecordUpdateRequest request){
         return new ResponseEntity<Boolean>(singleGameService.setUserRecord(request), HttpStatus.OK);
     }
+
+    @PostMapping("/entrance")
+    public void countSingleModeEntrance() {
+    	singleGameService.countSingleModeEntrance();
+    }
 }
