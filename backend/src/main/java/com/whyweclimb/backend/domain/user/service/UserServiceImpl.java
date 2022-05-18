@@ -2,6 +2,7 @@ package com.whyweclimb.backend.domain.user.service;
 
 import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
@@ -77,5 +78,4 @@ public class UserServiceImpl implements UserService{
 		else 
 			return false;
 	}
-    
 }

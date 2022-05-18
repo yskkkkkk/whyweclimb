@@ -1,8 +1,9 @@
 package com.whyweclimb.backend.domain.user.service;
 
-import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
+import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
 
 public interface SingleGameService {
 
-    boolean setUserLevel(UserUpdateRequest request);
+    boolean setUserRecord(UserRecordUpdateRequest request);
+
 }
