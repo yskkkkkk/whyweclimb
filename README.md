@@ -88,7 +88,7 @@
 - <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> - `jenkins:lts 2.332.2`
 - <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> - `1.18.0 (ubuntu)`
 - <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> - `20.10.14`
-- <img src="https://img.shields.io/badge/certbot-green?style=for-the-badge&logo=appveyor&logoColor=CC6699"/> - `1.27.0`
+- <img src="https://img.shields.io/badge/certbot-green?style=for-the-badge&logo=appveyor"/> - `1.27.0`
 
 ### Port
 
