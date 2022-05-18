@@ -26,7 +26,7 @@ export default function FindModal({handleClose}) {
         if(data !== ""){
           switch(data.roomFindResult) {
             case 'ok':
-              toast("here we go!", {icon: "🎮"});
+              toast("Prepare for the drop..", {icon: "🎮"});
               location.href=`/multi/${data.roomCode}`;
               break;
             case 'full':
