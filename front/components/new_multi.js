@@ -1415,8 +1415,9 @@ class Engine extends Component {
     //키입력 True False로 가능, while()
     return (
     <>
-        <canvas id="cvs" width="1000" height="800" />
         <Confetti active={ this.confetti } config={ config }/>
+        <canvas id="cvs" width="1000" height="800" />
+        
         {this.state.modalShow && <Modal visible={this.state.modalShow}>
             {(myIdx === winner)?<h1 className={style.resultText}>축하합니다!!!</h1>:<h1 className={style.resultText}>아쉽네요ㅠㅠ</h1>}            
             <h2 className={style.resultText}>winner: {groupInfo[winner].userId}</h2>
