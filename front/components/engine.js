@@ -35,9 +35,9 @@ let d = new Date();
 let previousTime = 0;
 let currentTime = 0;
 let passedTime = 0;
-let msPerFrame = 1000.0 /70.0;
+let msPerFrame = 1000.0 /140.0;
 
-const numResource = 35;
+const numResource = 51;
 let resourceLoaded = 0;
 let startTime;
 let playingTime;
@@ -48,11 +48,11 @@ let keys = {};
 let blocks = [];
 let walls = [];
 let goals = [];
-const speed = 2.7*2;
-const gravity = 0.19*2*2;
-const globalFriction = 0.992;
-const groundFriction = 0.76;
-const sideJump = 5.1*2;
+const speed = 2.7;
+const gravity = 0.19;
+const globalFriction = 0.996;
+const groundFriction = 0.88;
+const sideJump = 5.1;
 const boundFriction = 0.66;
 const JumpConst = 15.0;
 const chargingConst = 600.0;
@@ -340,14 +340,14 @@ class Player {
         this.running_R = false;
         this.running_L = true;
         this.runningTime += 1;
-        this.runningTime = this.runningTime % 16;
+        this.runningTime = this.runningTime % 32;
         if (c.side == undefined) this.vx = -speed;
         else this.vx = 0;
       } else if (keys.ArrowRight && !this.crouching) {
         this.running_R = true;
         this.running_L = false;
         this.runningTime += 1;
-        this.runningTime = this.runningTime % 16;
+        this.runningTime = this.runningTime % 32;
         c = this.testCollide(speed, 0);
 
         if (c.side == undefined) this.vx = speed;
@@ -357,7 +357,7 @@ class Player {
         else if (keys.ArrowRight) this.vx = sideJump;
         audios.jump.start();
 
-        this.vy = this.jumpGauge * JumpConst * 2;
+        this.vy = this.jumpGauge * JumpConst;
         this.jumpGauge = 0;
         this.onGround = false;
         this.crouching = false;
@@ -372,9 +372,9 @@ class Player {
     //Apply gravity
     c = this.testCollide(0, -gravity);
     if (c.side == undefined) {
-      if (this.vy > -100) {
-        this.vy -= gravity;
-      }
+      
+      this.vy -= gravity;
+      
 
       this.onGround = false;
     }
@@ -579,7 +579,7 @@ class Player {
       );
     } else if (this.running_L) {
       gfx.drawImage(
-        images[`running_${this.skin}_L${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_L${parseInt(this.runningTime / 16) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -587,7 +587,7 @@ class Player {
       );
     } else {
       gfx.drawImage(
-        images[`running_${this.skin}_R${parseInt(this.runningTime / 8) + 1}`],
+        images[`running_${this.skin}_R${parseInt(this.runningTime / 16) + 1}`],
         this.x,
         HEIGHT - this.size - this.y + level * HEIGHT,
         this.size,
@@ -908,7 +908,101 @@ function init() {
     // console.log("loadFinish")
   };
   //35
-  
+  images.stage1_before = new Image();
+  images.stage1_before.src = "/images/STAGE1_before.png";
+  images.stage1_before.onload = function () {
+    resourceLoaded++;
+  };
+  //4
+  images.stage2_before = new Image();
+  images.stage2_before.src = "/images/STAGE2_before.png";
+  images.stage2_before.onload = function () {
+    resourceLoaded++;
+  };
+  //5
+  images.stage3_before = new Image();
+  images.stage3_before.src = "/images/STAGE3_before.png";
+  images.stage3_before.onload = function () {
+    resourceLoaded++;
+  };
+  //6
+  images.stage4_before = new Image();
+  images.stage4_before.src = "/images/STAGE4_before.png";
+  images.stage4_before.onload = function () {
+    resourceLoaded++;
+  };
+  //7
+  images.stage5_before = new Image();
+  images.stage5_before.src = "/images/STAGE5_before.png";
+  images.stage5_before.onload = function () {
+    resourceLoaded++;
+  };
+  //8
+  images.stage6_before = new Image();
+  images.stage6_before.src = "/images/STAGE6_before.png";
+  images.stage6_before.onload = function () {
+    resourceLoaded++;
+  };
+  //9
+  images.stage7_before = new Image();
+  images.stage7_before.src = "/images/STAGE7_before.png";
+  images.stage7_before.onload = function () {
+    resourceLoaded++;
+  };
+  //10
+  images.stage8_before = new Image();
+  images.stage8_before.src = "/images/STAGE8_before.png";
+  images.stage8_before.onload = function () {
+    resourceLoaded++;
+  };
+  //11
+  images.stage1_bg_before = new Image();
+  images.stage1_bg_before.src = "/images/STAGE1_bg_before.png";
+  images.stage1_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //12
+  images.stage2_bg_before = new Image();
+  images.stage2_bg_before.src = "/images/STAGE2_bg_before.png";
+  images.stage2_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //13
+  images.stage3_bg_before = new Image();
+  images.stage3_bg_before.src = "/images/STAGE3_bg_before.png";
+  images.stage3_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //14
+  images.stage4_bg_before = new Image();
+  images.stage4_bg_before.src = "/images/STAGE4_bg_before.png";
+  images.stage4_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //15
+  images.stage5_bg_before = new Image();
+  images.stage5_bg_before.src = "/images/STAGE5_bg_before.png";
+  images.stage5_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //16
+  images.stage6_bg_before = new Image();
+  images.stage6_bg_before.src = "/images/STAGE6_bg_before.png";
+  images.stage6_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //17
+  images.stage7_bg_before = new Image();
+  images.stage7_bg_before.src = "/images/STAGE7_bg_before.png";
+  images.stage7_bg_before.onload = function () {
+    resourceLoaded++;
+  };
+  //18
+  images.stage8_bg_before = new Image();
+  images.stage8_bg_before.src = "/images/STAGE8_bg_before.png";
+  images.stage8_bg_before.onload = function () {
+    resourceLoaded++;
+  };
 
 
   //Audios
@@ -1055,6 +1149,10 @@ function rendering() {
     let stage_bg = `stage${level + 1}_bg`;
 
     gfx.drawImage(images[stage_bg], 0, 0, 1000, 800);
+  }else if (level <8){
+    let stage_bg = `stage${level + 1}_bg_before`;
+
+    gfx.drawImage(images[stage_bg], 0, 0, 1000, 800);
   }
 
   goals.forEach((g) => {
@@ -1082,7 +1180,7 @@ function drawWall(wall) {
   gfx.beginPath();
   gfx.moveTo(wall.x0, HEIGHT - wall.y0);
   gfx.lineTo(wall.x1, HEIGHT - wall.y1);
-  if (level < levelMax && level >= 3) {
+  if (level < levelMax || level >= 3) {
     gfx.strokeStyle = "white";
   }
   gfx.stroke();
@@ -1107,7 +1205,9 @@ function drawAABB(aabb) {
 function drawBlock(x, y, w, h) {
   gfx.beginPath();
   gfx.rect(x, HEIGHT - y, w, -h);
-
+  if (level>=8){
+    return
+  }
   if (level < levelMax) {
     let stage = `stage${level + 1}`;
     //console.log(stage)
@@ -1116,9 +1216,12 @@ function drawBlock(x, y, w, h) {
       gfx.drawImage(images[stage], x, HEIGHT - y, w, -h);
     } //gfx.fillStyle = 'rgb(255,221,0)'
   } else {
-    gfx.fillStyle = "rgb(0,0,0)";
-    gfx.fill();
-    gfx.fillStyle = "rgb(0,0,0)";
+    if (level == 0 && x == 0 && y == 0) {
+    } else {
+      let stage = `stage${level + 1}_before`;
+      gfx.drawImage(images[stage], x, HEIGHT - y, w, -h);
+    }
+    
   }
   if (x == 942 && y == 780 && w == Math.trunc(player.jumpGauge * 50) && h == 12) {
     gfx.fillStyle = "rgb(255,0,0)";

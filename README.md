@@ -75,16 +75,16 @@
 ### Front-End
 
 - Node.js - `v14.15.1`
-- Next.js
+- Next.js - `12.1.5`
 - npm - `v6.14.8`
 
 ### Back-End
 
 - Java - `openjdk v1.8.0_301`
 - Spring Boot - `2.6.6`
-- JPA
+- JPA 
 - Mysql - `8.0.27`
-- Swagger
+- Swagger - `v3`
 
 ### Infra
 
@@ -92,7 +92,7 @@
 - Jenkins - `jenkins:lts 2.332.2`
 - Nginx - `1.18.0 (ubuntu)`
 - Cerbot - `1.27.0`
-- Docker
+- Docker - `20.10.14`
 
 ### Port
 
