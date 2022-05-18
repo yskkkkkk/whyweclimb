@@ -18,8 +18,8 @@
   font-size: large;
   border: 3px solid #eaeaea;
   border-radius: 10px;
-  padding: 2em;
-  margin: 1rem 2.5rem;
+  padding: 4vh 1vw;
+  margin: 0 2.3vw;
   max-width: fit-content;
   height: fit-content;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -63,12 +63,13 @@
 .links {
   display: flex;
   justify-content: space-evenly;
-  margin: 1.5em 0;
+  margin: 3.6vh 0;
 }
 
 .fonts{
   font-size: 25px;
   font-weight: bold;
+  margin: 4vh 0;
 }
 
 .smallfonts{
@@ -113,7 +114,7 @@
   position: relative;
   top: 0px;
   cursor: pointer;
-  margin:1vh 3vw;
+  margin: 1vh 3vw;
   margin-bottom: .5vh;
 
   font-size: medium;

@@ -95,7 +95,7 @@ export default function CreateModal({handleClose}) {
       exit="exit"
     >
       <main className={style.container}>
-        <text className={style.fonts}>Create room</text>
+        <h1 className={style.fonts}>Create room</h1>
         <div className={style.container2}>          
           <section className={style.choice}>
             <span className={style.smallfonts}>Private Room</span>
