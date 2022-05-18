@@ -1,11 +1,9 @@
 package com.whyweclimb.backend.domain.user.service;
 
 import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
-import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.SingleConnectionRepository;
 import com.whyweclimb.backend.domain.user.repo.SingleRecordRepository;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
-import com.whyweclimb.backend.entity.CumulativeConnection;
 import com.whyweclimb.backend.entity.SingleConnection;
 import com.whyweclimb.backend.entity.SingleRecord;
 import com.whyweclimb.backend.entity.User;
@@ -23,13 +21,10 @@ public class SingleGameServiceImpl implements SingleGameService{
     private final UserRepository userRepository;
     private final SingleRecordRepository singleRecordRepository;
     private final SingleConnectionRepository singleConnectionRepository;
-    
+
     @Transactional
     @Override
     public boolean setUserRecord(UserRecordUpdateRequest request) {
-        if(request.getRecord() == 0){
-            return false;
-        }
         LocalDate date = LocalDate.now();
         Optional<User> userOptional = userRepository.findById(request.getUserSeq());
         if(userOptional.isPresent()){
@@ -39,6 +34,10 @@ public class SingleGameServiceImpl implements SingleGameService{
                 userRepository.save(user);
             }
         }else{
+            return false;
+        }
+        // 중도 퇴장 시 record 기록 X
+        if(request.getRecord() == 0){
             return false;
         }
         Optional<SingleRecord> singleRecordOptional = singleRecordRepository.findByUserAndDate(userOptional.get(),date);
