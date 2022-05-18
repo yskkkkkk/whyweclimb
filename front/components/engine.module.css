@@ -2,8 +2,8 @@
   display:flex;
 } */
 .resultText {
-  
   text-align: center;
+  cursor: pointer;
 }
 
 .buttons {
