@@ -1,6 +1,7 @@
 package com.whyweclimb.backend.domain.user.service;
 
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
+import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 
