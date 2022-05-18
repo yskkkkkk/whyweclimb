@@ -30,7 +30,7 @@ export default function FindModal({handleClose}) {
               location.href=`/multi/${data.roomCode}`;
               break;
             case 'full':
-              toast.error("the room is full..");
+              toast.error("The room is full..");
               break;
             case 'start':
               toast("The room already left to climb..", {icon: "😢"});
@@ -39,7 +39,7 @@ export default function FindModal({handleClose}) {
               toast.error("the room doesn't exist. Please check your room ID.");
           }
         } else {
-          toast.error("the room doesn't exist. Please check your room ID.");
+          toast.error("The room doesn't exist. Please check your room ID.");
         }
         // console.log(data);
       })
