@@ -8,62 +8,59 @@
 > >
 > > 멀티플레이에서는 루즈함을 해소하기 위해 맵 순서를 섞이도록 만들어 매번 다른 경험을 할 수 있게 구현
 
-##### 팀원
+##### ✨팀구성✨
 
-우 윤 석   ⇒   팀장, frontend & game modeling
+ - 우 윤 석   ⇒   팀장, frontend & game modeling
 
-김 태 훈   ⇒   팀원, frontend & front design
+ - 김 태 훈   ⇒   팀원, frontend & front design
 
-정      찬   ⇒   팀원, frontend  & webSocket front
+ - 정      찬   ⇒   팀원, frontend  & webSocket front
 
-김 민 준   ⇒   팀원, backend & devOps
+ - 김 민 준   ⇒   팀원, backend & devOps
 
-류 대 성   ⇒   팀원, backend & webSocket
+ - 류 대 성   ⇒   팀원, backend & webSocket
 
 
 
 ##### 개발 일정
 
-2022.04.11~2022.05.27(총 7주)
-
+2022.04.11~2022.05.27 (총 7주)
+ - 04/11 ~ 04/17 - 기획 (1주) 
+ - 04/18 ~ 05/19 - 개발 (약 5주)
+ - 05/20 ~ 05/27 - 발표 자료 작성, 회고 (약 1주)
 
 
 ## 실제 서비스 화면
 
 ##### 로그인
-![login](/uploads/a2536a22c7f75a893e409baa170d94cc/login.gif)
+<img src="README.assets/login.gif" alt="image"  width="900" height="507"/>
 
 ##### 회원가입
 
-<img src="README.assets/168965897-dd3f79ff-e2a6-4c3a-8ca8-63f3ca976862.png" alt="image" style="zoom:67%;" />
+<img src="README.assets/signup.gif" alt="image"  width="900" height="507"/>
 
-##### 모드 선택 (로그인 이후)
+##### 캐릭터 선택
 
-<img src="README.assets/image-20220518144622192.png" alt="image-20220518144622192" style="zoom:67%;" />
+<img src="README.assets/characterselect.gif" alt="image"  width="900" height="507"/>
 
-##### 플레이 화면
+##### 싱글 플레이 화면
 
-![image-20220518144719424](README.assets/image-20220518144719424.png)
+<img src="README.assets/singleplay.gif" alt="image"  width="900" height="507"/>
 
-##### 멀티모드 진입 시
+##### 멀티모드 진입 후 방 생성
 
-<img src="README.assets/image-20220518144829240.png" alt="image-20220518144829240" style="zoom:67%;" />
+<img src="README.assets/multicreate.gif" alt="image"  width="900" height="507"/>
 
-##### 방 검색 모달
+##### 랜덤 방 진입
 
-![image-20220518144904437](README.assets/image-20220518144904437.png)
+<img src="README.assets/multijoin.gif" alt="image"  width="900" height="507"/>
 
-##### 랜덤 방 진입 모달
+##### 코드를 입력하여 방 진입
 
-![image-20220518144922784](README.assets/image-20220518144922784.png)
+<img src="README.assets/multifind.gif" alt="image"  width="900" height="507"/>
 
-##### 방 생성 모달
+##### 대기실에서 start 버튼을 눌러 멀티 게임 시작
 
-![image-20220518144940082](README.assets/image-20220518144940082.png)
-
-##### 대기실
-
-![image-20220518145005924](README.assets/image-20220518145005924.png)
 
 
 
@@ -73,25 +70,25 @@
 
 ### Front-End
 
-- Node.js - `v14.15.1`
-- Next.js - `12.1.5`
-- npm - `v6.14.8`
+- <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> - `v14.15.1`
+- <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"> - `12.1.5`
+- <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"> - `v6.14.8`
 
 ### Back-End
 
-- Java - `openjdk v1.8.0_301`
-- Spring Boot - `2.6.6`
-- JPA 
-- Mysql - `8.0.27`
-- Swagger - `v3`
+- <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> - `openjdk v1.8.0_301`
+- <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> - `2.6.6`
+- <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> - `8.0.27`
+- <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"> - `v3`
+- <img src="https://img.shields.io/badge/Jpa-lightgrey?style=for-the-badge&logo=appveyor"/>
 
 ### Infra
 
-- AWS EC2
-- Jenkins - `jenkins:lts 2.332.2`
-- Nginx - `1.18.0 (ubuntu)`
-- Cerbot - `1.27.0`
-- Docker - `20.10.14`
+- <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white">
+- <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> - `jenkins:lts 2.332.2`
+- <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=NGINX&logoColor=white"> - `1.18.0 (ubuntu)`
+- <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> - `20.10.14`
+- <img src="https://img.shields.io/badge/certbot-green?style=for-the-badge&logo=appveyor"/> - `1.27.0`
 
 ### Port
 
