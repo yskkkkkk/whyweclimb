@@ -41,7 +41,7 @@ export default function Home() {
       setTimeout(() => {
         inRef.current.scrollTo(3);
         mainRef.current.scrollTo(0);
-      }, "50");
+      }, "100");
     }
   }, []);
 
