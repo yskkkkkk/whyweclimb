@@ -80,7 +80,7 @@
 - <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> - `2.6.6`
 - <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> - `8.0.27`
 - <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white"> - `v3`
-- Jpa
+- <img src="https://img.shields.io/badge/Jpa-lightgrey?style=for-the-badge&logo=appveyor"/>
 
 ### Infra
 
