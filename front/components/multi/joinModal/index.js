@@ -8,9 +8,9 @@ export default function JoinModal({handleClose}) {
   const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [isInterference, setIsInterference] = useState("false");
 
-  const handleChange = (e) => {
-    setIsInterference(e.target.value);
-  }
+  // const handleChange = (e) => {
+  //   setIsInterference(e.target.value);
+  // }
 
   const joinRoom = () => {
     const token = sessionStorage.getItem("token");
@@ -19,19 +19,18 @@ export default function JoinModal({handleClose}) {
       mode: 'no-cors'
     };
     axios.get(`${basicURL}/room?roomInterference=${isInterference}`,{headers:headers})
-      .then(res=>res.data)
-      .then(data=>{
+      .then(res => res.data)
+      .then(data => {
         if(data.length === 0) {
-          alert("대기 중인 방이 없습니다. 잠시후 시도해 주세요.");
+          toast("There's no available room. \nPlease try again later.", {icon: "😢"});
         } else {
           location.href=`multi/${data.roomCode}`;
         }
       })
-      .catch(e=>console.error(e))
-  }
-
-  const closeModal = () => {
-    toast.dismiss();
+      .catch(e => {
+        console.error(e);
+        toast.error("unexpected error occured.\nPlease try again later.");
+      })
   }
 
   const popUp = {

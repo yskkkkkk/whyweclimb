@@ -63,7 +63,7 @@ export default function Multi() {
           backgroundSize: 'cover',
           position: 'absolute',
           left: '50%',
-          top: '-110%',
+          top: '100%',
           opacity: '0.2',
           transform: 'translate(-50%, -50%)',
           zIndex: '0',
