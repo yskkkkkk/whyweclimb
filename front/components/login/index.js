@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import BasicButton from '../ui/basicButton';
 import style from './login.module.css';
 import toast from 'react-hot-toast';
 
-export default function Login({toSignup, toModeSelect}) {
-  
+
+export default function Login({toSignup, toModeSelect, openUCC}) {
+
   const inputID = useRef();
   const pw = useRef();
 
@@ -63,19 +63,28 @@ export default function Login({toSignup, toModeSelect}) {
     });
   };
 
-  useEffect(() => {
-    inputID.current.focus();
-  }, [])
   const onKeyPress=(e) => {
     if(e.key=='Enter'){
       handleLoginSubmit();
     }
   }
+
+  useEffect(() => {
+    inputID.current.focus();
+  }, [])
+
+
   return (
     <main className={style.container}>
       <div className={style.title}>why we climb</div>
+      
       <div className={style.loginContainer}> 
         <section className={style.login}>
+
+          <div className={style.trailerMascot} onClick={openUCC}>
+            <span />
+          </div>
+
           <div className={style.fonts}>Login</div>
           <div className={style.card}>
             <label  className={style.smallfonts}>Id 
