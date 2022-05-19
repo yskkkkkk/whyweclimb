@@ -3,7 +3,7 @@ import style from './login.module.css';
 import toast from 'react-hot-toast';
 
 
-export default function Login({toSignup, toModeSelect}) {
+export default function Login({toSignup, toModeSelect, openUCC}) {
 
   const inputID = useRef();
   const pw = useRef();
@@ -80,6 +80,11 @@ export default function Login({toSignup, toModeSelect}) {
       
       <div className={style.loginContainer}> 
         <section className={style.login}>
+
+          <div className={style.trailerMascot} onClick={openUCC}>
+            <span />
+          </div>
+
           <div className={style.fonts}>Login</div>
           <div className={style.card}>
             <label  className={style.smallfonts}>Id 

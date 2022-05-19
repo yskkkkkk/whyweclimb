@@ -48,7 +48,12 @@ export default function Home() {
     adjustLoginModal();
   }
 
+  const openUCC = () => {
+    setUccOn(true);
+  }
+
   useEffect(() => {             // expiration date 에 따라 ucc 화면 보여줄지 결정
+    // https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/ 참고
     const now = new Date();
     const expirationDate = localStorage.getItem("uccExpiration");
   
@@ -165,7 +170,7 @@ export default function Home() {
               </ParallaxLayer>
               <ParallaxLayer offset={0}>
                 {uccOn && !loggedIn && <Backdrop label="uccModal" handleClose={closeUCC} />}
-                {!loggedIn && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
+                {!loggedIn && <Login toSignup={toSignup} toModeSelect={toModeSelect} openUCC={openUCC} />}
               </ParallaxLayer>
             </Parallax>
           </ParallaxLayer>

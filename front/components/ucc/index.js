@@ -65,10 +65,11 @@ export default function UCC({handleClose}) {
         <section className={style.btns}>
           <label>
             invisible for 1 week.
-            <span className="checkmark" />
             <input type="checkbox" ref={checkBoxRef} onClick={toggleExpiration} />
           </label>
+          <button className={style.closeBtn} onClick={handleClose}>x</button>
         </section>
+        
         
         <video className="uccVideo" controls controlsList="nofullscreen" onEnded={handleClose}>
           <source src="/videos/ucc.mp4" type="video/mp4" width={200} height={100} />
