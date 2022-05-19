@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Login from "../components/login"
 import Signup from '../components/signup';
 import ModeSelect from '../components/modeSelect';
+import Backdrop from '../components/multi/backdrop';
 import { useState, useEffect, useRef } from 'react';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 
@@ -11,6 +12,8 @@ export default function Home() {
   const mainRef = useRef();
   const inRef = useRef();
   const [loggedIn, setLoggedIn] = useState(false);    // false: 로그인 & 회원가입 컴포넌트, true: 모드선택 & 설정 컴포넌트
+  const [uccOn, setUccOn] = useState(true);
+
 
   const toMain = () => {
     setLoggedIn(false);
@@ -35,12 +38,30 @@ export default function Home() {
     setLoggedIn(true);
   }
 
+  const adjustLoginModal = () => {
+    inRef.current.scrollTo(3);
+    mainRef.current.scrollTo(0);
+  }
+
+  const closeUCC = () => {
+    setUccOn(false);
+    adjustLoginModal();
+  }
+
+  useEffect(() => {             // expiration date 에 따라 ucc 화면 보여줄지 결정
+    const now = new Date();
+    const expirationDate = localStorage.getItem("uccExpiration");
+  
+    if (expirationDate && now.getTime() > JSON.parse(expirationDate).date) {
+      setUccOn(false);
+    }
+  }, [])
+
   useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
     setLoggedIn(sessionStorage.getItem("token") ? true : false);
     if (!sessionStorage.getItem("token")) {
       setTimeout(() => {
-        inRef.current.scrollTo(3);
-        mainRef.current.scrollTo(0);
+        adjustLoginModal();
       }, "100");
     }
   }, []);
@@ -143,6 +164,7 @@ export default function Home() {
                 {!loggedIn && <Signup toMain={toMain} />}
               </ParallaxLayer>
               <ParallaxLayer offset={0}>
+                {uccOn && !loggedIn && <Backdrop label="uccModal" handleClose={closeUCC} />}
                 {!loggedIn && <Login toSignup={toSignup} toModeSelect={toModeSelect} />}
               </ParallaxLayer>
             </Parallax>
