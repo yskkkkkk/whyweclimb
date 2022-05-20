@@ -35,7 +35,7 @@ export default function UCC({handleClose}) {
     const now = new Date();
     
     const item = {
-      date: now.getTime() + 7,
+      date: now.getDate() + 7,
     }
 
     localStorage.setItem("uccExpiration", JSON.stringify(item));

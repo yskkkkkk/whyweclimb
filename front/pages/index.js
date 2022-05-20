@@ -56,8 +56,8 @@ export default function Home() {
     // https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/ 참고
     const now = new Date();
     const expirationDate = localStorage.getItem("uccExpiration");
-  
-    if (expirationDate && now.getTime() > JSON.parse(expirationDate).date) {
+    
+    if (expirationDate && now.getDate() > JSON.parse(expirationDate).date) {
       setUccOn(false);
     }
   }, [])
