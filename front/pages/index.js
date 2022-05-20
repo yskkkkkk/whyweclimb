@@ -57,7 +57,7 @@ export default function Home() {
     const now = new Date();
     const expirationDate = localStorage.getItem("uccExpiration");
     
-    if (expirationDate && now.getDate() > JSON.parse(expirationDate).date) {
+    if (expirationDate && now.getDate() < JSON.parse(expirationDate).date) {
       setUccOn(false);
     }
   }, [])
