@@ -14,8 +14,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k6a401.p.ssafy.io:3306/whyweclimb?serverTimezone=UTC&characterEncoding=UTF-8
-    username: 
-    password: 
+    username:
+    password:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
@@ -27,5 +27,13 @@ spring:
       secret: vlasdlkfnekjlsainffklnmflkandklsfnklsd;lkjfiawefsdailsakdj
     sha-256:
       salt: thisWhyIsWecodeClimb
-    
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    property:
+      prefix: ENC(
+      suffix: )
+
     
