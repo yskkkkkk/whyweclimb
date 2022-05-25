@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 export default function JoinModal({handleClose}) {
-  const basicURL = 'https://52.79.251.121/api'
+  const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [isInterference, setIsInterference] = useState("false");
 
   // const handleChange = (e) => {
