@@ -25,7 +25,7 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
 
   const handleLoginSubmit = () => {     // 로그인 버튼 누를시 post요청 (백에서 실패사유 알려주면 땡큐)
     let flag_conf = false
-    fetch('https://52.79.251.121/api/user/login', {
+    fetch('https://k6a401.p.ssafy.io/api/user/login', {
       method: "POST",
       body: JSON.stringify({
         userId: userID,
