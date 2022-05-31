@@ -13,9 +13,9 @@ spring:
       ddl-auto: update
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(OWc9YpValQI5YOqZi/IDxDdShmUzPFeOihAHSdHJaGdLMi58QDwY82RmWaQHNbXrOR4kYWjY8ye9qPWss3SgilDHjjgQcaTCQTSesWKoT3tfbOFjml9MAv7Qv9ar6nYJCBBQBAVnL2o=)
-    username: ENC(yWyOKCNc1uDLPuskEvVJi++n6BC14Yas)
-    password: ENC(zoN7JhrgJiD1ZnT9KIbbn/ryheQStVyh)
+    url: jdbc:mysql://k6a401.p.ssafy.io:3306/whyweclimb?serverTimezone=UTC&characterEncoding=UTF-8
+    username: 
+    password: 
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
