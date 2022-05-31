@@ -27,5 +27,14 @@ spring:
       secret: vlasdlkfnekjlsainffklnmflkandklsfnklsd;lkjfiawefsdailsakdj
     sha-256:
       salt: thisWhyIsWecodeClimb
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    property:
+      prefix: ENC(
+      suffix: )
+    
     
     
