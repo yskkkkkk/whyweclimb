@@ -37,15 +37,14 @@ public class MessageController {
 	@MessageMapping("/room/entrance")
 	public void comeInPlayer(Access access) {
 		if (messageService.roomStatus(access.getRoomCode())) {
-			log.info("[user come: created session - " + access.getSessionId() + "]");
+			log.info("[user come: created session - {}]", access.getSessionId());
 			messageService.increaseNumberOfPeople(access);
 			
 			AccessResponse response = new AccessResponse(messageService.playerList(access.getRoomCode()), "OK");
 			messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), response);
 		} else {
-			Map<String, String> result = new HashMap<String, String>();
-			result.put("message", "full");
-			messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), result);
+			AccessResponse response = new AccessResponse("full");
+			messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), response);
 		}
 	}
 
@@ -53,7 +52,6 @@ public class MessageController {
 	public void playerReady(Integer userSeq) {
 		String roomCode = messageService.getReady(userSeq);
 		AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
-
 		messagingTemplate.convertAndSend("/sub/room/" + roomCode, response);
 	}
 	

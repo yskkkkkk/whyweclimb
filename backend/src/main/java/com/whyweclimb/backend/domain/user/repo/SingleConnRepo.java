@@ -11,5 +11,4 @@ import com.whyweclimb.backend.entity.SingleConnection;
 @Repository
 public interface SingleConnRepo extends JpaRepository<SingleConnection, Integer> {
 	Optional<SingleConnection> findByConnectionDate(LocalDate connectionDate);
-	
 }

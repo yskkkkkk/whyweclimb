@@ -12,5 +12,4 @@ import com.whyweclimb.backend.entity.SimultaneousConnection;
 @Repository
 public interface SimConnRepo extends JpaRepository<SimultaneousConnection, Integer> {
 	Optional<SimultaneousConnection> findByConnectionDate(LocalDate connectionDate);
-	
 }

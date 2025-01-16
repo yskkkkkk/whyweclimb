@@ -47,12 +47,12 @@ public class MessageServiceImpl implements MessageService{
 	}
 	
 	private void countUpConnection(LocalDate today) {
-		Optional<CumulativeConnection> cumul = cumConnRepo.findByConnectionDate(today);
-		if (cumul.isPresent()) {
+		Optional<CumulativeConnection> connection = cumConnRepo.findByConnectionDate(today);
+		if (connection.isPresent()) {
 			cumConnRepo.save(CumulativeConnection.builder()
-					.cumulativeConnectionSeq(cumul.get().getCumulativeConnectionSeq())
-					.connectionCount(cumul.get().getConnectionCount()+1)
-					.connectionDate(cumul.get().getConnectionDate())
+					.cumulativeConnectionSeq(connection.get().getCumulativeConnectionSeq())
+					.connectionCount(connection.get().getConnectionCount()+1)
+					.connectionDate(connection.get().getConnectionDate())
 					.build());
 		}else {
 			cumConnRepo.save(CumulativeConnection.builder()
