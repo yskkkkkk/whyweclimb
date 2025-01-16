@@ -61,10 +61,8 @@ public class MessageServiceImpl implements MessageService{
 					.build());
 		}
 
-		Iterable<Access> counts = accessRedisRepo.findAll();
-		int count = 0;
-		for (Access access : counts) count++;
-		
+		long count = accessRedisRepo.count();
+
 		Optional<SimultaneousConnection> simul = simConnRepo.findByConnectionDate(today);
 		if (simul.isPresent()) {
 			if(simul.get().getConnectionCount() < count) {
@@ -76,7 +74,7 @@ public class MessageServiceImpl implements MessageService{
 			}
 		}else {
 			simConnRepo.save(SimultaneousConnection.builder()
-					.connectionCount(1)
+					.connectionCount(1L)
 					.connectionDate(today)
 					.build());
 		}
