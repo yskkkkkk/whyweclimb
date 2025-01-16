@@ -17,8 +17,6 @@ public class SingleConnection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer singleConnectionSeq;
-    @Column
     private Integer connectionCount;
-    @Column
     private LocalDate connectionDate;
 }
