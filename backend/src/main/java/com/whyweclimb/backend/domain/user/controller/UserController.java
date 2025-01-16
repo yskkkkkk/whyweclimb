@@ -39,7 +39,7 @@ public class UserController {
 	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
 		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
 		UserInfoResponse response = userService.createUser(request);
-		Boolean result = true;
+		boolean result = true;
 		HttpStatus status;
 		if(response == null) {
 			result = false;

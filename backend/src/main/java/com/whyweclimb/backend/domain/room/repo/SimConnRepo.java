@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.whyweclimb.backend.entity.SimultaneousConnection;
 
+// 동시 접속 관련
 @Repository
-public interface SimultaneousConnectionRepository extends JpaRepository<SimultaneousConnection, Integer> {
+public interface SimConnRepo extends JpaRepository<SimultaneousConnection, Integer> {
 	Optional<SimultaneousConnection> findByConnectionDate(LocalDate connectionDate);
 	
 }
