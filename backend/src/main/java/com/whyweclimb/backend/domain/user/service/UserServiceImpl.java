@@ -4,7 +4,7 @@ import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
-import com.whyweclimb.backend.domain.user.repo.UserRepository;
+import com.whyweclimb.backend.domain.user.repo.UserRepo;
 import com.whyweclimb.backend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-	private final UserRepository userRepository;
+	private final UserRepo userRepo;
 	private final AccessRedisRepo accessRedisRepo;
 	
     @Override
 	public UserInfoResponse createUser(UserRequest request) {
-    	UserInfoResponse user = userRepository.existsByUserId(request.getUserId())
+    	UserInfoResponse user = userRepo.existsByUserId(request.getUserId())
     			? null
-    			: new UserInfoResponse(userRepository.save(
+    			: new UserInfoResponse(userRepo.save(
 					User.builder()
 					.userId(request.getUserId())
 					.userPassword(request.getUserPassword())
@@ -35,12 +35,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkIdDuplicate(String userId) {
-		return userRepository.existsByUserId(userId);
+		return userRepo.existsByUserId(userId);
 	}
 	
 	@Override
 	public UserInfoResponse login(UserRequest request) {
-		UserInfoResponse user = userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
+		UserInfoResponse user = userRepo.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
 
 		if(accessRedisRepo.findByUserSeq(user.getUserSeq()).isPresent())
 			return user;
@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserInfoResponse userInfo(String userId) {
-		return userRepository.findByUserId(userId).orElse(null);
+		return userRepo.findByUserId(userId).orElse(null);
 	}
 	
 	@Override
 	public UserInfoResponse updateUser(UserUpdateRequest request) {
-		Optional<User> user = userRepository.findById(request.getUserSeq());
+		Optional<User> user = userRepo.findById(request.getUserSeq());
 		user.ifPresent(selectUser -> {
-			userRepository.save(User.builder()
+			userRepo.save(User.builder()
 					.userSeq(selectUser.getUserSeq())
 					.userId(selectUser.getUserId())
 					.userPassword(selectUser.getUserPassword())

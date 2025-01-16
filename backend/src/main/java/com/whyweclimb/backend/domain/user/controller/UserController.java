@@ -39,30 +39,20 @@ public class UserController {
 	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
 		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
 		UserInfoResponse response = userService.createUser(request);
-		boolean result = true;
-		HttpStatus status;
-		if(response == null) {
-			result = false;
-			status = HttpStatus.NOT_ACCEPTABLE;
-		}else { 
-			status = HttpStatus.CREATED;
-		}
+
+		boolean result = response != null;
+		HttpStatus status = result ? HttpStatus.CREATED : HttpStatus.NOT_ACCEPTABLE;
+
 		return new ResponseEntity<>(result, status);
 	}
 	
 	@ApiOperation(value = "CheckIdDuplicate", notes = "아이디를 중복체크 합니다.")
 	@GetMapping("/id")
 	public ResponseEntity<Boolean> checkId(@RequestParam String userId){
-		boolean result;
-		HttpStatus status;
-		if (userService.checkIdDuplicate(userId)) {
-			result = false;
-			status = HttpStatus.CONFLICT;
-		}else {
-			result = true;
-			status = HttpStatus.OK;
-		}
-		
+		boolean result = !userService.checkIdDuplicate(userId);
+
+		HttpStatus status = result ? HttpStatus.OK : HttpStatus.CONFLICT;
+
 		return new ResponseEntity<>(result, status);
 	}
 
@@ -71,6 +61,7 @@ public class UserController {
     public ResponseEntity<Map<String, String>> login(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
     	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
     	UserInfoResponse response = userService.login(request);
+
 		String token = "";
     	HttpStatus status;
 		if(response == null) { 
@@ -81,47 +72,38 @@ public class UserController {
 			token = jwtTokenProvider.createToken(response.getUserId(), Collections.singletonList("ROLE_USER"));
 			status = HttpStatus.OK;
 		}
-		log.info("생성된 jwt 토큰: "+token);
-		Map<String, String> result = new HashMap<String, String>();
+
+		log.info("Generated JWT: {}", token);
+		Map<String, String> result = new HashMap<>();
 		result.put("token", token);
-		
+
 		return new ResponseEntity<>(result, status);
     }
 
-	@ApiOperation(value = "UserInfo", notes = "헤더에 jwt를 담아 요청 시 회원정보를 반환합니다.")
+	@ApiOperation(value = "UserInfo", notes = "헤더에 JWT를 담아 요청 시 회원정보를 반환합니다.")
 	@GetMapping("/information")
 	public ResponseEntity<UserInfoResponse> postLoginProcessing(HttpServletRequest request) {
 //		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
 		return new ResponseEntity<>(userService.userInfo(authentication.getName()), HttpStatus.OK);
-		
 	}
     
 	@ApiOperation(value = "settingUserOption", notes = "유저정보를 수정합니다.")
 	@PutMapping("")
     public ResponseEntity<UserInfoResponse> modifyUser(@RequestBody UserUpdateRequest request){
     	UserInfoResponse response = userService.updateUser(request);
-		HttpStatus status;
-		if(response == null) { 
-			status = HttpStatus.NOT_ACCEPTABLE;
-		}else { 
-			status = HttpStatus.OK;
-		}
+
+		HttpStatus status = response == null ? HttpStatus.NOT_ACCEPTABLE : HttpStatus.OK;
 		return new ResponseEntity<>(response, status);
     }
 
 	@ApiOperation(value = "checkSession", notes = "현재 멀티플레이 중인 유저인지 검사합니다.")
 	@GetMapping("/{userSeq}")
 	public ResponseEntity<HttpStatus> checkSession(@PathVariable int userSeq){
- 		HttpStatus status;
-		if(userService.checkSession(userSeq)) { 
-			status = HttpStatus.OK;
-		}else { 
-			status = HttpStatus.CONFLICT;
-		}
+ 		HttpStatus status = userService.checkSession(userSeq) ? HttpStatus.OK : HttpStatus.NOT_ACCEPTABLE;
+
 		return new ResponseEntity<>(status);
 	}
-	
-	
+
 }

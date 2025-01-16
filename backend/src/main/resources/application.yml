@@ -24,9 +24,9 @@ spring:
     port: 6379
   security:
     jwt:
-      secret: vlasdlkfnekjlsainffklnmflkandklsfnklsd;lkjfiawefsdailsakdj
+      secret: dGhpcyBpcyBhIHJhbmdvbSB2YWx1ZSB3aXRoIG1vcmUgc2VjdXJpdHku
     sha-256:
-      salt: thisWhyIsWecodeClimb
+      salt: eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4
 
 jasypt:
   encryptor:
