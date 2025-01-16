@@ -19,7 +19,7 @@ public class SimultaneousConnection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer simultaneousConnectionSeq;
     @Column
-    private Integer connectionCount;
+    private Long connectionCount;
     @Column
     private LocalDate connectionDate;
 }
