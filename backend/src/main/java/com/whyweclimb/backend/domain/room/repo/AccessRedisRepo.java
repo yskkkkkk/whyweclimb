@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.whyweclimb.backend.entity.Access;
 
-public interface AccessRedisRepository extends CrudRepository<Access, String> {
+public interface AccessRedisRepo extends CrudRepository<Access, String> {
 	
 	List<Access> findByRoomCode(String roomCode);
 	Optional<Access> findByUserSeq(Integer userSeq);

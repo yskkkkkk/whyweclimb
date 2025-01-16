@@ -11,7 +11,7 @@ import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.entity.Room;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Integer> {
+public interface RoomRepo extends JpaRepository<Room, Integer> {
 	Optional<Room> findByRoomCode(String roomCode);
 	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();
 	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();

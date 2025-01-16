@@ -1,8 +1,7 @@
 package com.whyweclimb.backend.domain.user.service;
 
-import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
-import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.UserRepository;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 	private final UserRepository userRepository;
-	private final AccessRedisRepository accessRedisRepository;
+	private final AccessRedisRepo accessRedisRepo;
 	
     @Override
 	public UserInfoResponse createUser(UserRequest request) {
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService{
 	public UserInfoResponse login(UserRequest request) {
 		UserInfoResponse user = userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
 
-		if(accessRedisRepository.findByUserSeq(user.getUserSeq()).isPresent())
+		if(accessRedisRepo.findByUserSeq(user.getUserSeq()).isPresent())
 			return user;
 		else 
 			return new UserInfoResponse();
@@ -73,6 +72,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkSession(int userSeq) {
-        return accessRedisRepository.findByUserSeq(userSeq).isPresent();
+        return accessRedisRepo.findByUserSeq(userSeq).isPresent();
 	}
 }

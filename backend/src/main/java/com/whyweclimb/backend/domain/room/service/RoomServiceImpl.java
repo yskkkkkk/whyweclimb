@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
 import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
-import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
-import com.whyweclimb.backend.domain.room.repo.RoomRepository;
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
+import com.whyweclimb.backend.domain.room.repo.RoomRepo;
 import com.whyweclimb.backend.entity.Room;
 
 import lombok.RequiredArgsConstructor;
@@ -16,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
-	private final RoomRepository roomRepository;
-	private final AccessRedisRepository accessRedisRepository;
+	private final RoomRepo roomRepo;
+	private final AccessRedisRepo accessRedisRepo;
 
 	@Override
 	public RoomInfoResponse createRoom(RoomCreateRequest request) {
 		RoomInfoResponse room = new RoomInfoResponse(
-				roomRepository.save(
+				roomRepo.save(
 					RoomCreateRequest.toEntity(request)
 				)
 			);
@@ -31,11 +31,11 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public RoomInfoResponse findRoom(String roomCode) {
-		Optional<Room> RoomInfo = roomRepository.findByRoomCode(roomCode);
+		Optional<Room> RoomInfo = roomRepo.findByRoomCode(roomCode);
 		RoomInfoResponse response = null;
 		
 		if(RoomInfo.isPresent()) {
-			int now = accessRedisRepository.findByRoomCode(roomCode).size();
+			int now = accessRedisRepo.findByRoomCode(roomCode).size();
 			int max = RoomInfo.get().getRoomMaxNum();
 			if (RoomInfo.get().getRoomStart()) {	// 시작 했으면 
 				response = RoomInfoResponse.builder()
@@ -56,12 +56,12 @@ public class RoomServiceImpl implements RoomService {
 		List<RoomInfoResponse> rooms;
 		RoomInfoResponse room = null;
 		if (interference) {
-			rooms = roomRepository.findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null);
+			rooms = roomRepo.findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null);
 		}else {
-			rooms = roomRepository.findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null);
+			rooms = roomRepo.findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null);
 		}
 		for (RoomInfoResponse roomInfoResponse : rooms) {
-			int now = accessRedisRepository.findByRoomCode(roomInfoResponse.getRoomCode()).size();
+			int now = accessRedisRepo.findByRoomCode(roomInfoResponse.getRoomCode()).size();
 			int max = roomInfoResponse.getRoomMaxNum();
 			if (now < max) {
 				room = roomInfoResponse;
@@ -75,14 +75,14 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void deleteRoom(String roomCode) {
 
-		roomRepository.deleteByRoomCode(roomCode);
+		roomRepo.deleteByRoomCode(roomCode);
 	}
 
 	@Override
 	public RoomInfoResponse startGame(String roomCode) {
-		Optional<Room> room = roomRepository.findByRoomCode(roomCode);
+		Optional<Room> room = roomRepo.findByRoomCode(roomCode);
 		room.ifPresent(selectRoom -> {
-			roomRepository.save(Room.builder()
+			roomRepo.save(Room.builder()
 					.roomSeq(selectRoom.getRoomSeq())
 					.roomCode(selectRoom.getRoomCode())
 					.roomPrivate(selectRoom.getRoomPrivate())

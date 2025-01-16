@@ -10,10 +10,10 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.whyweclimb.backend.domain.room.repo.AccessRedisRepository;
-import com.whyweclimb.backend.domain.room.repo.CumulativeConnectionRepository;
-import com.whyweclimb.backend.domain.room.repo.RoomRepository;
-import com.whyweclimb.backend.domain.room.repo.SimultaneousConnectionRepository;
+import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
+import com.whyweclimb.backend.domain.room.repo.CumConnRepo;
+import com.whyweclimb.backend.domain.room.repo.RoomRepo;
+import com.whyweclimb.backend.domain.room.repo.SimConnRepo;
 import com.whyweclimb.backend.entity.Access;
 import com.whyweclimb.backend.entity.CumulativeConnection;
 import com.whyweclimb.backend.entity.SimultaneousConnection;
@@ -23,22 +23,22 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService{
-	private final AccessRedisRepository accessRedisRepository;
-	private final RoomRepository roomRepository;
-	private final SimultaneousConnectionRepository simultaneousConnectionRepository;
-	private final CumulativeConnectionRepository cumulativeConnectionRepository;
+	private final AccessRedisRepo accessRedisRepo;
+	private final RoomRepo roomRepo;
+	private final SimConnRepo simConnRepo;
+	private final CumConnRepo cumConnRepo;
 
 	@Override
 	@Transactional
 	public void increaseNumberOfPeople(Access access) {
-		CountUpConnection(LocalDate.now());
+		countUpConnection(LocalDate.now());
 		
-		accessRedisRepository.save(pretreatment(access));
+		accessRedisRepo.save(pretreatment(access));
 	}
 
-	public Access pretreatment(Access access) {
+	private Access pretreatment(Access access) {
 		int max = 0;
-		for (Access a : accessRedisRepository.findByRoomCode(access.getRoomCode())) {
+		for (Access a : accessRedisRepo.findByRoomCode(access.getRoomCode())) {
 			max = Math.max(max, a.getOrder());
 		}
 		access.setOrder(max+1);
@@ -46,36 +46,36 @@ public class MessageServiceImpl implements MessageService{
 		return access;
 	}
 	
-	public void CountUpConnection(LocalDate today) {
-		Optional<CumulativeConnection> cumul = cumulativeConnectionRepository.findByConnectionDate(today);
+	private void countUpConnection(LocalDate today) {
+		Optional<CumulativeConnection> cumul = cumConnRepo.findByConnectionDate(today);
 		if (cumul.isPresent()) {
-			cumulativeConnectionRepository.save(CumulativeConnection.builder()
+			cumConnRepo.save(CumulativeConnection.builder()
 					.cumulativeConnectionSeq(cumul.get().getCumulativeConnectionSeq())
 					.connectionCount(cumul.get().getConnectionCount()+1)
 					.connectionDate(cumul.get().getConnectionDate())
 					.build());
 		}else {
-			cumulativeConnectionRepository.save(CumulativeConnection.builder()
+			cumConnRepo.save(CumulativeConnection.builder()
 					.connectionCount(1)
 					.connectionDate(today)
 					.build());
 		}
 
-		Iterable<Access> counts = accessRedisRepository.findAll();
+		Iterable<Access> counts = accessRedisRepo.findAll();
 		int count = 0;
 		for (Access access : counts) count++;
 		
-		Optional<SimultaneousConnection> simul = simultaneousConnectionRepository.findByConnectionDate(today);
+		Optional<SimultaneousConnection> simul = simConnRepo.findByConnectionDate(today);
 		if (simul.isPresent()) {
 			if(simul.get().getConnectionCount() < count) {
-				simultaneousConnectionRepository.save(SimultaneousConnection.builder()
+				simConnRepo.save(SimultaneousConnection.builder()
 						.simultaneousConnectionSeq(simul.get().getSimultaneousConnectionSeq())
 						.connectionCount(count)
 						.connectionDate(simul.get().getConnectionDate())
 						.build());
 			}
 		}else {
-			simultaneousConnectionRepository.save(SimultaneousConnection.builder()
+			simConnRepo.save(SimultaneousConnection.builder()
 					.connectionCount(1)
 					.connectionDate(today)
 					.build());
@@ -85,39 +85,35 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public void decreaseNumberOfPeople(String sessionId) {
-		accessRedisRepository.deleteById(sessionId);
+		accessRedisRepo.deleteById(sessionId);
 	}
 
 	@Override
 	public boolean roomStatus(String roomCode) {
-		boolean result = false;
+		int now = accessRedisRepo.findByRoomCode(roomCode).size();
+		int max = Objects.requireNonNull(roomRepo.findByRoomCode(roomCode).orElse(null)).getRoomMaxNum();
 
-		int now = accessRedisRepository.findByRoomCode(roomCode).size();
-		int max = Objects.requireNonNull(roomRepository.findByRoomCode(roomCode).orElse(null)).getRoomMaxNum();
-		
-		if (now < max) result = true;
-
-		return result;
+		return now < max;
 	}
 
 	@Override
 	public List<Access> playerList(String roomCode) {
-		List<Access> list = accessRedisRepository.findByRoomCode(roomCode);
+		List<Access> list = accessRedisRepo.findByRoomCode(roomCode);
 		Collections.sort(list);
 		return list;
 	}
 
 	@Override
 	public String getReady(Integer userSeq){
-		Access access = accessRedisRepository.findByUserSeq(userSeq).get();
+		Access access = accessRedisRepo.findByUserSeq(userSeq).get();
 		access.setReady(true);
-		accessRedisRepository.save(access);
+		accessRedisRepo.save(access);
 		
 		return access.getRoomCode();
 	}
 
 	@Override
 	public Access getAccess(String sessionId) {
-		return accessRedisRepository.findBySessionId(sessionId);
+		return accessRedisRepo.findBySessionId(sessionId);
 	}
 }
