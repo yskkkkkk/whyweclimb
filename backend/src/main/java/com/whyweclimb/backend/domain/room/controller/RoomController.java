@@ -26,18 +26,13 @@ public class RoomController {
 	@ApiOperation(value = "createRoom", notes = "채팅방 생성, 성공 시 roomCode를 반환합니다.")
     @PostMapping("")
     public ResponseEntity<Map<String, String>> createRoom(@RequestBody RoomCreateRequest request){
+		Map<String, String> result = new HashMap<>();
     	RoomInfoResponse response = roomService.createRoom(request);
-		String roomCode = "";
-		HttpStatus status;
-		if(response == null) {
-			status = HttpStatus.NOT_ACCEPTABLE;
-		}else { 
-			roomCode = response.getRoomCode();
-			status = HttpStatus.CREATED;
-		}
-		Map<String, String> result = new HashMap<String, String>();
+
+		String roomCode = (response == null) ? "" : response.getRoomCode();
 		result.put("roomCode", roomCode);
-		return new ResponseEntity<Map<String, String>>(result, status);
+
+		return new ResponseEntity<>(result, checkResponse(response));
     }
 
 	@ApiOperation(value = "findRoom", notes = 
@@ -45,15 +40,12 @@ public class RoomController {
     @GetMapping("/{roomCode}")
     public ResponseEntity<RoomInfoResponse> findRoomUseCode(@PathVariable String roomCode){
     	RoomInfoResponse response = roomService.findRoom(roomCode);
-		HttpStatus status;
+
 		if(response == null) {
-			response = RoomInfoResponse.builder()
-					.roomFindResult("none").build();
-			status = HttpStatus.NO_CONTENT;
-		}else { 
-			status = HttpStatus.OK;
+			response = RoomInfoResponse.builder().roomFindResult("none").build();
 		}
-		return new ResponseEntity<RoomInfoResponse>(response, status);
+
+		return new ResponseEntity<>(response, checkResponse(response));
     }
 
 	@ApiOperation(value = "joinRoom", notes = 
@@ -61,13 +53,8 @@ public class RoomController {
     @GetMapping("")
     public ResponseEntity<RoomInfoResponse> joinRoomRandom(@RequestParam boolean roomInterference){
     	RoomInfoResponse response = roomService.joinRoom(roomInterference);
-		HttpStatus status;
-		if(response == null) {
-			status = HttpStatus.NO_CONTENT;
-		}else { 
-			status = HttpStatus.OK;
-		}
-		return new ResponseEntity<RoomInfoResponse>(response, status);
+
+		return new ResponseEntity<>(response, checkResponse(response));
     }
 
 
@@ -75,16 +62,15 @@ public class RoomController {
     @PutMapping("/start/{roomCode}")
     public ResponseEntity<RoomInfoResponse> startGame(@PathVariable String roomCode){
     	RoomInfoResponse response = roomService.startGame(roomCode);
-    	HttpStatus status;
-    	if(response == null) {
-    		status = HttpStatus.NOT_ACCEPTABLE;
-    	}else { 
-    		status = HttpStatus.OK;
-    	}
-    	
-    	Map<String, String> message = new HashMap<String, String>();
+
+    	Map<String, String> message = new HashMap<>();
     	message.put("message", "start");
     	messagingTemplate.convertAndSend("/sub/room/" + roomCode, message);
-    	return new ResponseEntity<RoomInfoResponse>(response, status);
+
+		return new ResponseEntity<>(response, checkResponse(response));
     }
+
+	private HttpStatus checkResponse(RoomInfoResponse response){
+		return (response == null) ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+	}
 }
