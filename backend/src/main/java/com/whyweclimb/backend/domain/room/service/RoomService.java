@@ -11,7 +11,7 @@ public interface RoomService {
 	// 방 맞는 조건으로 랜덤하게 검색해서 들어가기
 	RoomInfoResponse joinRoom(boolean interference);
 	// 방 삭제하기 
-	boolean deleteRoom(String roomCode);
+	void deleteRoom(String roomCode);
 	// 게임 시작
 	RoomInfoResponse startGame(String roomCode);
 }

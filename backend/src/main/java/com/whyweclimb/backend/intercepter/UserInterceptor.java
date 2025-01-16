@@ -12,7 +12,7 @@ import com.whyweclimb.backend.domain.room.service.RoomService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
- 
+
 @Log4j2
 @RequiredArgsConstructor
 public class UserInterceptor implements ChannelInterceptor {
@@ -56,7 +56,7 @@ public class UserInterceptor implements ChannelInterceptor {
         		roomCode = messageService.getAccess(accessor.getSessionId()).getRoomCode();
         		messageService.decreaseNumberOfPeople(accessor.getSessionId());
         		
-        		if (messageService.playerList(roomCode).size() == 0) {
+        		if (messageService.playerList(roomCode).isEmpty()) {
         			roomService.deleteRoom(roomCode);
         		}
 			} catch (NullPointerException e) {

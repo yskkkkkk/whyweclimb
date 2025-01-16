@@ -33,7 +33,7 @@ public class UserController {
 	private final UserService userService;
 	private final SecurityService securityService;
 	private final JwtTokenProvider jwtTokenProvider;
-	
+
 	@ApiOperation(value = "SignUp", notes = "계정을 생성합니다.")
 	@PostMapping("")
 	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
@@ -47,7 +47,7 @@ public class UserController {
 		}else { 
 			status = HttpStatus.CREATED;
 		}
-		return new ResponseEntity<Boolean>(result, status);
+		return new ResponseEntity<>(result, status);
 	}
 	
 	@ApiOperation(value = "CheckIdDuplicate", notes = "아이디를 중복체크 합니다.")
@@ -63,7 +63,7 @@ public class UserController {
 			status = HttpStatus.OK;
 		}
 		
-		return new ResponseEntity<Boolean>(result, status);
+		return new ResponseEntity<>(result, status);
 	}
 
 	@ApiOperation(value = "Login", notes = "아이디와 비밀번호를 입력받아 로그인을 진행합니다.")
@@ -85,7 +85,7 @@ public class UserController {
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("token", token);
 		
-		return new ResponseEntity<Map<String, String>>(result, status);
+		return new ResponseEntity<>(result, status);
     }
 
 	@ApiOperation(value = "UserInfo", notes = "헤더에 jwt를 담아 요청 시 회원정보를 반환합니다.")
@@ -94,7 +94,7 @@ public class UserController {
 //		String user = jwtTokenProvider.getUserPk(jwtTokenProvider.resolveToken((HttpServletRequest) request));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		return new ResponseEntity<UserInfoResponse>(userService.userInfo(authentication.getName()), HttpStatus.OK);
+		return new ResponseEntity<>(userService.userInfo(authentication.getName()), HttpStatus.OK);
 		
 	}
     
@@ -108,7 +108,7 @@ public class UserController {
 		}else { 
 			status = HttpStatus.OK;
 		}
-		return new ResponseEntity<UserInfoResponse>(response, status);
+		return new ResponseEntity<>(response, status);
     }
 
 	@ApiOperation(value = "checkSession", notes = "현재 멀티플레이 중인 유저인지 검사합니다.")
@@ -120,7 +120,7 @@ public class UserController {
 		}else { 
 			status = HttpStatus.CONFLICT;
 		}
-		return new ResponseEntity<HttpStatus>(status);
+		return new ResponseEntity<>(status);
 	}
 	
 	

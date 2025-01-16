@@ -73,13 +73,9 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public boolean deleteRoom(String roomCode) {
-		boolean result = false;
-		if (roomRepository.deleteByRoomCode(roomCode) == 1) {
-			result = true;
-		};
-		
-		return result;
+	public void deleteRoom(String roomCode) {
+
+		roomRepository.deleteByRoomCode(roomCode);
 	}
 
 	@Override

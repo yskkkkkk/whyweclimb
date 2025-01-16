@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService{
 	
     @Override
 	public UserInfoResponse createUser(UserRequest request) {
-    	UserInfoResponse user = userRepository.existsByUserId(request.getUserId()) 
-    			? null 
+    	UserInfoResponse user = userRepository.existsByUserId(request.getUserId())
+    			? null
     			: new UserInfoResponse(userRepository.save(
 					User.builder()
 					.userId(request.getUserId())
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserInfoResponse login(UserRequest request) {
 		UserInfoResponse user = userRepository.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
-		
-		if(accessRedisRepository.findByUserSeq(user.getUserSeq()) == null)
+
+		if(accessRedisRepository.findByUserSeq(user.getUserSeq()).isPresent())
 			return user;
 		else 
 			return new UserInfoResponse();
@@ -73,9 +73,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean checkSession(int userSeq) {
-		if(accessRedisRepository.findByUserSeq(userSeq) == null)
-			return true;
-		else 
-			return false;
+        return accessRedisRepository.findByUserSeq(userSeq).isPresent();
 	}
 }
