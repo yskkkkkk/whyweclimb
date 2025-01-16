@@ -11,5 +11,4 @@ import com.whyweclimb.backend.entity.CumulativeConnection;
 @Repository
 public interface CumConnRepo extends JpaRepository<CumulativeConnection, Integer> {
 	Optional<CumulativeConnection> findByConnectionDate(LocalDate connectionDate);
-	
 }

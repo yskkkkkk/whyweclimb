@@ -55,15 +55,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserInfoResponse updateUser(UserUpdateRequest request) {
 		Optional<User> user = userRepo.findById(request.getUserSeq());
-		user.ifPresent(selectUser -> userRepo.save(User.builder()
-                .userSeq(selectUser.getUserSeq())
-                .userId(selectUser.getUserId())
-                .userPassword(selectUser.getUserPassword())
-                .backgroundSound(request.getBackgroundSound())
-                .effectSound(request.getEffectSound())
-                .maxLevel(selectUser.getMaxLevel())
-                .skinSeq(request.getSkinSeq())
-                .build()));
+		user.ifPresent(selectUser -> {
+			userRepo.save(User.builder()
+					.userSeq(selectUser.getUserSeq())
+					.userId(selectUser.getUserId())
+					.userPassword(selectUser.getUserPassword())
+					.backgroundSound(request.getBackgroundSound())
+					.effectSound(request.getEffectSound())
+					.maxLevel(selectUser.getMaxLevel())
+					.skinSeq(request.getSkinSeq())
+					.build());
+		});
 		return new UserInfoResponse(user.orElse(null));
 	}
 

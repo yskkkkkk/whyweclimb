@@ -20,5 +20,9 @@ public class AccessResponse {
 		super();
 		this.data = data;
 	}
+
+	public AccessResponse(String message){
+		this.message = message;
+	}
 	
 }
