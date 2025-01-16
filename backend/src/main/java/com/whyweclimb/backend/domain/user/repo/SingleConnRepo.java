@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.whyweclimb.backend.entity.SingleConnection;
 
 @Repository
-public interface SingleConnectionRepository extends JpaRepository<SingleConnection, Integer> {
+public interface SingleConnRepo extends JpaRepository<SingleConnection, Integer> {
 	Optional<SingleConnection> findByConnectionDate(LocalDate connectionDate);
 	
 }

@@ -1,9 +1,9 @@
 package com.whyweclimb.backend.domain.user.service;
 
 import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
-import com.whyweclimb.backend.domain.user.repo.SingleConnectionRepository;
-import com.whyweclimb.backend.domain.user.repo.SingleRecordRepository;
-import com.whyweclimb.backend.domain.user.repo.UserRepository;
+import com.whyweclimb.backend.domain.user.repo.SingleConnRepo;
+import com.whyweclimb.backend.domain.user.repo.SingleRecordRepo;
+import com.whyweclimb.backend.domain.user.repo.UserRepo;
 import com.whyweclimb.backend.entity.SingleConnection;
 import com.whyweclimb.backend.entity.SingleRecord;
 import com.whyweclimb.backend.entity.User;
@@ -18,20 +18,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SingleGameServiceImpl implements SingleGameService{
 
-    private final UserRepository userRepository;
-    private final SingleRecordRepository singleRecordRepository;
-    private final SingleConnectionRepository singleConnectionRepository;
+    private final UserRepo userRepo;
+    private final SingleRecordRepo singleRecordRepo;
+    private final SingleConnRepo singleConnRepo;
 
     @Transactional
     @Override
     public boolean setUserRecord(UserRecordUpdateRequest request) {
         LocalDate date = LocalDate.now();
-        Optional<User> userOptional = userRepository.findById(request.getUserSeq());
+        Optional<User> userOptional = userRepo.findById(request.getUserSeq());
         if(userOptional.isPresent()){
             User user = userOptional.get();
             if(user.getMaxLevel() < request.getMaxLevel()){
                 user.setMaxLevel(request.getMaxLevel());
-                userRepository.save(user);
+                userRepo.save(user);
             }
         }else{
             return false;
@@ -40,15 +40,15 @@ public class SingleGameServiceImpl implements SingleGameService{
         if(request.getRecord() == 0){
             return false;
         }
-        Optional<SingleRecord> singleRecordOptional = singleRecordRepository.findByUserAndDate(userOptional.get(),date);
+        Optional<SingleRecord> singleRecordOptional = singleRecordRepo.findByUserAndDate(userOptional.get(),date);
         if(singleRecordOptional.isPresent()){
             SingleRecord record = singleRecordOptional.get();
             if(record.getRecord() > request.getRecord()){
                 record.setRecord(request.getRecord());
-                singleRecordRepository.save(record);
+                singleRecordRepo.save(record);
             }
         }else{
-            singleRecordRepository.save(SingleRecord.builder()
+            singleRecordRepo.save(SingleRecord.builder()
                     .user(userOptional.get())
                     .record(request.getRecord())
                     .date(date).build());
@@ -59,15 +59,15 @@ public class SingleGameServiceImpl implements SingleGameService{
 	@Override
 	public void countSingleModeEntrance() {
 		LocalDate today = LocalDate.now();
-		Optional<SingleConnection> connection = singleConnectionRepository.findByConnectionDate(today);
+		Optional<SingleConnection> connection = singleConnRepo.findByConnectionDate(today);
 		if (connection.isPresent()) {
-			singleConnectionRepository.save(SingleConnection.builder()
+			singleConnRepo.save(SingleConnection.builder()
 					.singleConnectionSeq(connection.get().getSingleConnectionSeq())
 					.connectionCount(connection.get().getConnectionCount()+1)
 					.connectionDate(connection.get().getConnectionDate())
 					.build());
 		}else {
-			singleConnectionRepository.save(SingleConnection.builder()
+			singleConnRepo.save(SingleConnection.builder()
 					.connectionCount(1)
 					.connectionDate(today)
 					.build());

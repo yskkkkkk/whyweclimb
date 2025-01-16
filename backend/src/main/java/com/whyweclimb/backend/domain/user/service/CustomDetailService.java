@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
-import com.whyweclimb.backend.domain.user.repo.UserRepository;
+import com.whyweclimb.backend.domain.user.repo.UserRepo;
 import com.whyweclimb.backend.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class CustomDetailService implements UserDetailsService{
 
-	private final UserRepository userRepository;
+	private final UserRepo userRepo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		UserInfoResponse response = userRepository.findByUserId(userId)
+		UserInfoResponse response = userRepo.findByUserId(userId)
 				.orElseThrow(() -> new UsernameNotFoundException("Not Found User By username : " + userId));
 		
 		return toUser(response);

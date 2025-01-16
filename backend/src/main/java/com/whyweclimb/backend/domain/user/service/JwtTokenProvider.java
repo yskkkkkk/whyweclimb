@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,9 +27,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-	private String secret = "thisisfakesecretcodeforinitprocessitdidntusedduringrealprocess";
 
-	private Key SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
+	@Value("${spring.security.jwt.secret}")
+	private String secret;
+
+	private final Key SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
 
 	// 객체 초기화, secretKey를 Base64로 인코딩한다.
 	@PostConstruct
@@ -37,10 +40,10 @@ public class JwtTokenProvider {
 	}
 
 	// 토큰 유효시간 12시간
-	private long tokenValidTime = 12 * 60 * 60 * 1000L;
+	private final long tokenValidTime = 12 * 60 * 60 * 1000L;
 	private final UserDetailsService userDetailsService;
 
-	// JWT 토큰 생성
+	// JWT 생성
 	public String createToken(String userPk, List<String> roles) {
 		Claims claims = Jwts.claims().setSubject(userPk);
 		// JWT payload 에 저장되는 정보단위
@@ -54,7 +57,7 @@ public class JwtTokenProvider {
 				.compact();
 	}
 
-	// JWT 토큰에서 인증 정보 조회
+	// JWT 에서 인증 정보 조회
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
 		ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
