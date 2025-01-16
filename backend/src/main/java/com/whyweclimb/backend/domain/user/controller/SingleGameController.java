@@ -16,7 +16,7 @@ public class SingleGameController {
 
     @PostMapping("/record")
     public ResponseEntity<Boolean> settingUserRecord(@RequestBody UserRecordUpdateRequest request){
-        return new ResponseEntity<Boolean>(singleGameService.setUserRecord(request), HttpStatus.OK);
+        return new ResponseEntity<>(singleGameService.setUserRecord(request), HttpStatus.OK);
     }
 
     @PostMapping("/entrance")

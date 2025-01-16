@@ -2,11 +2,7 @@ package com.whyweclimb.backend.domain.room.dto;
 
 import com.whyweclimb.backend.entity.Room;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Builder
@@ -20,6 +16,7 @@ public class RoomInfoResponse {
     private Boolean roomInterference;
     private Integer roomMaxNum;
     private Boolean roomStart;
+    @Setter
     private String roomFindResult;
 
 	public RoomInfoResponse(Room room) {
@@ -29,9 +26,5 @@ public class RoomInfoResponse {
 		this.roomInterference = room.getRoomInterference();
 		this.roomMaxNum = room.getRoomMaxNum();
 		this.roomStart = room.getRoomStart();
-	}
-
-	public void setRoomFindResult(String roomFindResult) {
-		this.roomFindResult = roomFindResult;
 	}
 }

@@ -16,6 +16,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();
 	Optional<List<RoomInfoResponse>> findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc();
 	@Transactional
-	Integer deleteByRoomCode(String roomCode);
+	void deleteByRoomCode(String roomCode);
 
 }
