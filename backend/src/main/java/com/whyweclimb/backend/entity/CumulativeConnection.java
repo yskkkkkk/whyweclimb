@@ -17,8 +17,6 @@ public class CumulativeConnection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cumulativeConnectionSeq;
-    @Column
     private Integer connectionCount;
-    @Column
     private LocalDate connectionDate;
 }

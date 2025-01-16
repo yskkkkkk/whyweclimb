@@ -1,5 +1,6 @@
 package com.whyweclimb.backend.entity;
 
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -21,19 +22,13 @@ public class Access implements Comparable<Access>{
     @Indexed
     private Integer userSeq;
     private String userId;
-	private Boolean ready;
+	@Setter
+    private Boolean ready;
 	private Integer skinSeq;
-	private Integer order;
-	
-	public void setReady(Boolean ready) {
-		this.ready = ready;
-	}
+	@Setter
+    private Integer order;
 
-	public void setOrder(Integer order) {
-		this.order = order;
-	}
-	
-	@Override
+    @Override
 	public int compareTo(Access access) {
 		return this.order - access.order;
 	}

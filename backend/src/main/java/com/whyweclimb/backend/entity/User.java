@@ -19,27 +19,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "tb_user")
 public class User implements UserDetails{
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userSeq;
     @Column(length = 100)
     private String userId;
-    @Column
     private String userPassword;
-    @Column
     private Integer backgroundSound;
-    @Column
     private Integer effectSound;
-	@Column
 	@ColumnDefault("0")
 	private Integer maxLevel;
-	@Column
 	@ColumnDefault("1")
 	private Integer skinSeq;
+	@ColumnDefault("true")
+	private boolean accountNonExpired = true;
+	@ColumnDefault("true")
+	private boolean accountNonLocked = true;
+	@ColumnDefault("true")
+	private boolean credentialsNonExpired = true;
+	@ColumnDefault("true")
+	private boolean enabled = true;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -61,33 +61,30 @@ public class User implements UserDetails{
 	}
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.userPassword;
 	}
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.userId;
 	}
+
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+	    return this.accountNonExpired;
 	}
+
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+	    return this.accountNonLocked;
 	}
+
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+	    return this.credentialsNonExpired;
 	}
+
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+	    return this.enabled;
 	}
-    
 }
