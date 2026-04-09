@@ -18,8 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.Valid;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,26 +65,44 @@ public class UserController {
 
 	@ApiOperation(value = "Login", notes = "아이디와 비밀번호를 입력받아 로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody UserRequest request) {
+    public ResponseEntity<Void> login(@Valid @RequestBody UserRequest request, HttpServletResponse httpResponse) {
     	UserInfoResponse response = userService.login(request);
 
-		String token = "";
     	HttpStatus status;
-		if(response == null) { 
+		if (response == null) {
 			status = HttpStatus.NOT_FOUND;
-		}else if (response.getUserSeq() == null){
+		} else if (response.getUserSeq() == null) {
 			status = HttpStatus.CONFLICT;
-		}else { 
-			token = jwtTokenProvider.createToken(response.getUserId(), Collections.singletonList("ROLE_USER"));
+		} else {
+			String token = jwtTokenProvider.createToken(response.getUserId(), Collections.singletonList("ROLE_USER"));
+			log.info("Login success: {}", response.getUserId());
+			ResponseCookie cookie = ResponseCookie.from("jwt", token)
+					.httpOnly(true)
+					.secure(true)
+					.path("/")
+					.maxAge(12 * 60 * 60L)
+					.sameSite("Lax")
+					.build();
+			httpResponse.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 			status = HttpStatus.OK;
 		}
 
-		log.info("Generated JWT: {}", token);
-		Map<String, String> result = new HashMap<>();
-		result.put("token", token);
-
-		return new ResponseEntity<>(result, status);
+		return new ResponseEntity<>(status);
     }
+
+	@ApiOperation(value = "Logout", notes = "JWT 쿠키를 만료시켜 로그아웃합니다.")
+	@PostMapping("/logout")
+	public ResponseEntity<Void> logout(HttpServletResponse httpResponse) {
+		ResponseCookie cookie = ResponseCookie.from("jwt", "")
+				.httpOnly(true)
+				.secure(true)
+				.path("/")
+				.maxAge(0)
+				.sameSite("Lax")
+				.build();
+		httpResponse.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+		return ResponseEntity.ok().build();
+	}
 
 	@ApiOperation(value = "UserInfo", notes = "헤더에 JWT를 담아 요청 시 회원정보를 반환합니다.")
 	@GetMapping("/information")

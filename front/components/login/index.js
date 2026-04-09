@@ -30,6 +30,7 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
     let flag_conf = false
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify({
         userId: userID,
         userPassword: userPassword,
@@ -40,23 +41,14 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
       },
     })
     .then((response) => {
-      // console.log(response)
-      if(response.status==409){
-        toast.error(t('already_logged_in'))
-        flag_conf=true
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // console.log(data);
-      if (data.token) {
-        sessionStorage.setItem("token", data.token);
+      if (response.status === 409) {
+        toast.error(t('already_logged_in'));
+        flag_conf = true;
+      } else if (response.ok) {
         initializeData();
-        // alert(`로그인 성공 : ${data}`)
         toModeSelect();
-      }
-      else {
-        if(!flag_conf){
+      } else {
+        if (!flag_conf) {
           toast.error(t('invalid_login'));
         }
       }

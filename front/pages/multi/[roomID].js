@@ -42,14 +42,9 @@ export default function WaitRoom() {
       if (player.ready === true) count++;
     }
     if (count === groupInfo.length){
-      const token = sessionStorage.getItem("token");
-      const headers = {
-        'Authorization': token,
-        mode: 'no-cors'
-      };
-      axios.put(`${basicURL}/room/start/${roomID}`,{headers:headers})
-      .then(() => {})
-      .catch(err=>console.error(err))
+      axios.put(`${basicURL}/room/start/${roomID}`, {}, { withCredentials: true })
+        .then(() => {})
+        .catch(err=>console.error(err))
     }
   }
 
@@ -68,16 +63,10 @@ export default function WaitRoom() {
   }
 
   function userConfirm(data){
-    const token = sessionStorage.getItem("token");
-    const headers = {
-      'Authorization': token,
-      mode: 'no-cors'
-    }
-    axios.get(`${basicURL}/user/${data.userSeq}`,{headers:headers})
+    axios.get(`${basicURL}/user/${data.userSeq}`, { withCredentials: true })
       .then(() => {})
       .catch(err=>{
         toast.error("your account is currently in use.");
-        window.sessionStorage.clear();
         location.href="/";
       })
   }
@@ -105,26 +94,20 @@ export default function WaitRoom() {
   }
 
   function getUserInfo(){
-    const token = sessionStorage.getItem("token");
-    const headers = {
-      'Authorization': token,
-      mode: 'no-cors'
-    }
-    fetch(`${basicURL}/user/information`, {headers:headers})
+    fetch(`${basicURL}/user/information`, { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         socketConnect(data);
         userConfirm(data);
         setUserInfo(data);
-        fetch(`${basicURL}/user/skins`, {headers})
+        fetch(`${basicURL}/user/skins`, { credentials: 'include' })
           .then(r => r.json())
           .then(skins => setUnlockedSkins(skins))
           .catch(() => setUnlockedSkins([1]));
       })
       .catch(err => {
         toast.error("Please login again.");
-        sessionStorage.removeItem("token");
-        location.href="/";        
+        location.href="/";
       })
   }
 
@@ -139,12 +122,7 @@ export default function WaitRoom() {
   
   useEffect(()=>{
     if(roomID){
-      const token = sessionStorage.getItem("token");
-      const headers = {
-        'Authorization': token,
-        mode: 'no-cors'
-      }
-      axios.get(`${basicURL}/room/${roomID}`,{headers:headers})
+      axios.get(`${basicURL}/room/${roomID}`, { withCredentials: true })
         .then(res=>res.data)
         .then(data=>{
           if(data!==''){
