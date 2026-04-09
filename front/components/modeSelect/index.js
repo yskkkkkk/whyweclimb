@@ -9,20 +9,6 @@ import Backdrop from '../multi/backdrop';
 
 export default function ModeSelect({toMain, toConfigure}) {
   
-  // const test = (e) => {
-  //   e.preventDefault();
-
-  //   const token = sessionStorage.getItem("token");
-  //   console.log(token);
-  //   const headers = {
-  //     'Authorization': token,
-  //     mode: 'no-cors'
-  //   }
-  //   fetch('https://k6a401.p.ssafy.io/api/user/information', {headers: headers})
-  //   .then((response) => {
-  //     console.log(response.json());
-  //   });
-  // };
   const [modal, setModal] = useState(false);
 
   const openSelectModal = () => {

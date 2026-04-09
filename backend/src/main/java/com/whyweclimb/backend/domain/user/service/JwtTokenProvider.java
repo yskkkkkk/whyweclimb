@@ -31,29 +31,28 @@ public class JwtTokenProvider {
 	@Value("${spring.security.jwt.secret}")
 	private String secret;
 
-	private final Key SECRET_KEY = Keys.hmacShaKeyFor(secret.getBytes());
-
-	// 객체 초기화, secretKey를 Base64로 인코딩한다.
-	@PostConstruct
-	protected void init() {
-		this.secret = Base64.getEncoder().encodeToString(secret.getBytes());
-	}
+	private Key secretKey;
 
 	// 토큰 유효시간 12시간
 	private final long tokenValidTime = 12 * 60 * 60 * 1000L;
 	private final UserDetailsService userDetailsService;
 
+	// 객체 초기화: @Value 주입 완료 후 Key 생성
+	@PostConstruct
+	protected void init() {
+		byte[] keyBytes = Base64.getDecoder().decode(secret);
+		this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+	}
+
 	// JWT 생성
 	public String createToken(String userPk, List<String> roles) {
 		Claims claims = Jwts.claims().setSubject(userPk);
-		// JWT payload 에 저장되는 정보단위
 		claims.put("roles", roles);
-		// 정보는 key / value 쌍으로 저장된다.
 		Date now = new Date();
-		return Jwts.builder().setClaims(claims) // 정보 저장
-				.setIssuedAt(now) // 토큰 발행 시간 정보
-				.setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-				.signWith(SECRET_KEY)// signature 에 들어갈 secret값 세팅
+		return Jwts.builder().setClaims(claims)
+				.setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + tokenValidTime))
+				.signWith(secretKey)
 				.compact();
 	}
 
@@ -63,10 +62,10 @@ public class JwtTokenProvider {
 		ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return new UsernamePasswordAuthenticationToken(userDetails, "", grantedAuthorities);
-	} // 토큰에서 회원 정보 추출
+	}
 
 	public String getUserPk(String token) {
-		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 
 	// Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
@@ -77,7 +76,7 @@ public class JwtTokenProvider {
 	// 토큰의 유효성 + 만료일자 확인
 	public boolean validateToken(String jwtToken) {
 		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken);
+			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (Exception e) {
 			return false;

@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +35,8 @@ public class UserController {
 
 	@ApiOperation(value = "SignUp", notes = "계정을 생성합니다.")
 	@PostMapping("")
-	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
-		request.setUserPassword(securityService.encrypt(request.getUserPassword()));
+	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) {
+		request.setUserPassword(securityService.encode(request.getUserPassword()));
 		UserInfoResponse response = userService.createUser(request);
 
 		boolean result = response != null;
@@ -58,8 +57,7 @@ public class UserController {
 
 	@ApiOperation(value = "Login", notes = "아이디와 비밀번호를 입력받아 로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody UserRequest request) throws NoSuchAlgorithmException {
-    	request.setUserPassword(securityService.encrypt(request.getUserPassword()));
+    public ResponseEntity<Map<String, String>> login(@RequestBody UserRequest request) {
     	UserInfoResponse response = userService.login(request);
 
 		String token = "";

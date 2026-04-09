@@ -9,14 +9,14 @@ export default function CreateModal({handleClose}) {
   const saveCharacter = (num) => {
     // console.log("clickCharacter")
     axios({
-      url:'https://k6a401.p.ssafy.io/api/user/information',
+      url:`${process.env.NEXT_PUBLIC_API_URL}/user/information`,
       method:'GET',
       headers: {
         "Authorization":sessionStorage.getItem("token")
       }
     }).then(res=>{
       axios({
-        url:`https://k6a401.p.ssafy.io/api/user`,
+        url:`${process.env.NEXT_PUBLIC_API_URL}/user`,
         method:'PUT',
         headers: {
           "Authorization": sessionStorage.getItem("token")

@@ -604,7 +604,7 @@ class Player {
 
 function init() {
   axios({
-    url:`https://k6a401.p.ssafy.io/api/user/information/`,
+    url:`${process.env.NEXT_PUBLIC_API_URL}/user/information/`,
     method:'get',
     headers: {
       "Authorization": sessionStorage.getItem("token")
@@ -1287,7 +1287,7 @@ class Engine extends Component {
     this.run();
 
     axios({
-      url:`https://k6a401.p.ssafy.io/api/single/entrance`,
+      url:`${process.env.NEXT_PUBLIC_API_URL}/single/entrance`,
       method:'POST'
     }).then(res=>console.log(res))
     .catch(err=>console.error(err))
@@ -1298,7 +1298,7 @@ class Engine extends Component {
     // console.log(levelMax)
     
     axios({
-      url:`https://k6a401.p.ssafy.io/api/single/record/`,
+      url:`${process.env.NEXT_PUBLIC_API_URL}/single/record/`,
       method:'POST',
       headers: {
         "Authorization": sessionStorage.getItem("token")
@@ -1326,7 +1326,7 @@ class Engine extends Component {
   componentWillUnmount() {
     flag2 = true
     axios({
-      url:`https://k6a401.p.ssafy.io/api/single/record/`,
+      url:`${process.env.NEXT_PUBLIC_API_URL}/single/record/`,
       method:'POST',
       headers: {
         "Authorization": sessionStorage.getItem("token")

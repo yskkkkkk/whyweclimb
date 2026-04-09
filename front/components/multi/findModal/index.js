@@ -6,8 +6,7 @@ import {motion} from "framer-motion";
 
 
 export default function FindModal({handleClose}) {
-  const basicURL = 'https://k6a401.p.ssafy.io/api'
-  // const basicURL = `http://localhost:8081/api`
+  const basicURL = process.env.NEXT_PUBLIC_API_URL
   const [roomID, setRoomID] = useState('');
 
   const writeRoomID = (e) => {
