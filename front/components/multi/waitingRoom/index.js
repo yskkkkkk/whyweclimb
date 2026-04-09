@@ -1,7 +1,18 @@
+import { useState } from 'react';
 import style from './waitingRoom.module.css';
 
 
-export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGame, goBack}) {
+export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGame, goBack, stomp, userInfo, unlockedSkins}) {
+  const [showSkinPicker, setShowSkinPicker] = useState(false);
+
+  const changeSkin = (skinSeq) => {
+    if (!unlockedSkins || !unlockedSkins.includes(skinSeq)) return;
+    stomp.send('/pub/room/skin', {}, JSON.stringify({
+      userSeq: userInfo.userSeq,
+      skinSeq
+    }));
+    setShowSkinPicker(false);
+  };
 
   return (
     <>
@@ -14,15 +25,15 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
         </section>
 
         <section>
-          {groupInfo && groupInfo.slice(0).reverse().map((player, index) => 
+          {groupInfo && groupInfo.slice(0).reverse().map((player, index) =>
             <div key={player.userSeq}>
               <img
-                className={`player${index+1}`} 
-                src={`/images/waitRoomImg/${player.skinSeq}.png`} 
-                alt="character image" 
+                className={`player${index+1}`}
+                src={`/images/waitRoomImg/${player.skinSeq}.png`}
+                alt="character image"
               />
               <div className={`playerInfo${index+1}`}>
-                {player.userId} - {player.ready? "ready!" : "not ready"}
+                {player.userId} - {player.ready ? "ready!" : "not ready"}
               </div>
             </div>
           )}
@@ -30,21 +41,42 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
 
         <section className={style.btns}>
           <button className={style.readyBtn} onClick={ready}>ready</button>
+          <button className={style.skinBtn} onClick={() => setShowSkinPicker(p => !p)}>skin</button>
           <button className={style.startBtn} onClick={startGame}>start</button>
           <button className={style.backBtn} onClick={goBack}>back</button>
         </section>
-        
+
+        {showSkinPicker && (
+          <section className={style.skinPicker}>
+            {[1, 2, 3, 4].map(num => {
+              const unlocked = unlockedSkins && unlockedSkins.includes(num);
+              const isCurrent = userInfo && groupInfo &&
+                groupInfo.find(p => p.userSeq === userInfo.userSeq)?.skinSeq === num;
+              return (
+                <div
+                  key={num}
+                  className={`${style.skinOption} ${isCurrent ? style.skinCurrent : ''} ${!unlocked ? style.skinLocked : ''}`}
+                  onClick={() => changeSkin(num)}
+                >
+                  <img src={`/images/waitRoomImg/${num}.png`} alt={`skin ${num}`} />
+                  {!unlocked && <span className={style.lockIcon}>🔒</span>}
+                </div>
+              );
+            })}
+          </section>
+        )}
+
         <section>
           <img className={style.closestCloud1} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closestCloud2} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closestCloud3} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closestCloud4} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closestCloud5} src="/images/cloud.svg" alt="cloud image" />
-          
+
           <img className={style.closeCloud1} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closeCloud2} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.closeCloud3} src="/images/cloud.svg" alt="cloud image" />
-          
+
           <img className={style.farCloud1} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.farCloud2} src="/images/cloud.svg" alt="cloud image" />
           <img className={style.farCloud3} src="/images/cloud.svg" alt="cloud image" />
@@ -66,5 +98,5 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
 
       </main>
     </>
-  )
+  );
 }

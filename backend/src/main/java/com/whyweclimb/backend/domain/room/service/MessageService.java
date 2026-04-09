@@ -11,4 +11,5 @@ public interface MessageService {
 	List<Access> playerList(String roomCode);
 	String getReady(Integer userSeq);
 	Access getAccess(String sessionId);
+	String updateSkin(Integer userSeq, Integer skinSeq);
 }

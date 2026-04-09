@@ -29,6 +29,7 @@ export default function WaitRoom() {
   const [groupInfo, setGroupInfo] = useState();
   const [isReady, setIsReady] = useState();
   const [sessionId, setSessionId] = useState();
+  const [unlockedSkins, setUnlockedSkins] = useState([1]);
 
   // function sendMessage(msg){
   //   // console.log('hii');
@@ -111,7 +112,15 @@ export default function WaitRoom() {
     }
     fetch(`${basicURL}/user/information`, {headers:headers})
       .then(res => res.json())
-      .then(data => {socketConnect(data);userConfirm(data);setUserInfo(data)})
+      .then(data => {
+        socketConnect(data);
+        userConfirm(data);
+        setUserInfo(data);
+        fetch(`${basicURL}/user/skins`, {headers})
+          .then(r => r.json())
+          .then(skins => setUnlockedSkins(skins))
+          .catch(() => setUnlockedSkins([1]));
+      })
       .catch(err => {
         toast.error("Please login again.");
         sessionStorage.removeItem("token");
@@ -163,12 +172,15 @@ export default function WaitRoom() {
     <>
       {!isStart &&
         <WaitingRoom
-          roomID={roomID} 
-          groupInfo={groupInfo} 
+          roomID={roomID}
+          groupInfo={groupInfo}
           roomInfo={roomInfo}
           ready={ready}
           startGame={startGame}
           goBack={goBack}
+          stomp={stomp}
+          userInfo={userInfo}
+          unlockedSkins={unlockedSkins}
         /> 
       }      
       {isStart && <main className={style.container}>

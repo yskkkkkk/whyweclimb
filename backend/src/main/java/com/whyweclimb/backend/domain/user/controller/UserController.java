@@ -2,6 +2,7 @@ package com.whyweclimb.backend.domain.user.controller;
 
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
+import com.whyweclimb.backend.domain.user.dto.UserSkinUpdateRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.service.JwtTokenProvider;
 import com.whyweclimb.backend.domain.user.service.SecurityService;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +91,7 @@ public class UserController {
 		return new ResponseEntity<>(userService.userInfo(authentication.getName()), HttpStatus.OK);
 	}
     
-	@ApiOperation(value = "settingUserOption", notes = "유저정보를 수정합니다.")
+	@ApiOperation(value = "settingUserOption", notes = "유저 사운드 설정을 수정합니다.")
 	@PutMapping("")
     public ResponseEntity<UserInfoResponse> modifyUser(@Valid @RequestBody UserUpdateRequest request){
     	UserInfoResponse response = userService.updateUser(request);
@@ -97,6 +99,25 @@ public class UserController {
 		HttpStatus status = response == null ? HttpStatus.NOT_ACCEPTABLE : HttpStatus.OK;
 		return new ResponseEntity<>(response, status);
     }
+
+	@ApiOperation(value = "getUnlockedSkins", notes = "해금된 스킨 번호 목록을 반환합니다. 해금 조건: 스킨2=레벨3↑, 스킨3=레벨6↑, 스킨4=레벨7(클리어)")
+	@GetMapping("/skins")
+	public ResponseEntity<List<Integer>> getUnlockedSkins() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return new ResponseEntity<>(userService.getUnlockedSkins(authentication.getName()), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "updateSkin", notes = "JWT 인증된 유저의 스킨을 변경합니다.")
+	@PatchMapping("/skin")
+	public ResponseEntity<UserInfoResponse> updateSkin(
+			@Valid @RequestBody UserSkinUpdateRequest request,
+			HttpServletRequest httpRequest) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserInfoResponse response = userService.updateSkin(authentication.getName(), request);
+
+		HttpStatus status = response == null ? HttpStatus.NOT_ACCEPTABLE : HttpStatus.OK;
+		return new ResponseEntity<>(response, status);
+	}
 
 	@ApiOperation(value = "checkSession", notes = "현재 멀티플레이 중인 유저인지 검사합니다.")
 	@GetMapping("/{userSeq}")

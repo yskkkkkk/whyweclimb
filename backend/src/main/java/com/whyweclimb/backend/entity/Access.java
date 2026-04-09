@@ -24,6 +24,7 @@ public class Access implements Comparable<Access>{
     private String userId;
 	@Setter
     private Boolean ready;
+	@Setter
 	private Integer skinSeq;
 	@Setter
     private Integer order;
