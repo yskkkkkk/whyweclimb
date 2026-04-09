@@ -1,5 +1,7 @@
 package com.whyweclimb.backend.domain.room.controller;
 
+import javax.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class RoomController {
 
 	@ApiOperation(value = "createRoom", notes = "채팅방 생성, 성공 시 roomCode를 반환합니다.")
     @PostMapping("")
-    public ResponseEntity<Map<String, String>> createRoom(@RequestBody RoomCreateRequest request){
+    public ResponseEntity<Map<String, String>> createRoom(@Valid @RequestBody RoomCreateRequest request){
 		Map<String, String> result = new HashMap<>();
     	RoomInfoResponse response = roomService.createRoom(request);
 

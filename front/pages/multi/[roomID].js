@@ -47,7 +47,7 @@ export default function WaitRoom() {
         mode: 'no-cors'
       };
       axios.put(`${basicURL}/room/start/${roomID}`,{headers:headers})
-      .then(res=> console.log('start!!!',res))
+      .then(() => {})
       .catch(err=>console.error(err))
     }
   }
@@ -73,7 +73,7 @@ export default function WaitRoom() {
       mode: 'no-cors'
     }
     axios.get(`${basicURL}/user/${data.userSeq}`,{headers:headers})
-      .then(res=> console.log('confirmed!!',res))
+      .then(() => {})
       .catch(err=>{
         toast.error("your account is currently in use.");
         window.sessionStorage.clear();
@@ -151,8 +151,7 @@ export default function WaitRoom() {
       
     }
     return () => {
-      console.log(sessionId)
-      axios.post(`${basicURL}}/exit/${sessionId}`)
+      axios.post(`${basicURL}/exit/${sessionId}`)
       stomp.disconnect(function(){
         location.href="/multi";
       })

@@ -3,7 +3,6 @@ package com.whyweclimb.backend.domain.room.service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -89,9 +88,9 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public boolean roomStatus(String roomCode) {
 		int now = accessRedisRepo.findByRoomCode(roomCode).size();
-		int max = Objects.requireNonNull(roomRepo.findByRoomCode(roomCode).orElse(null)).getRoomMaxNum();
-
-		return now < max;
+		return roomRepo.findByRoomCode(roomCode)
+				.map(room -> now < room.getRoomMaxNum())
+				.orElse(false);
 	}
 
 	@Override
@@ -103,10 +102,10 @@ public class MessageServiceImpl implements MessageService{
 
 	@Override
 	public String getReady(Integer userSeq){
-		Access access = accessRedisRepo.findByUserSeq(userSeq).get();
+		Access access = accessRedisRepo.findByUserSeq(userSeq).orElse(null);
+		if (access == null) return null;
 		access.setReady(true);
 		accessRedisRepo.save(access);
-		
 		return access.getRoomCode();
 	}
 
