@@ -113,4 +113,13 @@ public class MessageServiceImpl implements MessageService{
 	public Access getAccess(String sessionId) {
 		return accessRedisRepo.findBySessionId(sessionId);
 	}
+
+	@Override
+	public String updateSkin(Integer userSeq, Integer skinSeq) {
+		Access access = accessRedisRepo.findByUserSeq(userSeq).orElse(null);
+		if (access == null) return null;
+		access.setSkinSeq(skinSeq);
+		accessRedisRepo.save(access);
+		return access.getRoomCode();
+	}
 }

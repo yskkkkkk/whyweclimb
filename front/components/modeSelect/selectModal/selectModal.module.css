@@ -18,17 +18,58 @@
   justify-content:space-around;
 }
 .inModal {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  padding: 10px;
 }
 .characters {
-  margin:25px;
+  margin: 15px;
+  display: block;
 }
 .closeButton {
   text-align: center;
-  font-size:20px;
+  font-size: 20px;
 }
 .imageA {
-  font-size:20px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 3px solid transparent;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.imageA:hover {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.selected {
+  border-color: #ffd54f;
+  background-color: rgba(255, 213, 79, 0.2);
+}
+.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.skinWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.lockOverlay {
+  position: absolute;
+  bottom: 18px;
+  right: 10px;
+  font-size: 18px;
+  pointer-events: none;
+}
+.hint {
+  font-size: 11px;
+  color: #ddd;
+  margin-top: -8px;
+  margin-bottom: 6px;
+  min-height: 16px;
+  text-align: center;
 }
 /* ------------------------------------------------------------------------------------ */
 /* 버튼들 */

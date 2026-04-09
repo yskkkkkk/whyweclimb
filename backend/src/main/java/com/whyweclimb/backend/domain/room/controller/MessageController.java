@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.whyweclimb.backend.domain.room.dto.AccessResponse;
+import com.whyweclimb.backend.domain.room.dto.SkinChangeRequest;
 import com.whyweclimb.backend.domain.room.service.MessageService;
 import com.whyweclimb.backend.entity.Access;
 import com.whyweclimb.backend.entity.Message;
@@ -48,6 +49,14 @@ public class MessageController {
 	@MessageMapping("/room/ready")
 	public void playerReady(Integer userSeq) {
 		String roomCode = messageService.getReady(userSeq);
+		if (roomCode == null) return;
+		AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
+		messagingTemplate.convertAndSend("/sub/room/" + roomCode, response);
+	}
+
+	@MessageMapping("/room/skin")
+	public void changeSkin(SkinChangeRequest request) {
+		String roomCode = messageService.updateSkin(request.getUserSeq(), request.getSkinSeq());
 		if (roomCode == null) return;
 		AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
 		messagingTemplate.convertAndSend("/sub/room/" + roomCode, response);

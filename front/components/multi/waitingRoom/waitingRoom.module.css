@@ -102,6 +102,66 @@
   transition: all .1s;
 }
 
+.skinBtn {
+  background: #ab8fce;
+  font-size: 20px;
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0 7px 0px #7c5fa0;
+  display: inline-block;
+  transition: all .1s;
+  position: relative;
+  padding: 5px 20px;
+  margin: 1.5vh 1vw;
+  margin-top: 2vh;
+  top: 0px;
+  cursor: pointer;
+}
+.skinBtn:active {
+  top: 0.2vh;
+  box-shadow: 0 2px 0px #7c5fa0;
+  transition: all .1s;
+}
+
+/* ----------------------------------------------------------------- */
+/* skin picker */
+
+.skinPicker {
+  position: absolute;
+  bottom: 18vh;
+  display: flex;
+  gap: 16px;
+  background-color: rgba(30, 30, 30, 0.85);
+  border: 3px solid #eaeaea;
+  border-radius: 16px;
+  padding: 12px 20px;
+  z-index: 10;
+}
+
+.skinOption {
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  transition: border-color 0.15s;
+}
+.skinOption:hover {
+  border-color: #fff;
+}
+.skinCurrent {
+  border-color: #ffd54f;
+}
+.skinLocked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.lockIcon {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 14px;
+}
+
 
 /* ----------------------------------------------------------------------- */
 /* wind effect */

@@ -3,11 +3,14 @@ package com.whyweclimb.backend.domain.user.service;
 import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
 import com.whyweclimb.backend.domain.user.dto.UserInfoResponse;
 import com.whyweclimb.backend.domain.user.dto.UserRequest;
+import com.whyweclimb.backend.domain.user.dto.UserSkinUpdateRequest;
 import com.whyweclimb.backend.domain.user.dto.UserUpdateRequest;
 import com.whyweclimb.backend.domain.user.repo.UserRepo;
 import com.whyweclimb.backend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,12 +69,41 @@ public class UserServiceImpl implements UserService{
                 .userSeq(selectUser.getUserSeq())
                 .userId(selectUser.getUserId())
                 .userPassword(selectUser.getUserPassword())
-                .backgroundSound(request.getBackgroundSound())
-                .effectSound(request.getEffectSound())
+                .backgroundSound(request.getBackgroundSound() != null ? request.getBackgroundSound() : selectUser.getBackgroundSound())
+                .effectSound(request.getEffectSound() != null ? request.getEffectSound() : selectUser.getEffectSound())
+                .maxLevel(selectUser.getMaxLevel())
+                .skinSeq(selectUser.getSkinSeq())
+                .build()));
+		return new UserInfoResponse(user.orElse(null));
+	}
+
+	@Override
+	public UserInfoResponse updateSkin(String userId, UserSkinUpdateRequest request) {
+		Optional<User> user = userRepo.findUserByUserId(userId);
+		user.ifPresent(selectUser -> userRepo.save(User.builder()
+                .userSeq(selectUser.getUserSeq())
+                .userId(selectUser.getUserId())
+                .userPassword(selectUser.getUserPassword())
+                .backgroundSound(selectUser.getBackgroundSound())
+                .effectSound(selectUser.getEffectSound())
                 .maxLevel(selectUser.getMaxLevel())
                 .skinSeq(request.getSkinSeq())
                 .build()));
-		return new UserInfoResponse(user.orElse(null));
+		return user.map(UserInfoResponse::new).orElse(null);
+	}
+
+	@Override
+	public List<Integer> getUnlockedSkins(String userId) {
+		User user = userRepo.findUserByUserId(userId).orElse(null);
+		List<Integer> unlocked = new ArrayList<>();
+		unlocked.add(1);
+		if (user == null) return unlocked;
+
+		int maxLevel = user.getMaxLevel() != null ? user.getMaxLevel() : 0;
+		if (maxLevel >= 3) unlocked.add(2);
+		if (maxLevel >= 6) unlocked.add(3);
+		if (maxLevel >= 7) unlocked.add(4);
+		return unlocked;
 	}
 
 	@Override
