@@ -7,7 +7,6 @@ import Backdrop from '../components/multi/backdrop';
 
 
 export default function Multi() {
-  // const basicURL = 'https://k6a401.p.ssafy.io/api'
   const [modal, setModal] = useState(false);
 
   const openFindModal = () => {

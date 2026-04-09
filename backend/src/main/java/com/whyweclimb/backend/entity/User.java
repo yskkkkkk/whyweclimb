@@ -3,11 +3,13 @@ package com.whyweclimb.backend.entity;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
@@ -56,8 +58,7 @@ public class User implements UserDetails{
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 	@Override
 	public String getPassword() {

@@ -15,7 +15,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 	private final UserRepo userRepo;
 	private final AccessRedisRepo accessRedisRepo;
-	
+	private final SecurityService securityService;
+
     @Override
 	public UserInfoResponse createUser(UserRequest request) {
 		return userRepo.existsByUserId(request.getUserId())
@@ -36,15 +37,21 @@ public class UserServiceImpl implements UserService{
 	public boolean checkIdDuplicate(String userId) {
 		return userRepo.existsByUserId(userId);
 	}
-	
+
 	@Override
 	public UserInfoResponse login(UserRequest request) {
-		UserInfoResponse user = userRepo.findByUserIdAndUserPassword(request.getUserId(), request.getUserPassword()).orElse(null);
+		User user = userRepo.findUserByUserId(request.getUserId()).orElse(null);
 
-		if(accessRedisRepo.findByUserSeq(user.getUserSeq()).isPresent())
-			return user;
-		else 
+		if (user == null || !securityService.matches(request.getUserPassword(), user.getUserPassword())) {
+			return null;
+		}
+
+		UserInfoResponse response = new UserInfoResponse(user);
+		if (accessRedisRepo.findByUserSeq(user.getUserSeq()).isPresent()) {
+			return response;
+		} else {
 			return new UserInfoResponse();
+		}
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
 export default function CreateModal({handleClose}) {
-  const basicURL = 'https://k6a401.p.ssafy.io/api'
+  const basicURL = process.env.NEXT_PUBLIC_API_URL
   const [roomCode, setroomCode] = useState("");
   const [roomInterference, setroomInterference] = useState(false);
   const [roomPrivate, setroomPrivate] = useState("");

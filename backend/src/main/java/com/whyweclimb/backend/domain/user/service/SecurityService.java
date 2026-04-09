@@ -1,32 +1,19 @@
 package com.whyweclimb.backend.domain.user.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class SecurityService {
 
-	@Value("${spring.security.sha-256.salt}")
-	private String SHA_SALT;
-	
-    public String encrypt(String text) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(SHA_SALT.getBytes());
-        md.update(text.getBytes());
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        return bytesToHex(md.digest());
+    public String encode(String rawPassword) {
+        return encoder.encode(rawPassword);
     }
 
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder builder = new StringBuilder();
-        for (byte b : bytes) {
-            builder.append(String.format("%02x", b));
-        }
-        return builder.toString();
+    public boolean matches(String rawPassword, String encodedPassword) {
+        return encoder.matches(rawPassword, encodedPassword);
     }
-	
 }

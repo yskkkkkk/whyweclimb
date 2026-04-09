@@ -13,8 +13,7 @@ import toast from "react-hot-toast";
 const StompJS = require('@stomp/stompjs');
 const Engine = dynamic(() => { return import('../../components/new_multi')}, {ssr:false});
 
-const basicURL = 'https://k6a401.p.ssafy.io/api';
-// const basicURL = `http://localhost:8081/api`
+const basicURL = process.env.NEXT_PUBLIC_API_URL;
 const Stomp = StompJS.Stomp;
 const stomp = Stomp.over(function(){
   return new SockJS(`${basicURL}/ws-stomp`);
@@ -110,7 +109,7 @@ export default function WaitRoom() {
       'Authorization': token,
       mode: 'no-cors'
     }
-    fetch(`https://k6a401.p.ssafy.io/api/user/information`, {headers:headers})
+    fetch(`${basicURL}/user/information`, {headers:headers})
       .then(res => res.json())
       .then(data => {socketConnect(data);userConfirm(data);setUserInfo(data)})
       .catch(err => {

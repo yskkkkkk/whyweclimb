@@ -40,7 +40,7 @@ export default function Signup ({toMain}) {
   const userIdCheck = (e) => {         // 아이디 중복 확인
     e.preventDefault();
     if (validUserId && userId) {
-      fetch(`https://k6a401.p.ssafy.io/api/user/id?userId=${userId}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/id?userId=${userId}`)
         .then((response) => response.json())
         .then((data) => {
           if (data) {
@@ -58,7 +58,7 @@ export default function Signup ({toMain}) {
   }
 
   const submitRegistration = () => {    // 백단에 회원가입 요청
-    fetch('https://k6a401.p.ssafy.io/api/user', {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
       method: "POST",
       body: JSON.stringify({
         userId: userId,
