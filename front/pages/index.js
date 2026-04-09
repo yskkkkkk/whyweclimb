@@ -19,14 +19,18 @@ export default function Home() {
 
 
   const toMain = () => {
-    setLoggedIn(false);
-    window.sessionStorage.clear();
-    inRef.current.scrollTo(3);
-    mainRef.current.scrollTo(0);
-    setTimeout(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    }).finally(() => {
+      setLoggedIn(false);
       inRef.current.scrollTo(3);
       mainRef.current.scrollTo(0);
-    }, "50");
+      setTimeout(() => {
+        inRef.current.scrollTo(3);
+        mainRef.current.scrollTo(0);
+      }, 50);
+    });
   }
   const toSignup = () => {
     setLoggedIn(false);
@@ -65,13 +69,22 @@ export default function Home() {
     }
   }, [])
 
-  useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜
-    setLoggedIn(sessionStorage.getItem("token") ? true : false);
-    if (!sessionStorage.getItem("token")) {
-      setTimeout(() => {
-        adjustLoginModal();
-      }, "100");
-    }
+  useEffect(() => {             // 로그인 여부에 따라 메인화면 바뀜 (httpOnly 쿠키 기반)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/information`, {
+      credentials: 'include',
+    })
+      .then(res => {
+        if (res.ok) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+          setTimeout(adjustLoginModal, 100);
+        }
+      })
+      .catch(() => {
+        setLoggedIn(false);
+        setTimeout(adjustLoginModal, 100);
+      });
   }, []);
 
   return (

@@ -608,9 +608,7 @@ function init() {
   axios({
     url:`${process.env.NEXT_PUBLIC_API_URL}/user/information/`,
     method:'get',
-    headers: {
-      "Authorization": sessionStorage.getItem("token")
-    }
+    withCredentials: true,
   }).then(res=>{
     // console.log(res.data)
     levelMax = res.data.maxLevel
@@ -1302,9 +1300,7 @@ class Engine extends Component {
     axios({
       url:`${process.env.NEXT_PUBLIC_API_URL}/single/record/`,
       method:'POST',
-      headers: {
-        "Authorization": sessionStorage.getItem("token")
-      },
+      withCredentials: true,
       data:{
         "maxLevel":levelMax,
         "userSeq": userSeq,
@@ -1312,7 +1308,7 @@ class Engine extends Component {
       }
     }).then(res=>{
       // console.log(res)
-      
+
     }).catch(err=>console.error(err))
     this.setState({Modalshow:true})
     this.confetti=true;
@@ -1321,27 +1317,25 @@ class Engine extends Component {
     this.setState({ Modalshow:false})
   }
   refresh () {
-    
+
     location.reload();
   }
-  
+
   componentWillUnmount() {
     flag2 = true
     axios({
       url:`${process.env.NEXT_PUBLIC_API_URL}/single/record/`,
       method:'POST',
-      headers: {
-        "Authorization": sessionStorage.getItem("token")
-      },
+      withCredentials: true,
       data:{
         "maxLevel":levelMax,
         "userSeq": userSeq,
         "record": 0,
-        
+
       }
     }).then(res=>{
       // console.log(res)
-      
+
     }).catch(err=>console.error(err))
   }
   

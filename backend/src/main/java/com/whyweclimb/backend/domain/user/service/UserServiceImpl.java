@@ -50,11 +50,11 @@ public class UserServiceImpl implements UserService{
 		}
 
 		UserInfoResponse response = new UserInfoResponse(user);
+		// 이미 게임방에 접속 중인 경우 중복 로그인 차단 (비어있는 응답 → 409 CONFLICT)
 		if (accessRedisRepo.findByUserSeq(user.getUserSeq()).isPresent()) {
-			return response;
-		} else {
 			return new UserInfoResponse();
 		}
+		return response;
 	}
 	
 	@Override

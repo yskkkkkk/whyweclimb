@@ -51,12 +51,7 @@ export default function CreateModal({handleClose}) {
   }
 
   function createRoom(){
-    const token = sessionStorage.getItem("token");
-    const headers = {
-      'Authorization': token,
-      mode: 'no-cors'
-    };
-    axios.post(`${basicURL}/room`, roomInfo, {headers:headers})
+    axios.post(`${basicURL}/room`, roomInfo, { withCredentials: true })
       .then(response => response.data)
       .then(data=>location.href=`multi/${data.roomCode}`)
       .catch(err=>console.error(err));

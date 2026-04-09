@@ -18,14 +18,11 @@ export default function SkinSelectModal({handleClose}) {
   const [unlockedSkins, setUnlockedSkins] = useState([1]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const headers = { "Authorization": token };
-
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/information`, { headers })
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/information`, { withCredentials: true })
       .then(res => setCurrentSkin(res.data.skinSeq))
       .catch(err => console.error(err));
 
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/skins`, { headers })
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/skins`, { withCredentials: true })
       .then(res => setUnlockedSkins(res.data))
       .catch(() => setUnlockedSkins([1]));
   }, []);
@@ -38,7 +35,7 @@ export default function SkinSelectModal({handleClose}) {
     axios({
       url: `${process.env.NEXT_PUBLIC_API_URL}/user/skin`,
       method: 'PATCH',
-      headers: { "Authorization": sessionStorage.getItem("token") },
+      withCredentials: true,
       data: { skinSeq: num }
     }).then(() => {
       setCurrentSkin(num);
