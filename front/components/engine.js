@@ -5,6 +5,8 @@ import Modal from "./ui/modal/modal";
 import axios from 'axios'
 import Confetti from 'react-dom-confetti';
 import { forwardRef, useImperativeHandle } from "react";
+import { translations } from "../utils/translations";
+
 const config = {
   angle: 90,
   spread: 360,
@@ -26,7 +28,7 @@ let mute;
 const WIDTH = 1000;
 const HEIGHT = 800;
 const volume = 0.3;
-let guideMsg = '[←, →, space] to play';
+let guideMsg = '';
 let guideMsg2 = '';
 let isMuted = false;
 let isTouch = false;
@@ -1139,11 +1141,12 @@ function update(delta) {
   player.update(delta);
 }
 
-function rendering() {
+function rendering(lang = 'en') {
   
   if ( numResource>resourceLoaded || resourceLoaded%numResource!=0 || levelMax==-1) return;
   
   gfx.clearRect(0, 0, WIDTH, HEIGHT);
+  guideMsg = translations[lang]['guide_to_play'];
   
   if (level < levelMax) {
     let stage_bg = `stage${level + 1}_bg`;
@@ -1349,10 +1352,11 @@ class Engine extends Component {
     this.currentTime = new Date().getTime();
     passedTime += this.currentTime - previousTime;
     previousTime = this.currentTime;
-    playingTime.innerText = `${parseInt((this.currentTime - startTime) / 1000)}초`;
+  const lang = localStorage.getItem('language') || 'en';
+  playingTime.innerText = `${parseInt((this.currentTime - startTime) / 1000)}${translations[lang]['sec']}`;
     while (passedTime >= msPerFrame) {
       update(msPerFrame);
-      rendering();
+    rendering(lang);
       passedTime -= msPerFrame;
       if(flag2){
         return;
@@ -1385,20 +1389,20 @@ class Engine extends Component {
           <a className={style.h3button} onClick={()=>{
             // console.log("reset?")
             this.reset()
-          }}><h3 className={style.replayBtn}>Reset</h3></a>
+          }}><h3 className={style.replayBtn}>{translations[localStorage.getItem('language') || 'en']['reset']}</h3></a>
           <Link href={'/'} passHref>
-            <a className={style.h3button}><h3>Back</h3></a>
+            <a className={style.h3button}><h3>{translations[localStorage.getItem('language') || 'en']['back']}</h3></a>
           </Link>
         </div>
         <Modal visible={this.state.Modalshow}> 
         <Confetti active={ this.confetti } config={ config }/>
-          <h1 className={style.resultText}>축하합니다!!!</h1>
-          <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}분 {parseInt(((this.currentTime - startTime)%60000)/1000)}초 {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
+          <h1 className={style.resultText}>{translations[localStorage.getItem('language') || 'en']['congrats']}</h1>
+          <h2 className={style.resultText}>{parseInt((this.currentTime - startTime)/60000)}{translations[localStorage.getItem('language') || 'en']['min']} {parseInt(((this.currentTime - startTime)%60000)/1000)}{translations[localStorage.getItem('language') || 'en']['sec']} {parseInt(((this.currentTime - startTime)%1000)/10)}</h2>
           <Link href={''} passHref>
-            <a onClick={this.refresh}><h3 className={style.resultText}>Replay</h3></a>
+            <a onClick={this.refresh}><h3 className={style.resultText}>{translations[localStorage.getItem('language') || 'en']['replay']}</h3></a>
           </Link>
           <Link href={'/'} passHref>
-            <a><h3 className={style.resultText}>Back</h3></a>
+            <a><h3 className={style.resultText}>{translations[localStorage.getItem('language') || 'en']['back']}</h3></a>
           </Link> 
         </Modal>
       </div>

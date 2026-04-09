@@ -3,15 +3,17 @@ import style from './selectModal.module.css';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-
-const UNLOCK_HINTS = {
-  1: '기본 스킨',
-  2: '싱글 레벨 3 달성',
-  3: '싱글 레벨 6 달성',
-  4: '싱글 게임 클리어',
-};
+import { useLanguage } from '../../../context/LanguageContext';
 
 export default function SkinSelectModal({handleClose}) {
+  const { t } = useLanguage();
+
+  const UNLOCK_HINTS = {
+    1: t('default_skin'),
+    2: t('reach_level_3'),
+    3: t('reach_level_6'),
+    4: t('clear_game'),
+  };
   const [currentSkin, setCurrentSkin] = useState(null);
   const [unlockedSkins, setUnlockedSkins] = useState([1]);
 
@@ -30,7 +32,7 @@ export default function SkinSelectModal({handleClose}) {
 
   const saveCharacter = (num) => {
     if (!unlockedSkins.includes(num)) {
-      toast.error(`해금 조건: ${UNLOCK_HINTS[num]}`);
+      toast.error(`${t('unlock_condition')}${UNLOCK_HINTS[num]}`);
       return;
     }
     axios({
@@ -60,7 +62,7 @@ export default function SkinSelectModal({handleClose}) {
       exit="exit"
     >
       <main className={style.container}>
-        <h2>Character Select</h2>
+        <h2>{t('character_select')}</h2>
         <div className={style.inModal}>
           {[1, 2, 3, 4].map(num => {
             const unlocked = unlockedSkins.includes(num);
@@ -78,12 +80,12 @@ export default function SkinSelectModal({handleClose}) {
                   />
                   {!unlocked && <span className={style.lockOverlay}>🔒</span>}
                 </a>
-                <span className={style.hint}>{unlocked ? (currentSkin === num ? '✓ 착용중' : '') : UNLOCK_HINTS[num]}</span>
+                <span className={style.hint}>{unlocked ? (currentSkin === num ? `✓ ${t('equipped')}` : '') : UNLOCK_HINTS[num]}</span>
               </div>
             );
           })}
         </div>
-        <button className={style.backBtn} onClick={handleClose}>back</button>
+        <button className={style.backBtn} onClick={handleClose}>{t('back')}</button>
       </main>
     </motion.div>
   );

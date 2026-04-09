@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import style from './login.module.css';
 import toast from 'react-hot-toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 
 export default function Login({toSignup, toModeSelect, openUCC}) {
+
+  const { t } = useLanguage();
 
   const inputID = useRef();
   const pw = useRef();
@@ -39,7 +42,7 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
     .then((response) => {
       // console.log(response)
       if(response.status==409){
-        toast.error("현재 접속중인 ID 입니다.")
+        toast.error(t('already_logged_in'))
         flag_conf=true
       }
       return response.json();
@@ -54,12 +57,12 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
       }
       else {
         if(!flag_conf){
-          toast.error("ID or password is not valid..");
+          toast.error(t('invalid_login'));
         }
       }
     })
     .catch((error) => {
-      toast.error(`failed to login due to : ${error}`);
+      toast.error(`${t('login_failed')}${error}`);
     });
   };
 
@@ -85,22 +88,22 @@ export default function Login({toSignup, toModeSelect, openUCC}) {
             <span />
           </div>
 
-          <div className={style.fonts}>Login</div>
+          <div className={style.fonts}>{t('login')}</div>
           <div className={style.card}>
-            <label  className={style.smallfonts}>Id 
+            <label  className={style.smallfonts}>{t('id')}
               <input type="text" onChange={e => setUserID(e.target.value)} ref={inputID} required />
             </label>
           </div>
           <div className={style.card}>
-            <label className={style.smallfonts}>Password 
+            <label className={style.smallfonts}>{t('password')}
               <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} required onKeyDown={onKeyPress}/>
             </label>
           </div>
           <div className={style.btnGroup}>
-            <button className={style.loginBtn} onClick={handleLoginSubmit} >Login</button>
+            <button className={style.loginBtn} onClick={handleLoginSubmit} >{t('login')}</button>
             <div className={style.signBtnGroup}>
-              <div className={style.btns}>No account?</div>
-              <button className={style.signupBtn} onClick={toSignUp} >Sign up</button>
+              <div className={style.btns}>{t('no_account')}</div>
+              <button className={style.signupBtn} onClick={toSignUp} >{t('signup')}</button>
             </div>
           </div>
         </section>
