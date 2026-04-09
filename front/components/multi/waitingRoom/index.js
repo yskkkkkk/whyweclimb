@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import style from './waitingRoom.module.css';
+import { useLanguage } from '../../../context/LanguageContext';
 
 
 export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGame, goBack, stomp, userInfo, unlockedSkins}) {
+  const { t } = useLanguage();
   const [showSkinPicker, setShowSkinPicker] = useState(false);
 
   const changeSkin = (skinSeq) => {
@@ -33,17 +35,17 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
                 alt="character image"
               />
               <div className={`playerInfo${index+1}`}>
-                {player.userId} - {player.ready ? "ready!" : "not ready"}
+                {player.userId} - {player.ready ? t('ready') : t('not_ready')}
               </div>
             </div>
           )}
         </section>
 
         <section className={style.btns}>
-          <button className={style.readyBtn} onClick={ready}>ready</button>
+          <button className={style.readyBtn} onClick={ready}>{t('ready')}</button>
           <button className={style.skinBtn} onClick={() => setShowSkinPicker(p => !p)}>skin</button>
-          <button className={style.startBtn} onClick={startGame}>start</button>
-          <button className={style.backBtn} onClick={goBack}>back</button>
+          <button className={style.startBtn} onClick={startGame}>{t('start')}</button>
+          <button className={style.backBtn} onClick={goBack}>{t('back')}</button>
         </section>
 
         {showSkinPicker && (

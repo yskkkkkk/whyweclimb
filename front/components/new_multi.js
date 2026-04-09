@@ -3,6 +3,8 @@ import Modal from "./ui/modal/modal";
 import style from "./engine.module.css";
 import Confetti from 'react-dom-confetti';
 import Link from 'next/link';
+import { translations } from "../utils/translations";
+
 const config = {
     angle: 90,
     spread: 360,
@@ -24,7 +26,7 @@ let mute;
 const WIDTH = 1000;
 const HEIGHT = 800;
 const volume = 0.3;
-let guideMsg = '[←, →, space] to play';
+let guideMsg = '';
 let guideMsg2 = '';
 let isMuted = false;
 let isTouch = false;
@@ -1255,13 +1257,14 @@ function update(delta)
     players.map(player => player.update(delta));
 }
 
-function render()
+function render(lang = 'en')
 {
     
     if (resourceLoaded != numResource)
         return;
 
     gfx.clearRect(0, 0, WIDTH, HEIGHT);
+    guideMsg = translations[lang]['guide_to_play'];
 
     if (level < levelMax) {
         let stage_bg = `stage${level + 1}_bg`;
@@ -1477,10 +1480,11 @@ class Engine extends Component {
     passedTime += currentTime - previousTime;
     previousTime = currentTime;
 
+    const lang = (typeof window !== 'undefined' && localStorage.getItem('language')) || 'en';
     while (passedTime >= msPerFrame)
     {
         update(msPerFrame);
-        render();
+        render(lang);
         passedTime -= msPerFrame;
 
         if(flag){
@@ -1511,6 +1515,7 @@ class Engine extends Component {
 
   
   render() {
+    const lang = (typeof window !== 'undefined' && localStorage.getItem('language')) || 'en';
     //Make game levels
     //플레이어의 위치 스테이지,이동처리가 됐을 때 바뀐 스테이정보, 다른 플레이어 정보(같은 스테이지에 있는), 최고높이는 둘다 가지고 있는게, 유저 토큰, 토큰값도 바꾸고, DB도 바꾸고
     //키입력 True False로 가능, while()
@@ -1520,10 +1525,10 @@ class Engine extends Component {
         <canvas id="cvs" width="1000" height="800" />
         
         {this.state.modalShow && <Modal visible={this.state.modalShow}>
-            {(myIdx === winner)?<h1 className={style.resultText}>축하합니다!!!</h1>:<h1 className={style.resultText}>아쉽네요ㅠㅠ</h1>}            
+            {(myIdx === winner)?<h1 className={style.resultText}>{translations[lang]['congrats']}</h1>:<h1 className={style.resultText}>{translations[lang]['too_bad']}</h1>}
             <h2 className={style.resultText}>winner: {groupInfo[winner].userId}</h2>
             <Link href={'/'} passHref>
-            <a><h3 className={style.resultText}>Back</h3></a>
+            <a><h3 className={style.resultText}>{translations[lang]['back']}</h3></a>
             </Link>
         </Modal>}
     </>

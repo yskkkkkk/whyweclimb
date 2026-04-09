@@ -1,12 +1,15 @@
 import style from './signup.module.css';
 import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ID_REGEX = /^[a-zA-Z0-9]{3,20}$/;
 const PW_REGEX = /^[a-zA-Z0-9]{8,24}$/;
 
 export default function Signup ({toMain}) {
   
+  const { t } = useLanguage();
+
   const inputID = useRef();
   const pw = useRef();
   const pwConf = useRef();
@@ -44,16 +47,16 @@ export default function Signup ({toMain}) {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            toast.success("your ID's good to go!");
+            toast.success(t('id_available'));
             setAvailableUserId(data);
           }
           else {
-            toast.error("we're sorry, the ID is already in use.. ");
+            toast.error(t('id_in_use'));
           }
         });
     }
     else {
-      toast.error("please provide a valid ID!");
+      toast.error(t('provide_valid_id'));
     }
   }
 
@@ -74,21 +77,21 @@ export default function Signup ({toMain}) {
       })
       .then((data) => {
         if (data) {
-          toast("welcome to the club!", {icon: "🎉"});
+          toast(t('welcome'), {icon: "🎉"});
           initializeData();
           toMain();
         } else {
-          toast.error("unexpected error occured, please try again later.");
+          toast.error(t('unexpected_error'));
         }
       })
       .catch((error) => {
-        toast.error(`failed to signup due to : ${error}`);
+        toast.error(`${t('signup_failed')}${error}`);
       });
   };
 
   // 왜 setErrorMsg 코드가 적용 안될까.. 
   const finalCheck = () => {          // 회원가입 버튼 눌렀을때 로직
-    setErrorMsg("please check the followings:");
+    setErrorMsg(t('check_followings'));
     let errMsg = ""
     if (availableUserId && validUserPassword && validMatchPassword) {
       submitRegistration();
@@ -144,25 +147,25 @@ export default function Signup ({toMain}) {
       <div className={style.semiContainer}>
 
         <div className={style.fonts}>
-          Sign up
+          {t('signup')}
         </div>
         <section className={style.signup}>
           <div className={style.card}>
-            <label className={style.smallfonts}>ID 
+            <label className={style.smallfonts}>{t('id')}
               <input type="text" onChange={e => setUserId(e.target.value)} ref={inputID} placeholder="a-z, A-Z, 0-9 / 3~20" required />
-              <button className={style.checkBtn} onClick={userIdCheck}>Check ID</button>
+              <button className={style.checkBtn} onClick={userIdCheck}>{t('check_id')}</button>
             </label>
           </div>
           <div className={style.card}>
-            <label className={style.smallfonts}>Password <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} placeholder="a-z, A-Z, 0-9 / 8~24" required /></label>
+            <label className={style.smallfonts}>{t('password')} <input type="password" onChange={e => setUserPassword(e.target.value)} ref={pw} placeholder="a-z, A-Z, 0-9 / 8~24" required /></label>
           </div>
           <div className={style.card}>
-            <label className={style.smallfonts}>PW Confirm <input type="password" onChange={e => setMatchPassword(e.target.value)} ref={pwConf} required /></label>
+            <label className={style.smallfonts}>{t('pw_confirm')} <input type="password" onChange={e => setMatchPassword(e.target.value)} ref={pwConf} required /></label>
           </div>
         </section>
         <div className={style.btnGroup}>
-          <button className={style.signupBtn} onClick={finalCheck}>Sign up!</button>
-          <button className={style.backBtn} onClick={goBack}>Back</button>
+          <button className={style.signupBtn} onClick={finalCheck}>{t('signup_exclamation')}</button>
+          <button className={style.backBtn} onClick={goBack}>{t('back')}</button>
         </div>
       </div>
     </main>

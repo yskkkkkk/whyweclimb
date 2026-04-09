@@ -5,9 +5,12 @@ import React, { useState } from 'react';
 import axios from'axios';
 import { AnimatePresence } from 'framer-motion';
 import Backdrop from '../multi/backdrop';
+import { useLanguage } from '../../context/LanguageContext';
 
 
 export default function ModeSelect({toMain, toConfigure}) {
+
+  const { t } = useLanguage();
   
   const [modal, setModal] = useState(false);
 
@@ -29,7 +32,7 @@ export default function ModeSelect({toMain, toConfigure}) {
     <main className={style.container}>
 
       <a onClick={openSelectModal} className={style.selectBtn}>
-        <h4>Character Select</h4>
+        <h4>{t('character_select')}</h4>
       </a>
 
       <section className={style.container2}>
@@ -37,7 +40,7 @@ export default function ModeSelect({toMain, toConfigure}) {
           <div className={style.stage}>
             <img className={`${style.box} ${style.bounce7}`} src="/images/running_R1.png" alt="a character jumping image" />
           </div>
-          <h2>Single Mode</h2>
+          <h2>{t('single_mode')}</h2>
         </a>
         <a className={style.btn1} href={'/multi'}>
           <div className={style.stage1}>
@@ -46,11 +49,11 @@ export default function ModeSelect({toMain, toConfigure}) {
             <img className={`${style.box1} ${style.bounce2}`} src="/images/dwarf.png" alt="a character jumping image" />
             <img className={`${style.box1} ${style.bounce3}`} src="/images/woodElf.png" alt="a character jumping image" />
           </div>
-          <h2 className={style.glow}>Multi Mode</h2>
+          <h2 className={style.glow}>{t('multi_mode')}</h2>
         </a>
       </section>
       {/* <button onClick={toConfigure}>configure</button> */}
-      <button className={style.btnBack} onClick={toMain}>logout</button>
+      <button className={style.btnBack} onClick={toMain}>{t('logout')}</button>
 
       <AnimatePresence    // 모달창들
         // initial animation (바로 사라져버리는것?) 비활성화시킴

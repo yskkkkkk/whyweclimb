@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import { useRouter } from 'next/router'; 
+import { translations } from "../utils/translations";
 
 class Engine extends Component {
 
@@ -23,7 +24,7 @@ class Engine extends Component {
     const WIDTH = 1000;
     const HEIGHT = 800;
     const volume = 0.3;
-    let guideMsg = '[←, →, space] to play';
+    let guideMsg = '';
     let guideMsg2 = '';
     let isMuted = false;
     let isTouch = false;
@@ -915,10 +916,11 @@ class Engine extends Component {
         passedTime += currentTime - previousTime;
         previousTime = currentTime;
 
+        const lang = (typeof window !== 'undefined' && localStorage.getItem('language')) || 'en';
         while (passedTime >= msPerFrame)
         {
             update(msPerFrame);
-            render();
+            render(lang);
             passedTime -= msPerFrame;
         }
 
@@ -931,13 +933,14 @@ class Engine extends Component {
         players.map(player => player.update(delta));
     }
 
-    function render()
+    function render(lang = 'en')
     {
         
         if (resourceLoaded != numResource)
             return;
 
         gfx.clearRect(0, 0, WIDTH, HEIGHT);
+        guideMsg = translations[lang]['guide_to_play'];
 
         if(level<levelMax){
             let stage_bg = `stage${level+1}_bg`
@@ -1102,10 +1105,11 @@ class Engine extends Component {
         }
     }
 
+    const renderLang = (typeof window !== 'undefined' && localStorage.getItem('language')) || 'en';
     return (
         <>
         <canvas id="cvs" width="1000" height="800" />
-        {this.state.notStart && <button onClick={()=>{start();this.setState({notStart:false})}}>start</button>}
+        {this.state.notStart && <button onClick={()=>{start();this.setState({notStart:false})}}>{translations[renderLang]['start']}</button>}
         </>
     )
 

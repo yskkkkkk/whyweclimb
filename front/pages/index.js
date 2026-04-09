@@ -5,9 +5,12 @@ import ModeSelect from '../components/modeSelect';
 import Backdrop from '../components/multi/backdrop';
 import { useState, useEffect, useRef } from 'react';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import { useLanguage } from '../context/LanguageContext';
 
 
 export default function Home() {
+
+  const { language, toggleLanguage } = useLanguage();
 
   const mainRef = useRef();
   const inRef = useRef();
@@ -85,6 +88,24 @@ export default function Home() {
       </Head>
 
       <main>
+        <button
+          onClick={toggleLanguage}
+          style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            zIndex: 100,
+            padding: '10px 20px',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: 'white',
+            border: '1px solid white',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontFamily: 'inherit',
+          }}
+        >
+          {language === 'en' ? 'Korean' : 'English'}
+        </button>
         <Parallax 
         ref={inRef} 
         pages={4}

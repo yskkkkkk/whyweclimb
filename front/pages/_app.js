@@ -1,12 +1,13 @@
 import '../styles/globals.css'
 import { Toaster } from 'react-hot-toast';
 import {motion} from 'framer-motion';
+import { LanguageProvider } from '../context/LanguageContext';
 
 
 function MyApp({ Component, pageProps, router }) {
 
   return (
-    <>
+    <LanguageProvider>
       <motion.div
         key={router.route}
         initial="initial"
@@ -34,7 +35,7 @@ function MyApp({ Component, pageProps, router }) {
         // }}
       />
       
-    </>
+    </LanguageProvider>
   )
 }
 
