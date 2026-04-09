@@ -1,7 +1,10 @@
 package com.whyweclimb.backend.domain.room.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +12,7 @@ import com.whyweclimb.backend.domain.room.dto.RoomCreateRequest;
 import com.whyweclimb.backend.domain.room.dto.RoomInfoResponse;
 import com.whyweclimb.backend.domain.room.repo.AccessRedisRepo;
 import com.whyweclimb.backend.domain.room.repo.RoomRepo;
+import com.whyweclimb.backend.entity.Access;
 import com.whyweclimb.backend.entity.Room;
 
 import lombok.RequiredArgsConstructor;
@@ -55,23 +59,27 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public RoomInfoResponse joinRoom(boolean interference) {
-		List<RoomInfoResponse> rooms;
-		RoomInfoResponse room = null;
-
-		rooms = interference
+		List<RoomInfoResponse> rooms = interference
 		    ? roomRepo.findTop10ByRoomInterferenceTrueAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null)
 		    : roomRepo.findTop10ByRoomInterferenceFalseAndRoomPrivateFalseAndRoomStartFalseOrderByRoomSeqAsc().orElse(null);
 
-		for (RoomInfoResponse roomInfoResponse : rooms) {
-			int now = accessRedisRepo.findByRoomCode(roomInfoResponse.getRoomCode()).size();
-			int max = roomInfoResponse.getRoomMaxNum();
-			if (now < max) {
-				room = roomInfoResponse;
-				break;
+		if (rooms == null || rooms.isEmpty()) return null;
+
+		// 후보 방 코드 목록을 수집한 뒤 Redis에서 참가자 수를 일괄 집계
+		Map<String, Long> occupancyMap = StreamSupport
+				.stream(accessRedisRepo.findAll().spliterator(), false)
+				.collect(Collectors.groupingBy(
+						access -> access.getRoomCode(),
+						Collectors.counting()));
+
+		for (RoomInfoResponse candidate : rooms) {
+			long now = occupancyMap.getOrDefault(candidate.getRoomCode(), 0L);
+			if (now < candidate.getRoomMaxNum()) {
+				return candidate;
 			}
 		}
-		
-		return room;
+
+		return null;
 	}
 
 	@Override
@@ -91,6 +99,6 @@ public class RoomServiceImpl implements RoomService {
                 .roomStart(true)
                 .build()));
 
-		return new RoomInfoResponse(room.get());
+		return room.map(RoomInfoResponse::new).orElse(null);
 	}
 }

@@ -16,8 +16,7 @@ export default function WaitingRoom({roomID, groupInfo, roomInfo, ready, startGa
         <section>
           {groupInfo && groupInfo.slice(0).reverse().map((player, index) => 
             <div key={player.userSeq}>
-              {console.log(player)}
-              <img 
+              <img
                 className={`player${index+1}`} 
                 src={`/images/waitRoomImg/${player.skinSeq}.png`} 
                 alt="character image" 

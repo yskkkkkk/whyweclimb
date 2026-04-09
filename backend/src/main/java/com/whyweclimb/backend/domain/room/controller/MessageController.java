@@ -28,9 +28,6 @@ public class MessageController {
 
 	@MessageMapping("/play/message")
 	public void play(Message message) {
-//		log.info("[name: " + message.getSender() + ", key input: space-" + message.getSpace() + " left-" + message.getLeft()
-//				+ " right-" + message.getRight() + "]");
-
 		messagingTemplate.convertAndSend("/sub/room/" + message.getRoomCode(), message);
 	}
 
@@ -51,14 +48,16 @@ public class MessageController {
 	@MessageMapping("/room/ready")
 	public void playerReady(Integer userSeq) {
 		String roomCode = messageService.getReady(userSeq);
+		if (roomCode == null) return;
 		AccessResponse response = new AccessResponse(messageService.playerList(roomCode));
 		messagingTemplate.convertAndSend("/sub/room/" + roomCode, response);
 	}
-	
+
 	@ApiOperation(value = "outGame", notes = "나감처리")
 	@PostMapping("/exit/{sessionId}")
 	public void outGameRoom(@PathVariable String sessionId){
 		Access access = messageService.getAccess(sessionId);
+		if (access == null) return;
 		AccessResponse response = new AccessResponse(messageService.playerList(access.getRoomCode()));
 		messagingTemplate.convertAndSend("/sub/room/" + access.getRoomCode(), response);
 	}

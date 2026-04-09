@@ -106,7 +106,7 @@ class Vector {
   }
 
   equals(v) {
-    return this.x == v.x && this.y == v.y;
+    return this.x === v.x && this.y === v.y;
   }
 }
 class Goal {
@@ -341,7 +341,7 @@ class Player {
         this.running_L = true;
         this.runningTime += 1;
         this.runningTime = this.runningTime % 32;
-        if (c.side == undefined) this.vx = -speed;
+        if (c.side === undefined) this.vx = -speed;
         else this.vx = 0;
       } else if (keys.ArrowRight && !this.crouching) {
         this.running_R = true;
@@ -350,7 +350,7 @@ class Player {
         this.runningTime = this.runningTime % 32;
         c = this.testCollide(speed, 0);
 
-        if (c.side == undefined) this.vx = speed;
+        if (c.side === undefined) this.vx = speed;
         else this.vx = 0;
       } else if (!keys[" "] && this.crouching) {
         if (keys.ArrowLeft) this.vx = -sideJump;
@@ -545,7 +545,7 @@ class Player {
 
   render() {
     
-    if (this.running_L == false && this.running_R == false && this.direction_L && !this.crouching) {
+    if (this.running_L === false && this.running_R === false && this.direction_L && !this.crouching) {
       gfx.drawImage(
         images[`running_${this.skin}_L1`],
         this.x,
@@ -553,7 +553,7 @@ class Player {
         this.size,
         this.size
       );
-    } else if (this.running_L == false && this.running_R == false && this.direction_L && this.crouching) {
+    } else if (this.running_L === false && this.running_R === false && this.direction_L && this.crouching) {
       gfx.drawImage(
         images[`running_${this.skin}_L1`],
         this.x,
@@ -561,7 +561,7 @@ class Player {
         this.size,
         this.size * (1 - this.jumpGauge * 0.2)
       );
-    } else if (this.running_L == false && this.running_R == false && !this.direction_L && !this.crouching) {
+    } else if (this.running_L === false && this.running_R === false && !this.direction_L && !this.crouching) {
       gfx.drawImage(
         images[`running_${this.skin}_R1`],
         this.x,
@@ -569,7 +569,7 @@ class Player {
         this.size,
         this.size
       );
-    } else if (this.running_L == false && this.running_R == false && !this.direction_L && this.crouching) {
+    } else if (this.running_L === false && this.running_R === false && !this.direction_L && this.crouching) {
       gfx.drawImage(
         images[`running_${this.skin}_R1`],
         this.x,
@@ -1211,19 +1211,19 @@ function drawBlock(x, y, w, h) {
   if (level < levelMax) {
     let stage = `stage${level + 1}`;
     //console.log(stage)
-    if (level == 0 && x == 0 && y == 0) {
+    if (level === 0 && x === 0 && y === 0) {
     } else {
       gfx.drawImage(images[stage], x, HEIGHT - y, w, -h);
     } //gfx.fillStyle = 'rgb(255,221,0)'
   } else {
-    if (level == 0 && x == 0 && y == 0) {
+    if (level === 0 && x === 0 && y === 0) {
     } else {
       let stage = `stage${level + 1}_before`;
       gfx.drawImage(images[stage], x, HEIGHT - y, w, -h);
     }
     
   }
-  if (x == 942 && y == 780 && w == Math.trunc(player.jumpGauge * 50) && h == 12) {
+  if (x === 942 && y === 780 && w === Math.trunc(player.jumpGauge * 50) && h === 12) {
     gfx.fillStyle = "rgb(255,0,0)";
     gfx.fill();
     gfx.fillStyle = "rgb(0,0,0)";
@@ -1289,8 +1289,7 @@ class Engine extends Component {
     axios({
       url:`${process.env.NEXT_PUBLIC_API_URL}/single/entrance`,
       method:'POST'
-    }).then(res=>console.log(res))
-    .catch(err=>console.error(err))
+    }).catch(err=>console.error(err))
   }
   openModal = () => {
     // // console.log("abcd")

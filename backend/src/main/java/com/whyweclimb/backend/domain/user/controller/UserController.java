@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,7 +37,7 @@ public class UserController {
 
 	@ApiOperation(value = "SignUp", notes = "계정을 생성합니다.")
 	@PostMapping("")
-	public ResponseEntity<Boolean> createUser(@RequestBody UserRequest request) {
+	public ResponseEntity<Boolean> createUser(@Valid @RequestBody UserRequest request) {
 		request.setUserPassword(securityService.encode(request.getUserPassword()));
 		UserInfoResponse response = userService.createUser(request);
 
@@ -57,7 +59,7 @@ public class UserController {
 
 	@ApiOperation(value = "Login", notes = "아이디와 비밀번호를 입력받아 로그인을 진행합니다.")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody UserRequest request) {
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody UserRequest request) {
     	UserInfoResponse response = userService.login(request);
 
 		String token = "";
@@ -89,7 +91,7 @@ public class UserController {
     
 	@ApiOperation(value = "settingUserOption", notes = "유저정보를 수정합니다.")
 	@PutMapping("")
-    public ResponseEntity<UserInfoResponse> modifyUser(@RequestBody UserUpdateRequest request){
+    public ResponseEntity<UserInfoResponse> modifyUser(@Valid @RequestBody UserUpdateRequest request){
     	UserInfoResponse response = userService.updateUser(request);
 
 		HttpStatus status = response == null ? HttpStatus.NOT_ACCEPTABLE : HttpStatus.OK;

@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-@RedisHash(value = "access")
+@RedisHash(value = "access", timeToLive = 7200)
 public class Access implements Comparable<Access>{
 	@Id
 	@Indexed

@@ -1,6 +1,7 @@
 package com.whyweclimb.backend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -20,7 +21,10 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 	private MessageService messageService;
 	@Autowired
 	private RoomService roomService;
-	
+
+	@Value("${cors.allowed-origins}")
+	private String allowedOrigins;
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config){
         config.enableSimpleBroker("/sub");
@@ -29,7 +33,8 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*")
+        registry.addEndpoint("/ws-stomp")
+                .setAllowedOriginPatterns(allowedOrigins.split(","))
                 .withSockJS();
     }
 
@@ -37,5 +42,4 @@ public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
     public void configureClientInboundChannel(ChannelRegistration registration) {
         registration.interceptors(new UserInterceptor(messageService, roomService));
     }
-    	// 때려 죽여도 메세지가 안보내짐 
 }

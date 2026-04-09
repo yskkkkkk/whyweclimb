@@ -1,5 +1,7 @@
 package com.whyweclimb.backend.domain.user.controller;
 
+import javax.validation.Valid;
+
 import com.whyweclimb.backend.domain.user.dto.UserRecordUpdateRequest;
 import com.whyweclimb.backend.domain.user.service.SingleGameService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ public class SingleGameController {
     private final SingleGameService singleGameService;
 
     @PostMapping("/record")
-    public ResponseEntity<Boolean> settingUserRecord(@RequestBody UserRecordUpdateRequest request){
+    public ResponseEntity<Boolean> settingUserRecord(@Valid @RequestBody UserRecordUpdateRequest request){
         return new ResponseEntity<>(singleGameService.setUserRecord(request), HttpStatus.OK);
     }
 
